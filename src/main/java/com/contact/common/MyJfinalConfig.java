@@ -10,6 +10,7 @@ import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.task.TaskPlugin;
+import com.jfinal.render.ViewType;
 
 /**
  * API引导式配置
@@ -23,13 +24,14 @@ public class MyJfinalConfig extends JFinalConfig {
 		// 加载少量必要配置，随后可用PropKit.get(...)获取值
 		PropKit.use("a_little_config.txt");
 		me.setDevMode(PropKit.getBoolean("devMode", false));
+		me.setViewType(ViewType.JSP); 
 	}
 	
 	/**
 	 * 配置路由
 	 */
 	public void configRoute(Routes me) {
-		me.add("/", MobileController.class, "/index");	// 第三个参数为该Controller的视图存放路径
+		me.add("/mobile", MobileController.class);	// 第三个参数为该Controller的视图存放路径
 	}
 	
 	/**

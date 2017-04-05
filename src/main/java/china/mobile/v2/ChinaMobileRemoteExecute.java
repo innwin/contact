@@ -9,14 +9,17 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.phantomjs.MyPhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.contact.util.ImageUtils;
 import com.jfinal.plugin.task.TaskKit;
@@ -26,7 +29,7 @@ public class ChinaMobileRemoteExecute {
 	public long timestamp;
 
 	static {
-		System.setProperty("phantomjs.binary.path", "/usr/local/phantomjs");
+		System.setProperty("phantomjs.binary.path", "/usr/bin/phantomjs");
 	}
 
 	// String hub = "http://127.0.0.1:4444/wd/hub";
@@ -72,7 +75,7 @@ public class ChinaMobileRemoteExecute {
 			org.openqa.selenium.WebElement e1 = driver.findElement(By.id("validateKey"));
 			e1.sendKeys(code); // br.readLine()
 			e1.submit();
-			if (driver.manage().getCookieNamed("CmWebtokenid") == null) {
+			if (driver.manage().getCookieNamed("CmWebtokenid") == null ||driver.manage().getCookieNamed("cmtokenid") == null ) {
 				return new Result(Constants.NEEDLOGIN, Constants.getMessage(Constants.NEEDCODE));
 			}
 			Pattern pattern2 = Pattern.compile(".*queryHisDetailBill.*");
@@ -95,14 +98,9 @@ public class ChinaMobileRemoteExecute {
 			return new Result(Constants.NEEDCODE, Constants.getMessage(Constants.NEEDCODE));
 		}
 
-		// WebElement sj = driver.findElement(By.className("search-js"));
-		// if (sj != null) {
-		// driver.get("http://service.zj.10086.cn/yw/detail/queryHisDetailBill.do?menuId=13009");
-		// driver.findElement(By.className("search-js")).click();
-		// }
 	}
-	
-	//http://service.zj.10086.cn/yw/detail/queryHisDetailBill.do?bid=&menuId=13009&listtype=1&month=04-2017
+
+	// http://service.zj.10086.cn/yw/detail/queryHisDetailBill.do?bid=&menuId=13009&listtype=1&month=04-2017
 
 	public static Result scan(String key, String code) {
 		String sessionId = SessionUtils.get(key);
@@ -112,46 +110,55 @@ public class ChinaMobileRemoteExecute {
 		try {
 			WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			if (driver.manage().getCookieNamed("CmWebtokenid") == null) {
+			if (driver.manage().getCookieNamed("CmWebtokenid") == null ||driver.manage().getCookieNamed("cmtokenid") == null) {
 				return new Result(Constants.NEEDLOGIN, Constants.getMessage(Constants.NEEDCODE));
 			}
-			Pattern pattern = Pattern.compile(".*queryHisDetailBill.*");
-			Matcher matcher = pattern.matcher(driver.getCurrentUrl());
-			if (!matcher.matches()) {
-				return new Result(Constants.INPROCESS, Constants.getMessage(Constants.INPROCESS));
-				// driver.get("http://service.zj.10086.cn/yw/detail/queryHisDetailBill.do?menuId=13009&AISSO_LOGIN=true");
-				// driver.findElement(By.className("search-js")).click();
-			}
-
-			for (Cookie c : driver.manage().getCookies())
-				System.out.println(c);
 
 			try {
-				WebElement vc = driver.findElement(By.id("validateCode"));
-				vc.sendKeys(code); // br.readLine()
+				new WebDriverWait(driver, 10)
+						.until(ExpectedConditions.urlMatches("(.*queryHisDetailBill.*)|(.*month.*)"));
+			} catch (Exception e) {
+				e.printStackTrace();
+				return new Result(Constants.INPROCESS, Constants.getMessage(Constants.INPROCESS));
+			}
+
+			try {
+				WebElement vc = (new WebDriverWait(driver, 10)).until(ExpectedConditions.refreshed(new ExpectedCondition<WebElement>() {
+					@Override
+					public WebElement apply(WebDriver d) {
+						return d.findElement(By.id("validateCode"));
+					}
+				}));
+				
+//				String str = "function() {
+//  var para = document.createElement("p");
+//  var txt1 = document.createTextNode("I inserted ");
+//  var emphasis = document.createElement("em");
+//  var txt2 = document.createTextNode("this");
+//  var txt3 = document.createTextNode(" content.");
+//  para.appendChild(txt1);
+//  emphasis.appendChild(txt2);
+//  para.appendChild(emphasis);
+//  para.appendChild(txt3);
+//  var testdiv = document.getElementById("testdiv");
+//  testdiv.appendChild(para);
+//}"
+//				((MyPhantomJSDriver)driver)executeScript(" window.alert = function(str){  return; }");
+				vc.sendKeys(code);
 				driver.findElement(By.className("tiji")).click();
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
-			// Pattern pattern2 = Pattern.compile(".*month.*");
-			// System.out.println(driver.getCurrentUrl());
-			// Matcher matcher2 = pattern2.matcher(driver.getCurrentUrl());
-			// if(!matcher2.matches()){
-			// return new Result(Constants.CODEERROR,
-			// Constants.getMessage(Constants.CODEERROR));
-			// }
-
-			// List<WebElement> titles =
-			// driver.findElements(By.className("titlecol"));
-			// List<String> titleStr = new ArrayList<>();
-			// for(WebElement title:titles){
-			// titleStr.add(StringEscapeUtils.escapeHtml4(title.getText()));
-			// }
+			try {
+				new WebDriverWait(driver, 10).until(ExpectedConditions.urlMatches(".*month.*"));
+			} catch (Exception e) {
+				e.printStackTrace();
+				return new Result(Constants.CODEERROR, Constants.getMessage(Constants.CODEERROR));
+			}
 			List<List<String>> data = new ArrayList<>();
 			try {
 				List<WebElement> rows = driver.findElements(By.className("content2"));
-
 				for (WebElement row : rows) {
 					List<WebElement> tds = row.findElements(By.className("talbecontent1"));
 					List<String> tdStrs = new ArrayList<>();
@@ -165,8 +172,8 @@ public class ChinaMobileRemoteExecute {
 				return new Result(Constants.CODEERROR, Constants.getMessage(Constants.CODEERROR));
 			}
 
-			// driver.quit();
-			// SessionUtils.remove(key);
+			driver.quit();
+			SessionUtils.remove(key);
 			return new Result(Constants.SUCCESS, data);
 		} catch (Exception e) {
 			e.printStackTrace();
