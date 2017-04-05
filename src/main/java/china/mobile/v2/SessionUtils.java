@@ -13,5 +13,8 @@ public class SessionUtils {
 	public static void put(String key,String val){
 		map.put(key, val);
 	}
+	public static void remove(String key){
+		map.remove(key);
+	}
 	
 }

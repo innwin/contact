@@ -9,6 +9,7 @@ import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
 import com.jfinal.kit.PropKit;
+import com.jfinal.plugin.task.TaskPlugin;
 
 /**
  * API引导式配置
@@ -35,6 +36,8 @@ public class MyJfinalConfig extends JFinalConfig {
 	 * 配置插件
 	 */
 	public void configPlugin(Plugins me) {
+		TaskPlugin taskPlugin = new TaskPlugin();
+		me.add(taskPlugin);
 //		// 配置C3p0数据库连接池插件
 //		C3p0Plugin c3p0Plugin = new C3p0Plugin(PropKit.get("jdbcUrl"), PropKit.get("user"), PropKit.get("password").trim());
 //		me.add(c3p0Plugin);

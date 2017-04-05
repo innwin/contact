@@ -109,7 +109,7 @@ public class MyHttpCommandExecutor implements CommandExecutor, NeedsLocalLogs {
 			MyProtocolHandshake handshake = new MyProtocolHandshake();
 			MyProtocolHandshake.Result result = handshake.connSession(this.client, command.getSessionId());
 			Dialect dialect = result.getDialect();
-			this.commandCodec = dialect.getCommandCodec();
+			this.commandCodec =  dialect.getCommandCodec();
 			this.responseCodec = dialect.getResponseCodec();
 			// throw new WebDriverException("No command or response codec has
 			// been defined. Unable to proceed");
