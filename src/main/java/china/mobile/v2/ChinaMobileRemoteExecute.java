@@ -13,6 +13,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.phantomjs.MyPhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.Augmenter;
@@ -115,6 +116,10 @@ public class ChinaMobileRemoteExecute {
 			}
 
 			try {
+//				String state = (String) ( (MyPhantomJSDriver)driver).executeScript("return document.readyState ;");
+//				if(!"complete".equals(state)){
+//					return new Result(Constants.INPROCESS, Constants.getMessage(Constants.INPROCESS));
+//				}
 				new WebDriverWait(driver, 10)
 						.until(ExpectedConditions.urlMatches("(.*queryHisDetailBill.*)|(.*month.*)"));
 			} catch (Exception e) {
@@ -129,27 +134,25 @@ public class ChinaMobileRemoteExecute {
 						return d.findElement(By.id("validateCode"));
 					}
 				}));
-				
-//				String str = "function() {
-//  var para = document.createElement("p");
-//  var txt1 = document.createTextNode("I inserted ");
-//  var emphasis = document.createElement("em");
-//  var txt2 = document.createTextNode("this");
-//  var txt3 = document.createTextNode(" content.");
-//  para.appendChild(txt1);
-//  emphasis.appendChild(txt2);
-//  para.appendChild(emphasis);
-//  para.appendChild(txt3);
-//  var testdiv = document.getElementById("testdiv");
-//  testdiv.appendChild(para);
-//}"
-//				((MyPhantomJSDriver)driver)executeScript(" window.alert = function(str){  return; }");
 				vc.sendKeys(code);
+				((MyPhantomJSDriver)driver).executeScript(" window.alert=function(str){ document.getElementById('validateCode').value = str; } ");
 				driver.findElement(By.className("tiji")).click();
+				String msg = (String)( (MyPhantomJSDriver)driver).executeScript("return document.getElementById('validateCode').value;") ;
+				if(!code.equals(msg)){
+					return new Result(Constants.CODEERROR, Constants.getMessage(Constants.CODEERROR));
+				}
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
+//			TaskKit.taskExecutor.execute(new Runnable() {
+//				@Override
+//				public void run() {
+//					driver.get("http://service.zj.10086.cn/yw/detail/queryHisDetailBill.do?menuId=13009");
+//					driver.findElement(By.className("search-js")).click();
+//				}
+//			});
 			try {
 				new WebDriverWait(driver, 10).until(ExpectedConditions.urlMatches(".*month.*"));
 			} catch (Exception e) {
