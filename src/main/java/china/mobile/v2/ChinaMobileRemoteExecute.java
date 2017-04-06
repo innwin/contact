@@ -89,6 +89,7 @@ public class ChinaMobileRemoteExecute {
 				TaskKit.taskExecutor.execute(new Runnable() {
 					@Override
 					public void run() {
+//						https://zj.ac.10086.cn/loginbox
 						String url = "http://service.zj.10086.cn/yw/detail/queryHisDetailBill.do?menuId=13009";
 						driver.get(url);// http://www.zj.10086.cn/my/UnifiedLoginServerServlet?AISSO_LOGIN=true
 						// Pattern pattern =
