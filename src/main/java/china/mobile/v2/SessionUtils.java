@@ -6,6 +6,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SessionUtils {
 	private static Map<String, String> map = new ConcurrentHashMap<>();
 	
+	public static Map<String, Result> data = new ConcurrentHashMap<>();
+	
 	public static String get(String key){
 		return map.get(key);
 	}

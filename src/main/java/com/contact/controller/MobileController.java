@@ -6,6 +6,7 @@ import com.jfinal.ext.render.MyCaptchaRender;
 import china.mobile.v2.ChinaMobileRemoteExecute;
 import china.mobile.v2.Constants;
 import china.mobile.v2.Result;
+import china.mobile.v2.SessionUtils;
 
 /**
  * IndexController
@@ -22,28 +23,51 @@ public class MobileController extends Controller {
 
 	public void getVerifyCode() {
 		String key = this.getSession().getId();
-		System.out.println(key);
 		render(new MyCaptchaRender(ChinaMobileRemoteExecute.getVerifyCode(key)));
 	}
 
 	public void login() {
 		String key = this.getSession().getId();
-		System.out.println(key);
 		String phone = getPara("login");
 		String pwd = getPara("pwd");
 		String code = getPara("code");
 		Result rs = ChinaMobileRemoteExecute.login(key, phone, pwd, code);
-		this.setAttr("result", rs);
-		render("next.jsp");
+		setAttr("result", rs);
+		if(rs.code != Constants.SUCCESS){
+			setAttr("login", phone);
+			setAttr("pwd", pwd);
+			setAttr("code", code);
+			render("login.jsp");
+		}else{
+			render("next.jsp");
+		}
 
 	}
-
+	
 	public void scan() {
 		String key = this.getSession().getId();
-		System.out.println(key);
 		String code = getPara("code");
 		Result rs = ChinaMobileRemoteExecute.scan(key, code);
 		this.setAttr("result", rs);
-		render("result.jsp");
+		if(rs.code == Constants.SUCCESS){
+			render("result.jsp");
+		}else if(rs.code == Constants.NEEDLOGIN){
+			render("login.jsp");
+		}else{
+			render("next.jsp");
+		}
+		
 	}
+	
+	public void result() {
+		String key = this.getSession().getId();
+		Result rs = SessionUtils.data.get(key);
+		if(rs == null){
+			rs = new Result(500,"in process");
+		}
+		this.setAttr("result", rs);
+		render("resulttmp.jsp");
+		
+	}
+
 }

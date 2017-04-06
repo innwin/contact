@@ -45,10 +45,25 @@
 
 				<div class="agile-tables">
 					<div class="w3l-table-info agile_info_shadow">
-						<h3 class="w3_inner_tittle two">result:</h3>
-						<code class="js">${result.data }</code>
-						
-						<h3 class="w3_inner_tittle two"><a href="/mobile/result">look result:</a></h3>
+						<h3 class="w3_inner_tittle two">data</h3>
+						<c:choose>
+							<c:when test="${result.code == 200 }">
+								<table id="table">
+									<tbody>
+										<c:forEach items="${result.data }" var="objs">
+											<tr>
+												<c:forEach items="${objs }" var="obj">
+													<td>${obj}</td>
+												</c:forEach>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</c:when>
+							<c:otherwise>
+								<code class="js">code: ${result.code } result:${result.data }</code>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<div class="clearfix"></div>
 

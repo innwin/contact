@@ -6,6 +6,7 @@ public class Constants {
 	public final static  int AREADYLOGIN = 2;
 	public final static  int CODEERROR = 3;
 	public final static  int INPROCESS = 4;
+	public final static  int SYSTEMERROR = 5;
 	public final static  int SUCCESS = 200;
 	
 	public static String getMessage(int key){
@@ -22,6 +23,8 @@ public class Constants {
 			return "code error";
 		case INPROCESS:
 			return "in process";
+		case SYSTEMERROR:
+			return "system error";
 		default:
 			break;
 		}

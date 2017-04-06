@@ -48,24 +48,13 @@
 				<div class="registration admin_agile">
 
 					<div class="signin-form profile admin">
-						<c:choose>
-							<c:when test="${result.code == 200}">
+								<h2>${result.data }</h2>
 								<form action="/mobile/scan" method="post">
 									<input type="text" name="code" required="">
 									<div class="tp">
 										<input type="submit" value="next">
 									</div>
 								</form>
-							</c:when>
-							<c:otherwise>
-								<div class="login-form">
-									<div class="tp">
-										<p>${result.code }</p>
-									</div>
-									<h2>${result.data }</h2>
-								</div>
-							</c:otherwise>
-						</c:choose>
 					</div>
 
 				</div>

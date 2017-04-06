@@ -45,7 +45,7 @@
 				<div class="registration admin_agile">
 
 					<div class="signin-form profile admin">
-						<h2>Admin Login</h2>
+						<h2>${result == null ? '' : result.data }</h2>
 						<div class="login-form">
 							<form action="/mobile/login" method="post">
 								<input type="text" name="login" required=""> 

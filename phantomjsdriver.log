@@ -504,3 +504,331 @@
 [INFO  - 2017-04-05T10:09:35.356Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
 [INFO  - 2017-04-05T10:14:35.370Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
 [INFO  - 2017-04-05T10:19:35.370Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T02:22:24.482Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T02:22:25.105Z] Session [df770220-1a6f-11e7-85dc-9f859a30a30a] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T02:22:25.105Z] Session [df770220-1a6f-11e7-85dc-9f859a30a30a] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T02:22:25.106Z] Session [df770220-1a6f-11e7-85dc-9f859a30a30a] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T02:22:25.106Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: df770220-1a6f-11e7-85dc-9f859a30a30a
+[ERROR - 2017-04-06T02:22:25.353Z] Session [df770220-1a6f-11e7-85dc-9f859a30a30a] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T02:22:25.353Z] Session [df770220-1a6f-11e7-85dc-9f859a30a30a] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T02:25:00.861Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T02:25:01.225Z] Session [3c852eb0-1a70-11e7-98d7-956a9cba6e42] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T02:25:01.225Z] Session [3c852eb0-1a70-11e7-98d7-956a9cba6e42] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T02:25:01.225Z] Session [3c852eb0-1a70-11e7-98d7-956a9cba6e42] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T02:25:01.226Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 3c852eb0-1a70-11e7-98d7-956a9cba6e42
+[ERROR - 2017-04-06T02:25:01.450Z] Session [3c852eb0-1a70-11e7-98d7-956a9cba6e42] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T02:25:01.450Z] Session [3c852eb0-1a70-11e7-98d7-956a9cba6e42] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T02:28:28.163Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T02:28:28.587Z] Session [b81e9200-1a70-11e7-a66b-bfb8bd73359b] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T02:28:28.589Z] Session [b81e9200-1a70-11e7-a66b-bfb8bd73359b] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T02:28:28.589Z] Session [b81e9200-1a70-11e7-a66b-bfb8bd73359b] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T02:28:28.590Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: b81e9200-1a70-11e7-a66b-bfb8bd73359b
+[ERROR - 2017-04-06T02:28:28.821Z] Session [b81e9200-1a70-11e7-a66b-bfb8bd73359b] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T02:28:28.821Z] Session [b81e9200-1a70-11e7-a66b-bfb8bd73359b] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[ERROR - 2017-04-06T02:28:55.048Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491445735016
+[ERROR - 2017-04-06T02:29:49.530Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491445789514
+[INFO  - 2017-04-06T02:32:50.548Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T02:32:51.124Z] Session [54997820-1a71-11e7-a1ca-b7b839ce79a3] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T02:32:51.124Z] Session [54997820-1a71-11e7-a1ca-b7b839ce79a3] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T02:32:51.125Z] Session [54997820-1a71-11e7-a1ca-b7b839ce79a3] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T02:32:51.133Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 54997820-1a71-11e7-a1ca-b7b839ce79a3
+[ERROR - 2017-04-06T02:32:51.435Z] Session [54997820-1a71-11e7-a1ca-b7b839ce79a3] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T02:32:51.441Z] Session [54997820-1a71-11e7-a1ca-b7b839ce79a3] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T02:37:50.548Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T02:42:03.300Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T02:42:03.889Z] Session [9e137a40-1a72-11e7-8b2e-099b44898afa] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T02:42:03.889Z] Session [9e137a40-1a72-11e7-8b2e-099b44898afa] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T02:42:03.893Z] Session [9e137a40-1a72-11e7-8b2e-099b44898afa] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T02:42:03.893Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 9e137a40-1a72-11e7-8b2e-099b44898afa
+[ERROR - 2017-04-06T02:42:04.273Z] Session [9e137a40-1a72-11e7-8b2e-099b44898afa] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T02:42:04.274Z] Session [9e137a40-1a72-11e7-8b2e-099b44898afa] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[ERROR - 2017-04-06T02:42:37.058Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491446557022
+[ERROR - 2017-04-06T02:42:47.800Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491446567772
+[ERROR - 2017-04-06T02:43:27.338Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491446607319
+[ERROR - 2017-04-06T02:43:40.927Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491446620883
+[ERROR - 2017-04-06T02:43:51.655Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491446631622
+[ERROR - 2017-04-06T02:44:26.293Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491446666250
+[ERROR - 2017-04-06T02:44:37.002Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491446676989
+[ERROR - 2017-04-06T02:44:54.212Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491446694181
+[ERROR - 2017-04-06T02:45:05.234Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491446705186
+[INFO  - 2017-04-06T02:47:03.995Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T02:52:03.995Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T02:57:03.996Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T03:02:03.996Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T03:07:03.996Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T03:12:03.996Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T03:17:03.996Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T03:22:03.996Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T03:27:03.997Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T03:32:03.998Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T03:37:03.998Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T03:42:03.999Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T03:47:03.999Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T03:52:04.000Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T03:57:04.001Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T04:06:10.313Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T04:06:10.743Z] Session [5e3ce4e0-1a7e-11e7-9a8e-995c874a6502] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T04:06:10.744Z] Session [5e3ce4e0-1a7e-11e7-9a8e-995c874a6502] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T04:06:10.744Z] Session [5e3ce4e0-1a7e-11e7-9a8e-995c874a6502] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T04:06:10.744Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 5e3ce4e0-1a7e-11e7-9a8e-995c874a6502
+[ERROR - 2017-04-06T04:06:11.099Z] Session [5e3ce4e0-1a7e-11e7-9a8e-995c874a6502] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T04:06:11.100Z] Session [5e3ce4e0-1a7e-11e7-9a8e-995c874a6502] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T04:10:41.636Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T04:10:42.133Z] Session [ffff1c80-1a7e-11e7-916d-c55673750766] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T04:10:42.133Z] Session [ffff1c80-1a7e-11e7-916d-c55673750766] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T04:10:42.134Z] Session [ffff1c80-1a7e-11e7-916d-c55673750766] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T04:10:42.134Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: ffff1c80-1a7e-11e7-916d-c55673750766
+[ERROR - 2017-04-06T04:10:42.377Z] Session [ffff1c80-1a7e-11e7-916d-c55673750766] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T04:10:42.378Z] Session [ffff1c80-1a7e-11e7-916d-c55673750766] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[ERROR - 2017-04-06T04:11:14.155Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491451874132
+[ERROR - 2017-04-06T04:11:24.959Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491451884948
+[INFO  - 2017-04-06T04:14:02.881Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T04:14:03.279Z] Session [77e318f0-1a7f-11e7-9ff8-47e527205c5d] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T04:14:03.279Z] Session [77e318f0-1a7f-11e7-9ff8-47e527205c5d] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T04:14:03.281Z] Session [77e318f0-1a7f-11e7-9ff8-47e527205c5d] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T04:14:03.281Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 77e318f0-1a7f-11e7-9ff8-47e527205c5d
+[ERROR - 2017-04-06T04:14:03.533Z] Session [77e318f0-1a7f-11e7-9ff8-47e527205c5d] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T04:14:03.534Z] Session [77e318f0-1a7f-11e7-9ff8-47e527205c5d] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T04:16:55.811Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T04:16:56.248Z] Session [defcfce0-1a7f-11e7-84e3-37783998e664] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T04:16:56.253Z] Session [defcfce0-1a7f-11e7-84e3-37783998e664] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T04:16:56.254Z] Session [defcfce0-1a7f-11e7-84e3-37783998e664] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T04:16:56.254Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: defcfce0-1a7f-11e7-84e3-37783998e664
+[ERROR - 2017-04-06T04:16:56.492Z] Session [defcfce0-1a7f-11e7-84e3-37783998e664] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T04:16:56.493Z] Session [defcfce0-1a7f-11e7-84e3-37783998e664] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[ERROR - 2017-04-06T04:18:12.108Z] Session [defcfce0-1a7f-11e7-84e3-37783998e664] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T04:18:12.109Z] Session [defcfce0-1a7f-11e7-84e3-37783998e664] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[ERROR - 2017-04-06T04:18:22.331Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491452302289
+[INFO  - 2017-04-06T04:18:54.657Z] Session [25902830-1a80-11e7-84e3-37783998e664] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T04:18:54.657Z] Session [25902830-1a80-11e7-84e3-37783998e664] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T04:18:54.658Z] Session [25902830-1a80-11e7-84e3-37783998e664] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T04:18:54.658Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 25902830-1a80-11e7-84e3-37783998e664
+[ERROR - 2017-04-06T04:18:54.822Z] Session [25902830-1a80-11e7-84e3-37783998e664] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T04:18:54.823Z] Session [25902830-1a80-11e7-84e3-37783998e664] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T04:21:55.999Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T04:24:33.218Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T04:24:33.669Z] Session [efa14870-1a80-11e7-81c2-d9f4ad32fc7f] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T04:24:33.670Z] Session [efa14870-1a80-11e7-81c2-d9f4ad32fc7f] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T04:24:33.670Z] Session [efa14870-1a80-11e7-81c2-d9f4ad32fc7f] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T04:24:33.676Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: efa14870-1a80-11e7-81c2-d9f4ad32fc7f
+[ERROR - 2017-04-06T04:24:34.025Z] Session [efa14870-1a80-11e7-81c2-d9f4ad32fc7f] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T04:24:34.030Z] Session [efa14870-1a80-11e7-81c2-d9f4ad32fc7f] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[ERROR - 2017-04-06T04:26:17.953Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491452777910
+[INFO  - 2017-04-06T04:29:33.219Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T04:34:33.219Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T04:39:33.219Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T04:44:33.220Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T04:49:33.219Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T04:54:33.219Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T04:59:33.220Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T05:04:33.220Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T05:09:33.220Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T05:14:33.220Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T05:19:33.220Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T05:24:33.220Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T05:28:36.588Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T05:28:36.959Z] Session [e26a0490-1a89-11e7-bc30-fd1ee4c6a742] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T05:28:36.959Z] Session [e26a0490-1a89-11e7-bc30-fd1ee4c6a742] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T05:28:36.959Z] Session [e26a0490-1a89-11e7-bc30-fd1ee4c6a742] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T05:28:36.960Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: e26a0490-1a89-11e7-bc30-fd1ee4c6a742
+[ERROR - 2017-04-06T05:28:37.373Z] Session [e26a0490-1a89-11e7-bc30-fd1ee4c6a742] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T05:28:37.373Z] Session [e26a0490-1a89-11e7-bc30-fd1ee4c6a742] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T05:30:18.647Z] Session [1f068720-1a8a-11e7-bc30-fd1ee4c6a742] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T05:30:18.647Z] Session [1f068720-1a8a-11e7-bc30-fd1ee4c6a742] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T05:30:18.648Z] Session [1f068720-1a8a-11e7-bc30-fd1ee4c6a742] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T05:30:18.650Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 1f068720-1a8a-11e7-bc30-fd1ee4c6a742
+[ERROR - 2017-04-06T05:30:18.874Z] Session [1f068720-1a8a-11e7-bc30-fd1ee4c6a742] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T05:30:18.874Z] Session [1f068720-1a8a-11e7-bc30-fd1ee4c6a742] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[ERROR - 2017-04-06T05:31:21.764Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491456681758
+[ERROR - 2017-04-06T05:31:32.618Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491456692567
+[INFO  - 2017-04-06T05:33:36.594Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T05:38:37.002Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T05:43:37.003Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T05:49:27.375Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T05:49:27.895Z] Session [cc05df50-1a8c-11e7-97dd-6ba71a456c7d] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T05:49:27.895Z] Session [cc05df50-1a8c-11e7-97dd-6ba71a456c7d] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T05:49:27.896Z] Session [cc05df50-1a8c-11e7-97dd-6ba71a456c7d] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T05:49:27.897Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: cc05df50-1a8c-11e7-97dd-6ba71a456c7d
+[ERROR - 2017-04-06T05:49:28.215Z] Session [cc05df50-1a8c-11e7-97dd-6ba71a456c7d] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T05:49:28.215Z] Session [cc05df50-1a8c-11e7-97dd-6ba71a456c7d] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T05:52:52.886Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T05:52:53.345Z] Session [467bd140-1a8d-11e7-8ddd-f39a2df25d95] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T05:52:53.346Z] Session [467bd140-1a8d-11e7-8ddd-f39a2df25d95] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T05:52:53.351Z] Session [467bd140-1a8d-11e7-8ddd-f39a2df25d95] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T05:52:53.352Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 467bd140-1a8d-11e7-8ddd-f39a2df25d95
+[ERROR - 2017-04-06T05:52:53.991Z] Session [467bd140-1a8d-11e7-8ddd-f39a2df25d95] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T05:52:53.991Z] Session [467bd140-1a8d-11e7-8ddd-f39a2df25d95] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T05:56:40.605Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T05:56:40.977Z] Session [ce2a9ea0-1a8d-11e7-ad57-ebf32b7a31f1] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T05:56:40.977Z] Session [ce2a9ea0-1a8d-11e7-ad57-ebf32b7a31f1] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T05:56:40.978Z] Session [ce2a9ea0-1a8d-11e7-ad57-ebf32b7a31f1] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T05:56:40.978Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: ce2a9ea0-1a8d-11e7-ad57-ebf32b7a31f1
+[ERROR - 2017-04-06T05:56:41.236Z] Session [ce2a9ea0-1a8d-11e7-ad57-ebf32b7a31f1] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T05:56:41.236Z] Session [ce2a9ea0-1a8d-11e7-ad57-ebf32b7a31f1] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[ERROR - 2017-04-06T05:58:29.348Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491458309302
+[ERROR - 2017-04-06T05:58:49.488Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491458329446
+[ERROR - 2017-04-06T05:59:07.554Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491458347521
+[ERROR - 2017-04-06T05:59:40.852Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491458380828
+[INFO  - 2017-04-06T06:01:40.997Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T06:06:41.002Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T06:11:41.002Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T06:15:47.479Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T06:15:48.148Z] Session [79edf460-1a90-11e7-8ffe-c5afc37ba33e] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T06:15:48.149Z] Session [79edf460-1a90-11e7-8ffe-c5afc37ba33e] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T06:15:48.150Z] Session [79edf460-1a90-11e7-8ffe-c5afc37ba33e] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T06:15:48.150Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 79edf460-1a90-11e7-8ffe-c5afc37ba33e
+[ERROR - 2017-04-06T06:15:48.577Z] Session [79edf460-1a90-11e7-8ffe-c5afc37ba33e] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T06:15:48.578Z] Session [79edf460-1a90-11e7-8ffe-c5afc37ba33e] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[ERROR - 2017-04-06T06:17:04.502Z] Session [79edf460-1a90-11e7-8ffe-c5afc37ba33e] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T06:17:04.503Z] Session [79edf460-1a90-11e7-8ffe-c5afc37ba33e] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[ERROR - 2017-04-06T06:17:05.696Z] Session [79edf460-1a90-11e7-8ffe-c5afc37ba33e] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T06:17:05.696Z] Session [79edf460-1a90-11e7-8ffe-c5afc37ba33e] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[ERROR - 2017-04-06T06:17:15.963Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491459435957
+[INFO  - 2017-04-06T06:20:47.480Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T06:25:47.480Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T06:30:47.481Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T06:31:54.516Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T06:31:55.033Z] Session [ba3dd010-1a92-11e7-9d04-654e243d1ee1] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T06:31:55.033Z] Session [ba3dd010-1a92-11e7-9d04-654e243d1ee1] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T06:31:55.035Z] Session [ba3dd010-1a92-11e7-9d04-654e243d1ee1] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T06:31:55.035Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: ba3dd010-1a92-11e7-9d04-654e243d1ee1
+[ERROR - 2017-04-06T06:32:08.750Z] Session [ba3dd010-1a92-11e7-9d04-654e243d1ee1] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T06:32:08.751Z] Session [ba3dd010-1a92-11e7-9d04-654e243d1ee1] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T06:35:38.194Z] Session [3f409040-1a93-11e7-9d04-654e243d1ee1] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T06:35:38.195Z] Session [3f409040-1a93-11e7-9d04-654e243d1ee1] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T06:35:38.196Z] Session [3f409040-1a93-11e7-9d04-654e243d1ee1] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T06:35:38.197Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 3f409040-1a93-11e7-9d04-654e243d1ee1
+[ERROR - 2017-04-06T06:35:38.414Z] Session [3f409040-1a93-11e7-9d04-654e243d1ee1] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T06:35:38.415Z] Session [3f409040-1a93-11e7-9d04-654e243d1ee1] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[ERROR - 2017-04-06T06:35:51.829Z] Session [3f409040-1a93-11e7-9d04-654e243d1ee1] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T06:35:51.829Z] Session [3f409040-1a93-11e7-9d04-654e243d1ee1] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T06:36:08.814Z] Session [51811c20-1a93-11e7-9d04-654e243d1ee1] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T06:36:08.815Z] Session [51811c20-1a93-11e7-9d04-654e243d1ee1] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T06:36:08.815Z] Session [51811c20-1a93-11e7-9d04-654e243d1ee1] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T06:36:08.815Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 51811c20-1a93-11e7-9d04-654e243d1ee1
+[ERROR - 2017-04-06T06:36:08.936Z] Session [51811c20-1a93-11e7-9d04-654e243d1ee1] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T06:36:08.936Z] Session [51811c20-1a93-11e7-9d04-654e243d1ee1] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[ERROR - 2017-04-06T06:36:51.446Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491460611389
+[INFO  - 2017-04-06T06:36:54.516Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T06:43:53.579Z] Session [66858d80-1a94-11e7-9d04-654e243d1ee1] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T06:43:53.580Z] Session [66858d80-1a94-11e7-9d04-654e243d1ee1] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T06:43:53.580Z] Session [66858d80-1a94-11e7-9d04-654e243d1ee1] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T06:43:53.581Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 66858d80-1a94-11e7-9d04-654e243d1ee1
+[ERROR - 2017-04-06T06:43:53.751Z] Session [66858d80-1a94-11e7-9d04-654e243d1ee1] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T06:43:53.751Z] Session [66858d80-1a94-11e7-9d04-654e243d1ee1] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T06:44:23.766Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T06:44:24.290Z] Session [78d582b0-1a94-11e7-8e80-bbf4fb2f007e] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T06:44:24.290Z] Session [78d582b0-1a94-11e7-8e80-bbf4fb2f007e] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T06:44:24.291Z] Session [78d582b0-1a94-11e7-8e80-bbf4fb2f007e] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T06:44:24.291Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 78d582b0-1a94-11e7-8e80-bbf4fb2f007e
+[ERROR - 2017-04-06T06:44:24.550Z] Session [78d582b0-1a94-11e7-8e80-bbf4fb2f007e] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T06:44:24.550Z] Session [78d582b0-1a94-11e7-8e80-bbf4fb2f007e] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[ERROR - 2017-04-06T06:45:18.640Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491461118613
+[ERROR - 2017-04-06T06:46:53.170Z] Session [78d582b0-1a94-11e7-8e80-bbf4fb2f007e] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T06:46:53.181Z] Session [78d582b0-1a94-11e7-8e80-bbf4fb2f007e] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T06:47:46.225Z] Session [f131e370-1a94-11e7-8e80-bbf4fb2f007e] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T06:47:46.226Z] Session [f131e370-1a94-11e7-8e80-bbf4fb2f007e] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T06:47:46.226Z] Session [f131e370-1a94-11e7-8e80-bbf4fb2f007e] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T06:47:46.226Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: f131e370-1a94-11e7-8e80-bbf4fb2f007e
+[ERROR - 2017-04-06T06:47:46.384Z] Session [f131e370-1a94-11e7-8e80-bbf4fb2f007e] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T06:47:46.386Z] Session [f131e370-1a94-11e7-8e80-bbf4fb2f007e] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T06:50:16.142Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T06:50:16.621Z] Session [4ad60a00-1a95-11e7-8186-55b68f02fc18] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T06:50:16.625Z] Session [4ad60a00-1a95-11e7-8186-55b68f02fc18] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T06:50:16.625Z] Session [4ad60a00-1a95-11e7-8186-55b68f02fc18] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T06:50:16.625Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 4ad60a00-1a95-11e7-8186-55b68f02fc18
+[ERROR - 2017-04-06T06:50:16.896Z] Session [4ad60a00-1a95-11e7-8186-55b68f02fc18] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T06:50:16.897Z] Session [4ad60a00-1a95-11e7-8186-55b68f02fc18] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T06:55:16.144Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T07:00:16.146Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T07:05:16.146Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T07:10:16.147Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2017-04-06T07:16:44.352Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T07:16:44.822Z] Session [fd795d30-1a98-11e7-b91c-1953b477ed73] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T07:16:44.825Z] Session [fd795d30-1a98-11e7-b91c-1953b477ed73] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T07:16:44.826Z] Session [fd795d30-1a98-11e7-b91c-1953b477ed73] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T07:16:44.826Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: fd795d30-1a98-11e7-b91c-1953b477ed73
+[ERROR - 2017-04-06T07:16:45.506Z] Session [fd795d30-1a98-11e7-b91c-1953b477ed73] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T07:16:45.507Z] Session [fd795d30-1a98-11e7-b91c-1953b477ed73] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T07:17:27.485Z] Session [16e95b80-1a99-11e7-b91c-1953b477ed73] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T07:17:27.485Z] Session [16e95b80-1a99-11e7-b91c-1953b477ed73] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T07:17:27.490Z] Session [16e95b80-1a99-11e7-b91c-1953b477ed73] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T07:17:27.490Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 16e95b80-1a99-11e7-b91c-1953b477ed73
+[ERROR - 2017-04-06T07:17:27.614Z] Session [16e95b80-1a99-11e7-b91c-1953b477ed73] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T07:17:27.614Z] Session [16e95b80-1a99-11e7-b91c-1953b477ed73] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[ERROR - 2017-04-06T07:17:36.278Z] Session [16e95b80-1a99-11e7-b91c-1953b477ed73] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T07:17:36.279Z] Session [16e95b80-1a99-11e7-b91c-1953b477ed73] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T07:17:36.629Z] Session [1c5ced20-1a99-11e7-b91c-1953b477ed73] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T07:17:36.629Z] Session [1c5ced20-1a99-11e7-b91c-1953b477ed73] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T07:17:36.630Z] Session [1c5ced20-1a99-11e7-b91c-1953b477ed73] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T07:17:36.631Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 1c5ced20-1a99-11e7-b91c-1953b477ed73
+[ERROR - 2017-04-06T07:17:36.796Z] Session [1c5ced20-1a99-11e7-b91c-1953b477ed73] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T07:17:36.806Z] Session [1c5ced20-1a99-11e7-b91c-1953b477ed73] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T07:30:09.746Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T07:30:10.244Z] Session [dd8a17b0-1a9a-11e7-89a4-0df65955991b] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T07:30:10.245Z] Session [dd8a17b0-1a9a-11e7-89a4-0df65955991b] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T07:30:10.246Z] Session [dd8a17b0-1a9a-11e7-89a4-0df65955991b] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T07:30:10.246Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: dd8a17b0-1a9a-11e7-89a4-0df65955991b
+[ERROR - 2017-04-06T07:30:10.555Z] Session [dd8a17b0-1a9a-11e7-89a4-0df65955991b] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T07:30:10.556Z] Session [dd8a17b0-1a9a-11e7-89a4-0df65955991b] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T08:08:58.692Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T08:08:59.155Z] Session [49af6350-1aa0-11e7-9297-c3fca147d1f2] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T08:08:59.156Z] Session [49af6350-1aa0-11e7-9297-c3fca147d1f2] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T08:08:59.156Z] Session [49af6350-1aa0-11e7-9297-c3fca147d1f2] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T08:08:59.157Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 49af6350-1aa0-11e7-9297-c3fca147d1f2
+[ERROR - 2017-04-06T08:08:59.549Z] Session [49af6350-1aa0-11e7-9297-c3fca147d1f2] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T08:08:59.549Z] Session [49af6350-1aa0-11e7-9297-c3fca147d1f2] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[INFO  - 2017-04-06T08:11:45.050Z] GhostDriver - Main - running on port 48105
+[INFO  - 2017-04-06T08:11:45.458Z] Session [accee820-1aa0-11e7-9700-7fc56360515a] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T08:11:45.460Z] Session [accee820-1aa0-11e7-9700-7fc56360515a] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T08:11:45.461Z] Session [accee820-1aa0-11e7-9700-7fc56360515a] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T08:11:45.462Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: accee820-1aa0-11e7-9700-7fc56360515a
+[ERROR - 2017-04-06T08:11:45.806Z] Session [accee820-1aa0-11e7-9700-7fc56360515a] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T08:11:45.807Z] Session [accee820-1aa0-11e7-9700-7fc56360515a] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
+[ERROR - 2017-04-06T08:12:35.744Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491466355727
+[ERROR - 2017-04-06T08:13:03.117Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491466383111
+[ERROR - 2017-04-06T08:13:08.099Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491466388058
+[ERROR - 2017-04-06T08:13:28.146Z] WebElementLocator - _handleLocateCommand - Element(s) NOT Found: GAVE UP. Search Stop Time: 1491466408121
+[INFO  - 2017-04-06T08:13:35.308Z] Session [ee4aab90-1aa0-11e7-9700-7fc56360515a] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2017-04-06T08:13:35.309Z] Session [ee4aab90-1aa0-11e7-9700-7fc56360515a] - page.customHeaders:  - {}
+[INFO  - 2017-04-06T08:13:35.310Z] Session [ee4aab90-1aa0-11e7-9700-7fc56360515a] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2017-04-06T08:13:35.314Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: ee4aab90-1aa0-11e7-9700-7fc56360515a
+[ERROR - 2017-04-06T08:13:35.442Z] Session [ee4aab90-1aa0-11e7-9700-7fc56360515a] - page.onError - msg: TypeError: null is not an object (evaluating 'document.body.addEventListener')
+[ERROR - 2017-04-06T08:13:35.442Z] Session [ee4aab90-1aa0-11e7-9700-7fc56360515a] - page.onError - stack:
+  trackEvent (http://www.zj.10086.cn/js/sdc_zj.js:12)
