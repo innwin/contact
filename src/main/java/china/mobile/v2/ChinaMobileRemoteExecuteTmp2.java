@@ -27,8 +27,9 @@ import com.beust.jcommander.internal.Nullable;
 import com.contact.util.ImageUtils;
 import com.jfinal.plugin.task.TaskKit;
 
-public class ChinaMobileRemoteExecute {
+public class ChinaMobileRemoteExecuteTmp2 {
 
+	public long timestamp;
 
 	static {
 		System.setProperty("phantomjs.binary.path", "/usr/bin/phantomjs");
@@ -93,6 +94,19 @@ public class ChinaMobileRemoteExecute {
 							SessionUtils.putState(key, Constants.INPROCESS);
 							String url = "http://service.zj.10086.cn/yw/detail/queryHisDetailBill.do?menuId=13009";
 							driver.get(url);// http://www.zj.10086.cn/my/UnifiedLoginServerServlet?AISSO_LOGIN=true
+							// Pattern pattern =
+							// Pattern.compile(".*UnifiedLoginServerServlet.*",
+							// Pattern.CASE_INSENSITIVE);
+							// Matcher matcher =
+							// pattern.matcher(driver.getCurrentUrl());
+							// int i = 0;
+							// while (matcher.matches()) { // maybe faild
+							// driver.get(url);
+							// matcher =
+							// pattern.matcher(driver.getCurrentUrl());
+							// if (i++ >= 3)
+							// break;
+							// }
 							driver.findElement(By.className("search-js")).click();
 							SessionUtils.putState(key, Constants.SUCCESS);
 						} catch (Exception e) {
@@ -168,6 +182,22 @@ public class ChinaMobileRemoteExecute {
 		} else if (ready == Constants.SYSTEMERROR) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
+//		try {
+//			String state = (String) ((MyPhantomJSDriver) driver).executeScript("return document.readyState ;");
+//			if (!"complete".equals(state)) {
+//				return new Result(Constants.INPROCESS, Constants.getMessage(Constants.INPROCESS));
+//			}
+//			new WebDriverWait(driver, 10).until(ExpectedConditions.urlMatches("(.*queryHisDetailBill.*)|(.*month.*)"));
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			Pattern pattern = Pattern.compile(".*UnifiedLoginServerServlet.*", Pattern.CASE_INSENSITIVE);
+//			Matcher matcher = pattern.matcher(driver.getCurrentUrl());
+//			if (matcher.matches()) {
+//				return new Result(Constants.NEEDLOGIN, Constants.getMessage(Constants.NEEDCODE));
+//			}
+//			return new Result(Constants.INPROCESS, Constants.getMessage(Constants.INPROCESS));
+//		}
+
 		try {
 			WebElement vc = (new WebDriverWait(driver, 10)).until(ExpectedConditions// .presenceOfElementLocated(By.id("validateCode")));
 					.refreshed(new ExpectedCondition<WebElement>() {

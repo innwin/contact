@@ -51,7 +51,7 @@ public class MobileController extends Controller {
 		this.setAttr("result", rs);
 		if(rs.code == Constants.SUCCESS){
 			render("result.jsp");
-		}else if(rs.code == Constants.NEEDLOGIN){
+		}else if(rs.code == Constants.NEEDLOGIN || rs.code == Constants.SYSTEMERROR){
 			render("login.jsp");
 		}else{
 			render("next.jsp");
