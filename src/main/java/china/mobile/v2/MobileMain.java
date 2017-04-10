@@ -2,6 +2,7 @@ package china.mobile.v2;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -22,46 +23,134 @@ public class MobileMain {
 	public static void main(String[] args) throws Exception {
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		ChromeOptions options = new ChromeOptions();
-		options.setBinary("/opt/google/chrome/chrome");
+		// options.setBinary("/opt/google/chrome/chrome");
 		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 		WebDriver driver = new ChromeDriver(capabilities);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.get("https://login.10086.cn/login.html");
+		driver.get("https://login.10086.cn");//?backUrl=about:blank
 		driver.manage().window().maximize();
 		driver.findElement(By.id("radiobuttonSMS")).click();
 		driver.findElement(By.id("p_name")).sendKeys("18868945291");
 		driver.findElement(By.id("getSMSpwd")).click();
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		
+
 		driver.findElement(By.id("p_pwd")).sendKeys(br.readLine());
 		((RemoteWebDriver) driver).executeScript(
-				"window.getJSON=$.getJSON;$.getJSON=function(){ var funObj=arguments[2]; var myFun=function(data){  window.myData=data;  funObj(data); } ; window.getJSON(arguments[0],arguments[1],myFun) }");
+				"window.getJSON=$.getJSON;$.getJSON=function(){ window.funObj=arguments[2]; var myFun=function(data){  window.myData=data;} ; window.getJSON(arguments[0],arguments[1],myFun) }");
 		driver.findElement(By.id("submit_bt")).click();
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, 1);
+			WebDriverWait wait = new WebDriverWait(driver, 10);
 			@SuppressWarnings("unchecked")
-			Map<String, ?> data = (Map<String, ?>)wait.until(new Function<WebDriver, Object>() {
+			Map<String, ?> data = (Map<String, ?>) wait.until(new Function<WebDriver, Object>() {
 				public Object apply(@Nullable WebDriver driver) {
-					return  ((RemoteWebDriver) driver)
-							.executeScript("return window.myData;");
+					return ((RemoteWebDriver) driver).executeScript("return window.myData;");
 				}
 			});
-			if(!"0".equals(data.get("code"))){
-				System.out.println("error");
-				return;
-			}else{
-				System.out.println("success");
-			}
+			System.out.println(data);
+			// if(!"0".equals(data.get("code"))){
+			// System.out.println("error");
+			// return;
+			// }else{
+			// System.out.println("success");
+			// }
+			((RemoteWebDriver) driver)
+					.executeScript("window.funObj(window.myData);delete window.myData;$.getJSON=window.getJSON;");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("error");
+			return;
+		}
+
+		driver.get("https://login.10086.cn/SSOCheck.action?channelID=12003&backUrl=http://shop.10086.cn/i/");
+
+		try {
+			WebElement we = new WebDriverWait(driver, 10)
+					.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@code='020700']")));
+			we.click();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		try{
-			WebElement we = new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@code='020700']")));
+
+		try {
+			WebElement we = new WebDriverWait(driver, 10)
+					.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@class='meal-5']/..")));//By.className("meal-5")
 			we.click();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		try {
+			WebElement we = new WebDriverWait(driver, 10)
+					.until(ExpectedConditions.visibilityOfElementLocated(By.id("month1")));
+			we.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+
+			WebElement we = new WebDriverWait(driver, 10)
+					.until(ExpectedConditions.visibilityOfElementLocated(By.id("imageVec")));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String js = "window.ajaxBack = $.ajax;" + "\n" + "$.ajax = function(setting){" + "\n"
+				+ "window.myCb = setting.success;" + "\n" + "window.myContext = setting.context;" + "\n"
+				+ "setting.success = function(){" + "\n"
+				// +"window.myArguments = arguments;"+"\n"
+				+ "window.myData=arguments;" + "\n"
+				// if($.isFunction(window.myCb)){window.myCb.apply(setting.context,
+				// arguments); }
+				+ "}" + "\n" + "window.ajaxBack(setting);" + "\n" + "}" + "\n";
+
+		((RemoteWebDriver) driver).executeScript(js);
+
+		driver.findElement(By.id("vec_servpasswd")).sendKeys(br.readLine());
+		driver.findElement(By.id("stc-send-sms")).click();
+		driver.findElement(By.id("vec_smspasswd")).sendKeys(br.readLine());
+		driver.findElement(By.id("vec_imgcode")).sendKeys(br.readLine());
+
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, 1);
+			Object o = (ArrayList<?>) wait.until(new Function<WebDriver, Object>() {
+				public Object apply(@Nullable WebDriver driver) {
+					return ((RemoteWebDriver) driver).executeScript("return window.myData;");
+				}
+			});
+			System.out.println(o);
+			// 正确click
+			// driver.findElement(By.id("vecbtn")).click();
+			((RemoteWebDriver) driver).executeScript(
+					"if($.isFunction(window.myCb)){window.myCb.apply(window.myContext, window.myData); }");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// for (int i = 1; i <= 6; i++) {
+		// try {
+		// WebDriverWait wait = new WebDriverWait(driver, 1);
+		// @SuppressWarnings("unchecked")
+		// Object o = (ArrayList<?>) wait.until(new Function<WebDriver,
+		// Object>() {
+		// public Object apply(@Nullable WebDriver driver) {
+		// return ((RemoteWebDriver) driver).executeScript("return
+		// window.myData;");
+		// }
+		// });
+		// System.out.println(o);
+		// ((RemoteWebDriver) driver).executeScript(
+		// "if($.isFunction(window.myCb)){window.myCb.apply(window.myContext,
+		// window.myData); }");
+		// if (i != 1) {
+		// driver.findElement(By.id("month" + i)).click();
+		// }
+		//
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// System.out.println("error");
+		// return;
+		// }
+		// break;
+		// }
+
 	}
 }
