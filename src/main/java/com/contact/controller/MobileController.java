@@ -1,11 +1,11 @@
 package com.contact.controller;
 
+import com.contact.common.Result;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.render.MyCaptchaRender;
 
 import china.mobile.v2.ChinaMobileRemoteExecute;
 import china.mobile.v2.Constants;
-import china.mobile.v2.Result;
 import china.mobile.v2.SessionUtils;
 
 /**

@@ -1,4 +1,4 @@
-package china.mobile.v2;
+package com.contact.common;
 
 public class Result {
 	public int code;

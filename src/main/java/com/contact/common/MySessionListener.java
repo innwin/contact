@@ -1,10 +1,12 @@
-package china.mobile.v2;
+package com.contact.common;
 
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.MyPhantomJSDriver;
+
+import china.mobile.v2.SessionUtils;
 
 public class MySessionListener implements HttpSessionListener {
 

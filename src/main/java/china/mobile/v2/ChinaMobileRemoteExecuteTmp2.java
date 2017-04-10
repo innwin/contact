@@ -24,6 +24,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.beust.jcommander.internal.Nullable;
+import com.contact.common.Result;
 import com.contact.util.ImageUtils;
 import com.jfinal.plugin.task.TaskKit;
 

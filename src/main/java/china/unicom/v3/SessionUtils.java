@@ -1,4 +1,4 @@
-package china.mobile.v3;
+package china.unicom.v3;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

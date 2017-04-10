@@ -3,6 +3,8 @@ package china.mobile.v2;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.contact.common.Result;
+
 public class SessionUtils {
 	private static Map<String, String> map = new ConcurrentHashMap<>();
 	

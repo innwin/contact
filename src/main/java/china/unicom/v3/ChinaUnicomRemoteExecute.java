@@ -1,4 +1,4 @@
-package china.mobile.v3;
+package china.unicom.v3;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import com.contact.util.ImageUtils;
 
 import china.mobile.v3.SessionUtils;
 
-public class ChinaMobileRemoteExecute {
+public class ChinaUnicomRemoteExecute {
 
 	static {
 		System.setProperty("phantomjs.binary.path", "/usr/bin/phantomjs");
