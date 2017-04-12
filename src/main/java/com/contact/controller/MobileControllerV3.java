@@ -33,21 +33,29 @@ public class MobileControllerV3 extends Controller {
 		if (rs.code != Constants.SUCCESS) {
 			setAttr("login", phone);
 			setAttr("pwd", pwd);
-			redirect("/mobile/loginForm");
+			forwardAction("/mobile/loginForm");
 		} else {
-			redirect("/mobile/authForm");
+			forwardAction("/mobile/authForm");
 		}
 
 	}
 
-	public void getSMSCode(){
+	public void getSMSCode() {
 		String key = this.getSession().getId();
 		String phone = getPara("login");
 		Result rs = ChinaMobileRemoteExecute.getSMSPwd(key, phone);
 		renderJson(rs);
 	}
+
 	public void authForm() {
-		render("auth.jsp");
+		String key = this.getSession().getId();
+		Result rs = ChinaMobileRemoteExecute.authForm(key);
+		setAttr("result", rs);
+		if (rs.code != Constants.SUCCESS) {
+			forwardAction("/mobile/authForm");
+		} else {
+			render("auth.jsp");
+		}
 	}
 
 	public void getVerifyCode() {
@@ -68,6 +76,12 @@ public class MobileControllerV3 extends Controller {
 		String smsPwd = getPara("smsPwd");
 		String imgCode = getPara("imgCode");
 		Result rs = ChinaMobileRemoteExecute.auth(key, servPwd, smsPwd, imgCode);
+		setAttr("result", rs);
+		if (rs.code != Constants.SUCCESS) {
+			forwardAction("/mobile/authForm");
+		} else {
+			render("result.jsp");
+		}
 	}
 
 }

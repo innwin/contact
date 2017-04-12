@@ -16,7 +16,17 @@
 			<name>Jeesite Repository</name>
 			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
 		</repository>
-
+		<repository>
+			<id>jeesite-repos</id>
+			<name>Jeesite Repository</name>
+			<url>https://nexus.softwaremill.com/content/repositories/releases/</url>
+			 <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+		</repository>
 	</repositories>
 
 	<!-- 设定插件仓库 -->
@@ -67,6 +77,12 @@
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
 			<version>2.3.20</version>
+		</dependency>
+
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.2</version>
 		</dependency>
 
 		<dependency>

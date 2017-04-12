@@ -47,8 +47,6 @@
 					<div class="w3l-table-info agile_info_shadow">
 						<h3 class="w3_inner_tittle two">result:</h3>
 						<code class="js">${result.data }</code>
-						
-						<h3 class="w3_inner_tittle two"><a href="/mobile/result">look result:</a></h3>
 					</div>
 					<div class="clearfix"></div>
 

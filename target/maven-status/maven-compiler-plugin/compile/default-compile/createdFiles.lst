@@ -27,10 +27,10 @@ com/jfinal/plugin/task/support/TaskExecutor.class
 com/jfinal/plugin/task/TaskPlugin.class
 com/jfinal/plugin/task/support/ClassUtils.class
 com/jfinal/plugin/task/support/AsyncTaskExecutor.class
-china/mobile/v2/Constants.class
 com/jfinal/plugin/task/support/ReflectionUtils$3.class
-com/jfinal/plugin/task/TaskKit.class
+china/mobile/v2/Constants.class
 org/openqa/selenium/remote/MyProtocolHandshake$Result.class
+com/jfinal/plugin/task/TaskKit.class
 china/mobile/v2/ChinaMobileRemoteExecute$4.class
 org/openqa/selenium/remote/MyProtocolHandshake$1.class
 com/jfinal/plugin/task/support/JfinalTaskExecutor.class

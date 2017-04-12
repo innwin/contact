@@ -1,6 +1,5 @@
 package com.contact.common;
 
-import com.contact.controller.MobileController;
 import com.contact.controller.MobileControllerV3;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -10,8 +9,12 @@ import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
 import com.jfinal.kit.PropKit;
+import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
+import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.plugin.task.TaskPlugin;
 import com.jfinal.render.ViewType;
+
+import china.mobile.v3.ChinaMobile;
 
 /**
  * API引导式配置
@@ -41,14 +44,14 @@ public class MyJfinalConfig extends JFinalConfig {
 	public void configPlugin(Plugins me) {
 		TaskPlugin taskPlugin = new TaskPlugin();
 		me.add(taskPlugin);
-//		// 配置C3p0数据库连接池插件
-//		C3p0Plugin c3p0Plugin = new C3p0Plugin(PropKit.get("jdbcUrl"), PropKit.get("user"), PropKit.get("password").trim());
-//		me.add(c3p0Plugin);
-//		
-//		// 配置ActiveRecord插件
-//		ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
-//		me.add(arp);
-//		arp.addMapping("blog", Blog.class);	// 映射blog 表到 Blog模型
+		// 配置C3p0数据库连接池插件
+		C3p0Plugin c3p0Plugin = new C3p0Plugin(PropKit.get("jdbcUrl"), PropKit.get("user"), PropKit.get("password").trim());
+		me.add(c3p0Plugin);
+		
+		// 配置ActiveRecord插件
+		ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
+		me.add(arp);
+		arp.addMapping("blog", ChinaMobile.class);	// 映射blog 表到 Blog模型
 	}
 	
 	/**

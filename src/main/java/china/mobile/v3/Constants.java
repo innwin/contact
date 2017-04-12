@@ -11,6 +11,8 @@ public class Constants {
 			return "system error";
 		case INPUTERROR:
 			return "input error";
+		case SUCCESS:
+			return "success";
 		default:
 			break;
 		}

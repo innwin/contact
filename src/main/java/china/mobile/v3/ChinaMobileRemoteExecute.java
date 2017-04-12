@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,6 +21,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.beust.jcommander.internal.Nullable;
 import com.contact.common.Result;
 import com.contact.util.ImageUtils;
+import com.jfinal.plugin.task.TaskKit;
 
 import china.mobile.v3.SessionUtils;
 
@@ -64,7 +65,7 @@ public class ChinaMobileRemoteExecute {
 			driver.findElement(By.id("p_name")).sendKeys(login);// 18868945291
 			WebElement smsPwd = driver.findElement(By.id("getSMSpwd"));
 			String display = smsPwd.getCssValue("display");
-			if(!"none".equals(display)){
+			if (!"none".equals(display)) {
 				smsPwd.click();
 			}
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
@@ -81,7 +82,7 @@ public class ChinaMobileRemoteExecute {
 		}
 		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
 		// driver.findElement(By.id("radiobuttonSMS")).click();
-//		driver.findElement(By.id("p_name")).sendKeys(login);// 18868945291
+		// driver.findElement(By.id("p_name")).sendKeys(login);// 18868945291
 		driver.findElement(By.id("p_pwd")).sendKeys(pwd);
 		((RemoteWebDriver) driver).executeScript(
 				"window.getJSON=$.getJSON;$.getJSON=function(){ window.funObj=arguments[2]; var myFun=function(data){  window.myData=data;} ; window.getJSON(arguments[0],arguments[1],myFun) }");
@@ -106,6 +107,32 @@ public class ChinaMobileRemoteExecute {
 		}
 	}
 
+	public static Result authForm(String key) {
+		String sessionId = SessionUtils.getSessionId(key);
+		if (sessionId == null) {
+			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
+		}
+		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
+		try {
+			boolean exist = (Boolean) ((RemoteWebDriver) driver)
+					.executeScript("return document.getElementById('imageVec') != null ? true : false ; ");
+			if (exist) {
+				return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
+			}
+			new WebDriverWait(driver, 10)
+					.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@code='020700']"))).click();
+			new WebDriverWait(driver, 10)
+					.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@class='meal-5']/.."))).click();// By.className("meal-5")
+			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("month1"))).click();
+			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("imageVec")));
+			return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
+		}
+
+	}
+
 	public static Result getVerifyImage(String key) {
 		String sessionId = SessionUtils.getSessionId(key);
 		if (sessionId == null) {
@@ -114,32 +141,14 @@ public class ChinaMobileRemoteExecute {
 		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
 		driver.manage().window().maximize();
 		try {
-			new WebDriverWait(driver, 10)
-					.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@code='020700']"))).click();
-			new WebDriverWait(driver, 10)
-					.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@class='meal-5']/.."))).click();// By.className("meal-5")
-			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("month1"))).click();
-			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("imageVec")));
-			((RemoteWebDriver) driver).executeScript("$('.ui-popup').offset({ top: 0, left: 0 });");
 
-			WebElement popup=driver.findElement(By.className("ui-popup"));
-			
 			WebDriver augmentedDriver = new Augmenter().augment(driver);
-			File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
 			org.openqa.selenium.WebElement e0 = driver.findElement(By.id("imageVec"));
-			FileUtils.copyFile(screenshot, new File("/Users/mac-hc/test0003.jpg"));
-			
-			System.out.println(popup.getLocation()+"---->"+popup.getSize());
-//			$("#imageVec").position()
-			Object scrollTop = ((RemoteWebDriver) driver).executeScript("return $('.ui-popup').scrollTop();");
-			System.out.println(scrollTop+"---"+scrollTop.getClass().getName());
-			
-			String top = popup.getCssValue("top");
-			String left= popup.getCssValue("left");
-			System.out.println(top+"....."+left);
-			ImageUtils.fixImageSize(screenshot, e0.getLocation(), e0.getSize());
-			System.out.println(e0.getLocation()+"====="+ e0.getSize());
-			FileUtils.copyFile(screenshot, new File("/Users/mac-hc/test0004.jpg"));
+			e0.click();
+			File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
+			Point p = e0.getLocation();
+			p.y = 700;
+			ImageUtils.fixImageSize(screenshot, p, e0.getSize());
 			return new Result(Constants.SUCCESS, screenshot);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -155,7 +164,19 @@ public class ChinaMobileRemoteExecute {
 		}
 		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
 		try {
-			driver.findElement(By.id("stc-send-sms")).click();
+			((RemoteWebDriver) driver).executeScript("window.alert=function(data){ window.myData=data; };");
+			WebElement we = driver.findElement(By.id("stc-send-sms"));
+			String display = we.getCssValue("display");
+			if (!"none".equals(display)) {
+				we.click();
+				WebDriverWait wait = new WebDriverWait(driver, 5);
+				String msg = (String) wait.until(new Function<WebDriver, Object>() {
+					public Object apply(@Nullable WebDriver driver) {
+						return ((RemoteWebDriver) driver).executeScript("return window.myData;");
+					}
+				});
+				((RemoteWebDriver) driver).executeScript("delete window.myData;");
+			}
 			return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -185,8 +206,8 @@ public class ChinaMobileRemoteExecute {
 			driver.findElement(By.id("vec_servpasswd")).sendKeys(servPwd);
 			driver.findElement(By.id("vec_smspasswd")).sendKeys(smsPwd);// 419106
 			driver.findElement(By.id("vec_imgcode")).sendKeys(imgCode);
-			WebDriverWait wait = new WebDriverWait(driver, 1);
-			ArrayList<?> data = (ArrayList<?>) wait.until(new Function<WebDriver, Object>() {
+			WebDriverWait wait = new WebDriverWait(driver, 5);
+			ArrayList<?> data = (ArrayList<?>) wait.until(new Function<WebDriver, Object>() {// 531234
 				public Object apply(@Nullable WebDriver driver) {
 					return ((RemoteWebDriver) driver).executeScript("return window.myData;");
 				}
@@ -204,17 +225,70 @@ public class ChinaMobileRemoteExecute {
 		try {
 			((RemoteWebDriver) driver).executeScript(jsStart);
 			driver.findElement(By.id("vecbtn")).click();
-			WebDriverWait wait = new WebDriverWait(driver, 1);
+			WebDriverWait wait = new WebDriverWait(driver, 5);
 			ArrayList<?> data = (ArrayList<?>) wait.until(new Function<WebDriver, Object>() {
 				public Object apply(@Nullable WebDriver driver) {
 					return ((RemoteWebDriver) driver).executeScript("return window.myData;");
 				}
 			});
-			((RemoteWebDriver) driver).executeScript(jsEnd);
+			((RemoteWebDriver) driver).executeScript(jsEnd + "delete window.myData;");
 			Map<String, ?> map = (Map<String, ?>) data.get(0);
 			if (!"000000".equals(map.get("retCode"))) {
 				return new Result(Constants.INPUTERROR, map.get("retMsg"));
 			}
+			TaskKit.taskExecutor.execute(new Runnable() {
+				@Override
+				public void run() {
+					for (int i = 1; i <= 6; i++) {
+						ArrayList<?> myData = (ArrayList<?>) wait.until(new Function<WebDriver, Object>() {
+							public Object apply(@Nullable WebDriver driver) {
+								return ((RemoteWebDriver) driver).executeScript("return window.myData;");
+							}
+						});
+						((RemoteWebDriver) driver).executeScript(jsEnd + "delete window.myData;");
+						Map<String, ?> myMap = (Map<String, ?>) myData.get(0);
+						if (i != 1) {
+							driver.findElement(By.id("month" + i)).click();
+						}
+						// totalNum=44, endDate=20170430, retCode=000000,
+						// retMsg=get data from cache success,
+						// startDate=20170401, curCuror=1
+						String retCode = (String) myMap.get("retCode");
+						if (!"000000".equals(retCode)) {
+							continue;
+						}
+						String totalNum = (String) myMap.get("totalNum");
+						String endDate = (String) myMap.get("endDate");
+						String retMsg = (String) myMap.get("retMsg");
+						String startDate = (String) myMap.get("startDate");
+						String curCuror = (String) myMap.get("curCuror");
+						ArrayList<Map<String, String>> msgs = (ArrayList<Map<String, String>>) myMap.get("data");
+						for (Map<String, String> obj : msgs) {
+							// {commMode=被叫, commPlac=杭州, commType=本地,
+							// commTime=38秒,
+							// remark=null, startTime=04-01 11:51:20,
+							// anotherNm=18857759069, mealFavorable=null,
+							// commFee=0.00}
+							String commMode = obj.get("commMode");
+							String commPlac = obj.get("commPlac");
+							String commType = obj.get("commType");
+							String commTime = obj.get("commTime");
+							String remark = obj.get("remark");
+							String startTime = obj.get("startTime");
+							String anotherNm = obj.get("anotherNm");
+							String mealFavorable = obj.get("mealFavorable");
+							String commFee = obj.get("commFee");
+							new ChinaMobile().set("commMode", commMode).set("commPlac", commPlac)
+									.set("commType", commType).set("commTime", commTime).set("remark", remark)
+									.set("startTime", startTime).set("anotherNm", anotherNm)
+									.set("mealFavorable", mealFavorable).set("commFee", commFee).save();
+						}
+						System.out.println(myData + "---------------->");
+					}
+					// driver.quit();
+				}
+			});
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));

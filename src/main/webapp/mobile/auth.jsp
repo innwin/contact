@@ -73,7 +73,7 @@
 		<!--copy rights end here-->
 		<!-- js -->
 
-		<script type="/text/javascript" src="js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
 		<script src="/js/modernizr.custom.js"></script>
 
 		<script src="/js/classie.js"></script>
@@ -83,7 +83,7 @@
 		<script type="text/javascript" src="/js/bootstrap-3.1.1.min.js"></script>
 		<script type="text/javascript">
 			$(function() {
-				$("#send_sms").onclick(function() {
+				$("#send_sms").click(function() {
 					$.ajax({
 						type : "POST",
 						url : "/mobile/sendSMS",
