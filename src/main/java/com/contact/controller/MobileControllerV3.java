@@ -33,13 +33,19 @@ public class MobileControllerV3 extends Controller {
 		if (rs.code != Constants.SUCCESS) {
 			setAttr("login", phone);
 			setAttr("pwd", pwd);
-			render("login.jsp");
+			redirect("/mobile/loginForm");
 		} else {
-			render("next.jsp");
+			redirect("/mobile/authForm");
 		}
 
 	}
 
+	public void getSMSCode(){
+		String key = this.getSession().getId();
+		String phone = getPara("login");
+		Result rs = ChinaMobileRemoteExecute.getSMSPwd(key, phone);
+		renderJson(rs);
+	}
 	public void authForm() {
 		render("auth.jsp");
 	}

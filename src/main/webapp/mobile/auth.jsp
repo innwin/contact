@@ -6,15 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="" />
-<script type="application/x-javascript">
-	
-	
-	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-		function hideURLbar(){ window.scrollTo(0,1); } 
-
-
-
-</script>
 <!-- //custom-theme -->
 <link href="/css/bootstrap.css" rel="stylesheet" type="text/css"
 	media="all" />
@@ -50,15 +41,18 @@
 					<div class="signin-form profile admin">
 						<h2>${result == null ? '' : result.data }</h2>
 						<div class="login-form">
-							<form action="/mobile/login" method="post">
-								<input type="text" id="login" name="login" placeholder="手机号码"
-									required="required"> <input type="text" name="pwd"
-									placeholder="短信验证码" required="required">
+							<form action="/mobile/auth" method="post">
+								<input type="text" name="servPwd" placeholder="服务密码"> <input
+									type="text" name="smsPwd" placeholder="短信验证码">
 								<div class="tp">
 									<a id="send_sms" href="javascript:void(0);">发送短信验证码</a>
 								</div>
+								<input type="text" name="imgCode">
 								<div class="tp">
-									<input type="submit" value="登陆">
+									<img src="/mobile/getVerifyCode">
+								</div>
+								<div class="tp">
+									<input type="submit" value="二次验证">
 								</div>
 							</form>
 						</div>
@@ -79,7 +73,7 @@
 		<!--copy rights end here-->
 		<!-- js -->
 
-		<script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+		<script type="/text/javascript" src="js/jquery-2.1.4.min.js"></script>
 		<script src="/js/modernizr.custom.js"></script>
 
 		<script src="/js/classie.js"></script>
@@ -89,18 +83,11 @@
 		<script type="text/javascript" src="/js/bootstrap-3.1.1.min.js"></script>
 		<script type="text/javascript">
 			$(function() {
-				$("#send_sms").click(function() {
-					var phone = $("#login").val();
-					if (!phone) {
-						alert("请输入手机号");
-						return;
-					}
+				$("#send_sms").onclick(function() {
 					$.ajax({
 						type : "POST",
-						url : "/mobile/getSMSCode",
-						data : {
-							"login" : phone
-						},
+						url : "/mobile/sendSMS",
+						//data : "name=John&location=Boston",
 						success : function(msg) {
 							alert("发送成功");
 						}

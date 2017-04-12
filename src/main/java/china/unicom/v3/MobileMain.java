@@ -1,5 +1,7 @@
 package china.unicom.v3;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -28,7 +30,6 @@ public class MobileMain {
 		driver.get("http://iservice.10010.com/e4/query/bill/call_dan-iframe.html?menuCode=000100030001");
 		driver.manage().window().maximize();
 		driver.switchTo().frame(1);
-		System.out.println(driver.getPageSource());
 		WebElement userName = new WebDriverWait(driver, 10)
 				.until(ExpectedConditions.visibilityOfElementLocated(By.id("userName")));
 		userName.sendKeys("13017830621");
@@ -65,7 +66,9 @@ public class MobileMain {
 		WebElement button = new WebDriverWait(driver, 10)
 				.until(ExpectedConditions.visibilityOfElementLocated(By.id("huoqu_buttons")));
 		button.click();
-		driver.findElement(By.id("input")).sendKeys("");
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		driver.findElement(By.id("input")).sendKeys(br.readLine());
 		
 		try{
 			((RemoteWebDriver) driver).executeScript(jsStart);

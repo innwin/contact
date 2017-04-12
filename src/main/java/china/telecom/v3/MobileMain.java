@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -25,62 +26,24 @@ public class MobileMain {
 		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 		WebDriver driver = new ChromeDriver(capabilities);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.get("http://iservice.10010.com/e4/query/bill/call_dan-iframe.html?menuCode=000100030001");
+		driver.get("http://login.189.cn/login");
 		driver.manage().window().maximize();
-		driver.switchTo().frame(1);
-		System.out.println(driver.getPageSource());
-		WebElement userName = new WebDriverWait(driver, 10)
-				.until(ExpectedConditions.visibilityOfElementLocated(By.id("userName")));
-		userName.sendKeys("13017830621");
-		driver.findElement(By.id("userPwd")).sendKeys("720628");
-		String jsStart = "window.ajaxBack = $.ajax;" + "\n" + "$.ajax = function(setting){" + "\n"
-				+ "window.myCb = setting.success;" + "\n" + "window.myContext = setting.context;" + "\n"
-				+ "setting.success = function(){" + "\n"
-				// +"window.myArguments = arguments;"+"\n"
-				+ "window.myData=arguments;" + "\n"
-				// if($.isFunction(window.myCb)){window.myCb.apply(setting.context,
-				// arguments); }
-				+ "}" + "\n" + "window.ajaxBack(setting);" + "\n" + "}" + "\n";
-		String jsEnd = "if($.isFunction(window.myCb)){window.myCb.apply(window.myContext, window.myData); };";
-		String jsClean = "$.ajax=window.ajaxBack;delete window.ajaxBack;delete window.myCb;delete window.myData;";
-		try{
-			((RemoteWebDriver) driver).executeScript(jsStart);
-			driver.findElement(By.id("login1")).click();
-			WebDriverWait wait = new WebDriverWait(driver, 1);
-			ArrayList<?> data = (ArrayList<?>)wait.until(new Function<WebDriver, Object>() {
-				public Object apply(@Nullable WebDriver driver) {
-					return ((RemoteWebDriver) driver).executeScript("return window.myData;");
-				}
-			});
-			((RemoteWebDriver) driver).executeScript(jsEnd + jsClean);
-			Map<String, ?> map = (Map<String, ?>) data.get(0);
-			System.out.println("false".equals(map.get("resultCode")));
-		}catch(Exception e){
-			e.printStackTrace();
+		driver.findElement(By.id("txtAccount")).sendKeys("18066289959");
+//		driver.findElement(By.id("txtPassword"))..sendKeys("331566");
+		((RemoteWebDriver) driver).executeScript("document.getElementById('txtPassword').value=arguments[0]","331566");
+		driver.findElement(By.id("loginbtn")).click();
+		WebDriverWait wait = new WebDriverWait(driver, 3);
+		Cookie data = (Cookie)wait.until(new Function<WebDriver, Object>() {
+			public Object apply(@Nullable WebDriver driver) {
+				return driver.manage().getCookieNamed("loginStatus");
+			}
+		});
+		if("logined".equals(data.getValue())){
+			//success
+		}else{
+			//faild
 		}
 		
-
-		driver.switchTo().defaultContent();
 		
-		WebElement button = new WebDriverWait(driver, 10)
-				.until(ExpectedConditions.visibilityOfElementLocated(By.id("huoqu_buttons")));
-		button.click();
-		driver.findElement(By.id("input")).sendKeys("");
-		
-		try{
-			((RemoteWebDriver) driver).executeScript(jsStart);
-			driver.findElement(By.id("sign_in")).click();
-			WebDriverWait wait = new WebDriverWait(driver, 1);
-			ArrayList<?> data = (ArrayList<?>)wait.until(new Function<WebDriver, Object>() {
-				public Object apply(@Nullable WebDriver driver) {
-					return ((RemoteWebDriver) driver).executeScript("return window.myData;");
-				}
-			});
-			((RemoteWebDriver) driver).executeScript(jsEnd + jsClean);
-			Map<String, ?> map = (Map<String, ?>) data.get(0);
-			System.out.println(data);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
 	}
 }

@@ -1,6 +1,7 @@
 package com.contact.common;
 
 import com.contact.controller.MobileController;
+import com.contact.controller.MobileControllerV3;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -31,7 +32,7 @@ public class MyJfinalConfig extends JFinalConfig {
 	 * 配置路由
 	 */
 	public void configRoute(Routes me) {
-		me.add("/mobile", MobileController.class);	// 第三个参数为该Controller的视图存放路径
+		me.add("/mobile", MobileControllerV3.class);	// 第三个参数为该Controller的视图存放路径
 	}
 	
 	/**

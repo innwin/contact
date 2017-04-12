@@ -6,10 +6,12 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.phantomjs.MyPhantomJSDriver;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -42,7 +44,7 @@ public class ChinaMobileRemoteExecute {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.get("https://login.10086.cn/login.html?channelID=12003&backUrl=http://shop.10086.cn/i/");// https://login.10086.cn?backUrl=about:blank
 			driver.manage().window().maximize();
-			driver.findElement(By.id("getSMSpwd")).click();
+			driver.findElement(By.id("radiobuttonSMS")).click();
 			SessionUtils.putSessionId(key, ((RemoteWebDriver) driver).getSessionId().toString());
 			return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 		} catch (Exception e) {
@@ -52,14 +54,34 @@ public class ChinaMobileRemoteExecute {
 
 	}
 
+	public static Result getSMSPwd(String key, String login) {
+		String sessionId = SessionUtils.getSessionId(key);
+		if (sessionId == null) {
+			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
+		}
+		try {
+			WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
+			driver.findElement(By.id("p_name")).sendKeys(login);// 18868945291
+			WebElement smsPwd = driver.findElement(By.id("getSMSpwd"));
+			String display = smsPwd.getCssValue("display");
+			if(!"none".equals(display)){
+				smsPwd.click();
+			}
+			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
+		}
+	}
+
 	public static Result login(String key, String login, String pwd) {
 		String sessionId = SessionUtils.getSessionId(key);
 		if (sessionId == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
-		driver.findElement(By.id("radiobuttonSMS")).click();
-		driver.findElement(By.id("p_name")).sendKeys(login);// 18868945291
+		// driver.findElement(By.id("radiobuttonSMS")).click();
+//		driver.findElement(By.id("p_name")).sendKeys(login);// 18868945291
 		driver.findElement(By.id("p_pwd")).sendKeys(pwd);
 		((RemoteWebDriver) driver).executeScript(
 				"window.getJSON=$.getJSON;$.getJSON=function(){ window.funObj=arguments[2]; var myFun=function(data){  window.myData=data;} ; window.getJSON(arguments[0],arguments[1],myFun) }");
@@ -90,6 +112,7 @@ public class ChinaMobileRemoteExecute {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
+		driver.manage().window().maximize();
 		try {
 			new WebDriverWait(driver, 10)
 					.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@code='020700']"))).click();
@@ -97,10 +120,26 @@ public class ChinaMobileRemoteExecute {
 					.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@class='meal-5']/.."))).click();// By.className("meal-5")
 			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("month1"))).click();
 			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("imageVec")));
+			((RemoteWebDriver) driver).executeScript("$('.ui-popup').offset({ top: 0, left: 0 });");
+
+			WebElement popup=driver.findElement(By.className("ui-popup"));
+			
 			WebDriver augmentedDriver = new Augmenter().augment(driver);
-			org.openqa.selenium.WebElement e0 = driver.findElement(By.id("imageVec"));
 			File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
+			org.openqa.selenium.WebElement e0 = driver.findElement(By.id("imageVec"));
+			FileUtils.copyFile(screenshot, new File("/Users/mac-hc/test0003.jpg"));
+			
+			System.out.println(popup.getLocation()+"---->"+popup.getSize());
+//			$("#imageVec").position()
+			Object scrollTop = ((RemoteWebDriver) driver).executeScript("return $('.ui-popup').scrollTop();");
+			System.out.println(scrollTop+"---"+scrollTop.getClass().getName());
+			
+			String top = popup.getCssValue("top");
+			String left= popup.getCssValue("left");
+			System.out.println(top+"....."+left);
 			ImageUtils.fixImageSize(screenshot, e0.getLocation(), e0.getSize());
+			System.out.println(e0.getLocation()+"====="+ e0.getSize());
+			FileUtils.copyFile(screenshot, new File("/Users/mac-hc/test0004.jpg"));
 			return new Result(Constants.SUCCESS, screenshot);
 		} catch (Exception e) {
 			e.printStackTrace();

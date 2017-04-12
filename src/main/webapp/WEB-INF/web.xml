@@ -16,12 +16,12 @@
 		<filter-name>jfinal</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<listener>
+	<!-- <listener>
 		<listener-class>china.mobile.v2.MySessionListener</listener-class>
-	</listener>
+	</listener> -->
 
-	<session-config>
+<!-- 	<session-config>
 		<session-timeout>60</session-timeout>
-	</session-config>
+	</session-config> -->
 
 </web-app>
