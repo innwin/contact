@@ -116,7 +116,7 @@ public class ChinaTelecomRemoteExecute {
 
 	}
 	
-	public static Result auth(String key){
+	public static Result sendCode(String key){
 		String sessionId = SessionUtils.getSessionId(key);
 		if (sessionId == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));

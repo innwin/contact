@@ -1,6 +1,7 @@
 package com.contact.common;
 
 import com.contact.controller.MobileControllerV3;
+import com.contact.controller.TelecomControllerV3;
 import com.contact.controller.UnicomControllerV3;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -38,6 +39,7 @@ public class MyJfinalConfig extends JFinalConfig {
 	public void configRoute(Routes me) {
 		me.add("/mobile", MobileControllerV3.class);	// 第三个参数为该Controller的视图存放路径
 		me.add("/unicom", UnicomControllerV3.class);
+		me.add("/telecom", TelecomControllerV3.class);
 	}
 	
 	/**
