@@ -2,20 +2,13 @@ package com.contact.controller;
 
 import java.io.File;
 
+import com.contact.common.Constants;
 import com.contact.common.Result;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.render.MyCaptchaRender;
 
 import china.mobile.v3.ChinaMobileRemoteExecute;
-import china.mobile.v3.Constants;
 
-/**
- * IndexController
- */
-
-// http://localhost:8080/getVerifyCode?key=18868945291
-// http://localhost:8080/login?key=18868945291&login=18868945291&pwd=531234&code=tkgda
-// http://localhost:8080/scan?key=18868945291&&code=576055
 public class MobileControllerV3 extends Controller {
 
 	public void loginForm() {

@@ -1,4 +1,4 @@
-package china.telecom.v3;
+package com.contact.common;
 
 public class Constants {
 	public final static int SUCCESS = 0;
@@ -11,6 +11,8 @@ public class Constants {
 			return "system error";
 		case INPUTERROR:
 			return "input error";
+		case SUCCESS:
+			return "success";
 		default:
 			break;
 		}

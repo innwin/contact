@@ -1,16 +1,24 @@
-package china.unicom.v3;
+package com.contact.common;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import com.contact.common.Result;
 
 public class SessionUtils {
 	private static Map<String, String> mapSessionId = new ConcurrentHashMap<>();
 	
 	private static Map<String, Integer> mapNext = new ConcurrentHashMap<>();
 	
+	private static Map<String, String> mapPhone = new ConcurrentHashMap<>();
+	
 	public static Map<String, Result> data = new ConcurrentHashMap<>();
+	
+	public static String getPhone(String key){
+		return mapPhone.get(key);
+	}
+	
+	public static void putPhone(String key,String val){
+		mapPhone.put(key, val);
+	}
 	
 	public static String getSessionId(String key){
 		return mapSessionId.get(key);

@@ -1,5 +1,7 @@
 package china.telecom.v3;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -28,9 +30,9 @@ public class MobileMain {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.get("http://login.189.cn/login");
 		driver.manage().window().maximize();
-		driver.findElement(By.id("txtAccount")).sendKeys("18066289959");
+		driver.findElement(By.id("txtAccount")).sendKeys("15336532612");
 //		driver.findElement(By.id("txtPassword"))..sendKeys("331566");
-		((RemoteWebDriver) driver).executeScript("document.getElementById('txtPassword').value=arguments[0]","331566");
+		((RemoteWebDriver) driver).executeScript("document.getElementById('txtPassword').value=arguments[0]","161616");
 		driver.findElement(By.id("loginbtn")).click();
 		WebDriverWait wait = new WebDriverWait(driver, 3);
 		Cookie data = (Cookie)wait.until(new Function<WebDriver, Object>() {
@@ -43,6 +45,19 @@ public class MobileMain {
 		}else{
 			//faild
 		}
+		
+		driver.get("http://zj.189.cn/shouji/15336532612/zhanghu/xiangdan/");
+		
+		driver.findElement(By.name("username")).sendKeys("陈有凤");;
+		driver.findElement(By.name("idcard")).sendKeys("330523196811275426");;
+		
+		driver.findElement(By.id("codekey")).click();
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		driver.findElement(By.name("cdrCondition.randpsw")).sendKeys(br.readLine());
+		
+		((RemoteWebDriver) driver).executeScript("document.getElementById('txtPassword').value=arguments[0]","161616");
+		driver.findElement(By.name("Submit"));
+		
 		
 		
 	}

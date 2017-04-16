@@ -1,6 +1,7 @@
 package com.contact.common;
 
 import com.contact.controller.MobileControllerV3;
+import com.contact.controller.UnicomControllerV3;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -14,7 +15,7 @@ import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.plugin.task.TaskPlugin;
 import com.jfinal.render.ViewType;
 
-import china.mobile.v3.ChinaMobile;
+import china.mobile.v3.Mobile;
 
 /**
  * API引导式配置
@@ -36,6 +37,7 @@ public class MyJfinalConfig extends JFinalConfig {
 	 */
 	public void configRoute(Routes me) {
 		me.add("/mobile", MobileControllerV3.class);	// 第三个参数为该Controller的视图存放路径
+		me.add("/unicom", UnicomControllerV3.class);
 	}
 	
 	/**
@@ -47,11 +49,10 @@ public class MyJfinalConfig extends JFinalConfig {
 		// 配置C3p0数据库连接池插件
 		C3p0Plugin c3p0Plugin = new C3p0Plugin(PropKit.get("jdbcUrl"), PropKit.get("user"), PropKit.get("password").trim());
 		me.add(c3p0Plugin);
-		
 		// 配置ActiveRecord插件
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
 		me.add(arp);
-		arp.addMapping("blog", ChinaMobile.class);	// 映射blog 表到 Blog模型
+		arp.addMapping("blog", Mobile.class);	// 映射blog 表到 Blog模型
 	}
 	
 	/**

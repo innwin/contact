@@ -1,0 +1,15 @@
+ $.ajax({
+                    type: "POST",
+                    dataType: "html",
+                    url: AjaxURL + '?Action=' + 'SubmitHandlingFee' + '&OrderNumber=' + $.trim($("#<%=this.txtOrderNumber.ClientID %>").val()),
+                    data: $('form1').serialize(),
+                    success: function (result) {
+                        var strresult=result;
+                        alert(strresult);
+                        //加载最大可退金额
+                        $("#spanMaxAmount").html(strresult);
+                    },
+                    error: function(data) {
+                        alert("error:"+data.responseText);
+                     }
+                });

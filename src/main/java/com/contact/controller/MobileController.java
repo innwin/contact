@@ -8,13 +8,6 @@ import china.mobile.v2.ChinaMobileRemoteExecute;
 import china.mobile.v2.Constants;
 import china.mobile.v2.SessionUtils;
 
-/**
- * IndexController
- */
-
-// http://localhost:8080/getVerifyCode?key=18868945291
-// http://localhost:8080/login?key=18868945291&login=18868945291&pwd=531234&code=tkgda
-// http://localhost:8080/scan?key=18868945291&&code=576055
 public class MobileController extends Controller {
 
 	public void loginForm() {

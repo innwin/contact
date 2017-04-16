@@ -29,8 +29,7 @@ public class ImageUtils {
 
 	}
 
-	
-	public static void fixImageSize(File file,Point p,Dimension d) {
+	public static void fixImageSize(File file, Point p, Dimension d) {
 		// ByteArrayOutputStream byteArrayOutputStream = new
 		// ByteArrayOutputStream();
 		try {
@@ -40,11 +39,11 @@ public class ImageUtils {
 					BufferedImage.TYPE_INT_ARGB);// TYPE_4BYTE_ABGR
 			Graphics2D g2D = (Graphics2D) bufferedImage.getGraphics();
 			g2D.drawImage(imageIcon.getImage(), 0, 0, imageIcon.getImageObserver());
-			
+
 			ImageReader reader = ImageIO.getImageReadersByMIMEType("image/png").next();
 			reader.setInput(ImageIO.createImageInputStream(file), true);
 			ImageReadParam param = reader.getDefaultReadParam();
-			param.setSourceRegion(new Rectangle(p.x, p.y, d.width,d.height));
+			param.setSourceRegion(new Rectangle(p.x, p.y, d.width, d.height));
 			BufferedImage bi = reader.read(0, param);
 			ImageIO.write(bi, "png", file);
 			g2D.dispose();
@@ -57,7 +56,7 @@ public class ImageUtils {
 
 		// return byteArrayOutputStream.toByteArray();
 	}
-	
+
 	public static void fixImageSize(File file) {
 		// ByteArrayOutputStream byteArrayOutputStream = new
 		// ByteArrayOutputStream();

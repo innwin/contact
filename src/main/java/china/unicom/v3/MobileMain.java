@@ -23,7 +23,7 @@ public class MobileMain {
 	public static void main(String[] args) throws Exception {
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		ChromeOptions options = new ChromeOptions();
-//		options.setBinary("/opt/google/chrome/chrome");
+		options.setBinary("/opt/google/chrome/chrome");
 		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 		WebDriver driver = new ChromeDriver(capabilities);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -47,7 +47,7 @@ public class MobileMain {
 		try{
 			((RemoteWebDriver) driver).executeScript(jsStart);
 			driver.findElement(By.id("login1")).click();
-			WebDriverWait wait = new WebDriverWait(driver, 1);
+			WebDriverWait wait = new WebDriverWait(driver, 5);
 			ArrayList<?> data = (ArrayList<?>)wait.until(new Function<WebDriver, Object>() {
 				public Object apply(@Nullable WebDriver driver) {
 					return ((RemoteWebDriver) driver).executeScript("return window.myData;");
@@ -73,7 +73,7 @@ public class MobileMain {
 		try{
 			((RemoteWebDriver) driver).executeScript(jsStart);
 			driver.findElement(By.id("sign_in")).click();
-			WebDriverWait wait = new WebDriverWait(driver, 1);
+			WebDriverWait wait = new WebDriverWait(driver, 5);
 			ArrayList<?> data = (ArrayList<?>)wait.until(new Function<WebDriver, Object>() {
 				public Object apply(@Nullable WebDriver driver) {
 					return ((RemoteWebDriver) driver).executeScript("return window.myData;");

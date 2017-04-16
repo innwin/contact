@@ -19,11 +19,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.beust.jcommander.internal.Nullable;
+import com.contact.common.Constants;
 import com.contact.common.Result;
+import com.contact.common.SessionUtils;
 import com.contact.util.ImageUtils;
 import com.jfinal.plugin.task.TaskKit;
-
-import china.mobile.v3.SessionUtils;
 
 public class ChinaMobileRemoteExecute {
 
@@ -100,6 +100,7 @@ public class ChinaMobileRemoteExecute {
 			if (!"0000".equals(data.get("code"))) {
 				return new Result(Constants.INPUTERROR, data.get("desc"));
 			}
+			SessionUtils.putPhone(key, login);
 			return new Result(Constants.SUCCESS, data.get("desc"));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -278,7 +279,7 @@ public class ChinaMobileRemoteExecute {
 							String anotherNm = obj.get("anotherNm");
 							String mealFavorable = obj.get("mealFavorable");
 							String commFee = obj.get("commFee");
-							new ChinaMobile().set("commMode", commMode).set("commPlac", commPlac)
+							new Mobile().set("phone", SessionUtils.getPhone(key)).set("commMode", commMode).set("commPlac", commPlac)
 									.set("commType", commType).set("commTime", commTime).set("remark", remark)
 									.set("startTime", startTime).set("anotherNm", anotherNm)
 									.set("mealFavorable", mealFavorable).set("commFee", commFee).save();
