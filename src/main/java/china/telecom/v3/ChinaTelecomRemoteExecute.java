@@ -1,11 +1,13 @@
 package china.telecom.v3;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.openqa.selenium.By;
@@ -16,6 +18,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.phantomjs.MyPhantomJSDriver;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.beust.jcommander.internal.Nullable;
@@ -64,7 +67,7 @@ public class ChinaTelecomRemoteExecute {
 		try {
 			WebDriver augmentedDriver = new Augmenter().augment(driver);
 			org.openqa.selenium.WebElement e0 = driver.findElement(By.id("imgbar"));
-			e0.click();
+			// e0.click();
 			File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
 			ImageUtils.fixImageSize(screenshot, e0.getLocation(), e0.getSize());
 			return new Result(Constants.SUCCESS, screenshot);
@@ -80,34 +83,52 @@ public class ChinaTelecomRemoteExecute {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
+		driver.findElement(By.id("u_account")).clear();
 		driver.findElement(By.id("u_account")).sendKeys(login);
+		driver.findElement(By.id("u_password")).clear();
 		driver.findElement(By.id("u_password")).sendKeys(pwd);
+		driver.findElement(By.id("product_code")).clear();
+		;
 		driver.findElement(By.id("product_code")).sendKeys(code);
-		String jsStart = "window.ajaxBack = $.ajax;" + "\n" + "$.ajax = function(setting){" + "\n"
+		String jsStart = "window.ajaxBack = jQuery.ajax;" + "\n" + "jQuery.ajax = function(setting){" + "\n"
 				+ "window.myCb = setting.success;" + "\n" + "window.myContext = setting.context;" + "\n"
 				+ "setting.success = function(){" + "\n"
 				// +"window.myArguments = arguments;"+"\n"
 				+ "window.myData=arguments;" + "\n"
 				// if($.isFunction(window.myCb)){window.myCb.apply(setting.context,
 				// arguments); }
-				+ "}" + "\n" + "window.ajaxBack(setting);" + "\n" + "}" + "\n";
-		String jsEnd = "if($.isFunction(window.myCb)){window.myCb.apply(window.myContext, window.myData); };";
-		String jsClean = "$.ajax=window.ajaxBack;delete window.ajaxBack;delete window.myCb;delete window.myData;";
-
-		((RemoteWebDriver) driver).executeScript(jsStart);
+				+ "}" + "\n" + "window.ajaxBack(setting);" + "\n" + "}";
+		String jsEnd = "if(jQuery.isFunction(window.myCb)){window.myCb.apply(window.myContext, window.myData); };";
+		String jsClean = "jQuery.ajax=window.ajaxBack;delete window.ajaxBack;delete window.myCb;delete window.myData;";
+		String jsEndCustom = "jQuery.ajax=window.ajaxBack;delete window.ajaxBack;"
+				+ "if(jQuery.isFunction(window.myCb)){window.myCb.apply(window.myContext, window.myData); };"
+				+ "delete window.myCb;delete window.myData;delete window.myContext;";
+		// String test="$j.ajax({"+"\n"
+		// +"async: true,"+"\n"
+		// +"url: 'accounttype!gettype.ajax',"+"\n"
+		// +"type: 'POST',"+"\n"
+		// +"dataType: 'json',"+"\n"
+		// +"data: $j('#loginForm').serialize(),"+"\n"
+		// +"success: function(reply){"+"\n"
+		// +"}"+"\n"
+		// +"}"+"\n"
+		// +");";
 
 		try {
 			((RemoteWebDriver) driver).executeScript(jsStart);
+			// ((RemoteWebDriver) driver).executeScript(test);
 			driver.findElement(By.className("paySub")).click();
-			WebDriverWait wait = new WebDriverWait(driver, 5);
+			WebDriverWait wait = new WebDriverWait(driver, 10);
 			ArrayList<?> data = (ArrayList<?>) wait.until(new Function<WebDriver, Object>() {// 531234
 				public Object apply(@Nullable WebDriver driver) {
 					return ((RemoteWebDriver) driver).executeScript("return window.myData;");
 				}
 			});
-			((RemoteWebDriver) driver).executeScript(jsEnd + jsClean);
-			Map<String, ?> map = (Map<String, ?>) data.get(0);
-			System.out.println(map);
+			((RemoteWebDriver) driver).executeScript(jsEndCustom);
+			String result = (String) data.get(0);
+			if (result == null || result.indexOf("success") != 0) {
+				return new Result(Constants.INPUTERROR, Constants.getMessage(Constants.INPUTERROR));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
@@ -115,62 +136,75 @@ public class ChinaTelecomRemoteExecute {
 		return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 
 	}
-	
-	public static Result sendCode(String key){
+
+	public static Result sendCode(String key) {
 		String sessionId = SessionUtils.getSessionId(key);
 		if (sessionId == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
-		try{
-			driver.findElement(By.id("codekey")).click();
+		try {
+			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("codekey")))
+					.click();// 120s
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 	}
-	
-	public static Result auth(String key, String name, String idCard, String code){
+
+	public static Result auth(String key, String name, String idCard, String code) {
 		String sessionId = SessionUtils.getSessionId(key);
 		if (sessionId == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
-		driver.findElement(By.name("username")).sendKeys(name);
-		driver.findElement(By.name("idcard")).sendKeys(idCard);
-		driver.findElement(By.name("cdrCondition.randpsw")).sendKeys(code);
+		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("codekey")));
+		((RemoteWebDriver) driver).executeScript(
+				"document.getElementsByName('username')[0].value=decodeURI(arguments[0]);", URLEncoder.encode(name));
+		((RemoteWebDriver) driver).executeScript("document.getElementsByName('idcard')[0].value=arguments[0];", idCard);
+		((RemoteWebDriver) driver)
+				.executeScript("document.getElementsByName('cdrCondition.randpsw')[0].value=arguments[0];", code);
+		String data = (String) ((RemoteWebDriver) driver)
+				.executeScript("return decodeURIComponent(jQuery(\"form[name='form1']\").serialize());");
+		String submit = "jQuery.ajax({" + "\n" + " type: \"POST\"," + "\n" + " dataType: \"html\"," + "\n"
+				+ " url: \"/zjpr/cdr/getCdrDetail.htm\"," + "\n" + " data: arguments[0]," + "\n"
+				+ " success: function (result) {" + "\n" + " 	window.myData=result;"
+				// +" window.myData1=result;"+"\n"
+				// +" re=/location.href = .*error.html.*/;"+"\n"
+				// +" if(result.search(re)!=-1){"+"\n"
+				// +" window.myData=false;"+"\n"
+				// +" return;"+"\n"
+				// +" }"+"\n"
+				// +" window.myData=true;"+"\n"
+				// +" jQuery(\"body\").append(\"<iframe
+				// id='myIframe'></iframe>\");"+"\n"
+				// +" document.getElementById('myIframe').srcdoc=result;"+"\n"
+				+ " }," + "\n" + " error: function(data) {" + "\n" + "     console.log(\"error:\"+data.responseText);"
+				+ "\n" + "  }" + "\n" + " });";
 
-		String submit = "jQuery.ajax({"+"\n"
-           +" type: \"POST\","+"\n"
-           +" dataType: \"html\","+"\n"
-           +" url: \"/zjpr/cdr/getCdrDetail.htm\","+"\n"
-           +" data: jQuery(\"form[name='form1']\").serialize(),"+"\n"
-           +" success: function (result) {"+"\n"
-           +"     re=/(.|\\s|\\S)*(location.href.* error.html)(.|\\s|\\S)*/"+"\n"
-           +"     if(re.test(result)){"+"\n"
-           +"         window.myData=false;"+"\n"
-           +"         return;"+"\n"
-           +"     }"+"\n"
-           +"     window.myData=true;"+"\n"
-           +"     jQuery(\"body\").append(\"<iframe srcdoc='\"+result+\"'></iframe>\");"+"\n"
-           +" },"+"\n"
-           +" error: function(data) {"+"\n"
-           +"     console.log(\"error:\"+data.responseText);"+"\n"
-           +"  }"+"\n"
-           +" });";
-		
 		WebDriverWait wait = new WebDriverWait(driver, 10);
-		((RemoteWebDriver) driver).executeScript(submit);
-		boolean success = (boolean)wait.until(new Function<WebDriver, Object>() {
+		((RemoteWebDriver) driver).executeScript(submit, HexUtils.getHexResult(data));
+		Object o = wait.until(new Function<WebDriver, Object>() {
+			public Object apply(@Nullable WebDriver driver) {
+				return ((RemoteWebDriver) driver).executeScript("return window.myData1;");
+			}
+		});
+		System.out.println(o);
+		String html = (String) wait.until(new Function<WebDriver, Object>() {
 			public Object apply(@Nullable WebDriver driver) {
 				return ((RemoteWebDriver) driver).executeScript("return window.myData;");
 			}
 		});
-		if(!success){
+		Pattern pattern = Pattern.compile("location.href = .*error.html.*", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(html);
+		if (matcher.find()) {
 			return new Result(Constants.INPUTERROR, Constants.getMessage(Constants.INPUTERROR));
 		}
-		driver.switchTo().frame(0);
+		String success = " jQuery(\"body\").append(\"<iframe  id='myIframe'></iframe>\");" + "\n"
+				+ " document.getElementById('myIframe').srcdoc=result;";
+		((RemoteWebDriver) driver).executeScript(success);
+		driver.switchTo().frame("myIframe");
 		WebElement body = driver.findElement(By.tagName("tbody"));
 		List<WebElement> trs = body.findElements(By.tagName("tr"));
 		int i = 0;

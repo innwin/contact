@@ -50,10 +50,10 @@ public class TelecomControllerV3 extends Controller {
 
 	public void auth() {
 		String key = this.getSession().getId();
-		String phone = getPara("login");
+		String name = getPara("name");
 		String idcard = getPara("idcard");
 		String code = getPara("code");
-		Result rs = ChinaTelecomRemoteExecute.auth(key, phone, idcard, code);
+		Result rs = ChinaTelecomRemoteExecute.auth(key, name, idcard, code);
 		setAttr("result", rs);
 		if (rs.code != Constants.SUCCESS) {
 			forwardAction("/telecom/authForm");

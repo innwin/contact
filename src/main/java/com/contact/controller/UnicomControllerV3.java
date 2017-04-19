@@ -27,7 +27,6 @@ public class UnicomControllerV3 extends Controller {
 		} else {
 			forwardAction("/unicom/authForm");
 		}
-
 	}
 
 }

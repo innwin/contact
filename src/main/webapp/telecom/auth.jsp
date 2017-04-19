@@ -42,14 +42,11 @@
 						<h2>${result == null ? '' : result.data }</h2>
 						<div class="login-form">
 							<form action="/telecom/auth" method="post">
-								<input type="text" name="servPwd" placeholder="服务密码"> <input
-									type="text" name="smsPwd" placeholder="短信验证码">
+								<input type="text" name="name" placeholder="姓名"> <input
+									type="text" name="idcard" placeholder="身份证">
+								<input type="text" name="code">
 								<div class="tp">
 									<a id="send_sms" href="javascript:void(0);">发送短信验证码</a>
-								</div>
-								<input type="text" name="imgCode">
-								<div class="tp">
-									<img src="/telecom/getVerifyCode">
 								</div>
 								<div class="tp">
 									<input type="submit" value="二次验证">
@@ -86,7 +83,7 @@
 				$("#send_sms").click(function() {
 					$.ajax({
 						type : "POST",
-						url : "/mobile/sendSMS",
+						url : "/telecom/sendSMS",
 						//data : "name=John&location=Boston",
 						success : function(msg) {
 							alert("发送成功");
