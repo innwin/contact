@@ -202,8 +202,8 @@ public class ChinaTelecomRemoteExecute {
 			return new Result(Constants.INPUTERROR, Constants.getMessage(Constants.INPUTERROR));
 		}
 		String success = " jQuery(\"body\").append(\"<iframe  id='myIframe'></iframe>\");" + "\n"
-				+ " document.getElementById('myIframe').srcdoc=result;";
-		((RemoteWebDriver) driver).executeScript(success);
+				+ " document.getElementById('myIframe').srcdoc=arguments[0];";
+		((RemoteWebDriver) driver).executeScript(success,html);
 		driver.switchTo().frame("myIframe");
 		WebElement body = driver.findElement(By.tagName("tbody"));
 		List<WebElement> trs = body.findElements(By.tagName("tr"));
