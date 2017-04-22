@@ -43,7 +43,7 @@
 						<div class="login-form">
 							<form action="/unicom/login" method="post">
 								<input type="text" id="login" name="login" placeholder="手机号码" required="required"> 
-								<input type="text" name="pwd" placeholder="短信验证码" required="required">
+								<input type="text" name="pwd" placeholder="服务密码" required="required">
 								<div class="tp">
 									<input type="submit" value="登陆">
 								</div>
