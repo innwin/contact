@@ -12,9 +12,8 @@ public class HexUtils {
 			bytes = data.getBytes("gbk");
 			StringBuilder sb = new StringBuilder(bytes.length * 2);
 			for (int i = 0; i < bytes.length; i++) {
-				sb.append("%");
-				sb.append(hexString.charAt((bytes[i] & 0xf0) >> 4));
-				sb.append(hexString.charAt((bytes[i] & 0x0f) >> 0));
+				sb.append("%").append(hexString.charAt((bytes[i] & 0xf0) >> 4))
+						.append(hexString.charAt((bytes[i] & 0x0f) >> 0));
 			}
 			return sb.toString();
 		} catch (UnsupportedEncodingException e) {
@@ -22,24 +21,25 @@ public class HexUtils {
 		}
 		return "";
 	}
-	
-//	public static String encodeStr(String data) {
-//		String result = "";
-//		byte[] bytes;
-//		try {
-//			bytes = data.getBytes("gbk");
-//			for (int i = 0; i < bytes.length; i++) {
-//				result += Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1);
-//			}
-//			return result;
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
-//		return "";
-//	}
-	
+
+	// public static String encodeStr(String data) {
+	// String result = "";
+	// byte[] bytes;
+	// try {
+	// bytes = data.getBytes("gbk");
+	// for (int i = 0; i < bytes.length; i++) {
+	// result += Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1);
+	// }
+	// return result;
+	// } catch (UnsupportedEncodingException e) {
+	// e.printStackTrace();
+	// }
+	// return "";
+	// }
+
 	/**
 	 * 判定是否为中文汉字
+	 * 
 	 * @param data
 	 * @return
 	 */
@@ -62,7 +62,7 @@ public class HexUtils {
 				if (isCN(data)) {
 					hexStr.append(encodeCN(data));
 				} else {
-					hexStr.append(data);//encodeStr(data)
+					hexStr.append(data);// encodeStr(data)
 				}
 			}
 		}

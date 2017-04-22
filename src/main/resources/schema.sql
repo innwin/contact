@@ -4,7 +4,7 @@ USE mobile;
 
 CREATE TABLE `blog` (
   `id` int(11) NOT NULL auto_increment,
-  `phone` varchar(255) NOT NULL,
+  `nm` varchar(255) NOT NULL,
   `commMode` varchar(255) NOT NULL,
   `commPlac` varchar(255) NOT NULL,
   `commType` varchar(255) NOT NULL,

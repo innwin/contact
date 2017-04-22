@@ -192,14 +192,18 @@ public class ChinaMobileRemoteExecute {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
-		String jsStart = "window.ajaxBack = $.ajax;" + "\n" + "$.ajax = function(setting){" + "\n"
-				+ "window.myCb = setting.success;" + "\n" + "window.myContext = setting.context;" + "\n"
-				+ "setting.success = function(){" + "\n"
+		String jsStart = "window.ajaxBack = $.ajax;" + "\n" //
+				+ "$.ajax = function(setting){" + "\n"//
+				+ "window.myCb = setting.success;" + "\n" //
+				+ "window.myContext = setting.context;" + "\n"//
+				+ "setting.success = function(){" + "\n"//
 				// +"window.myArguments = arguments;"+"\n"
-				+ "window.myData=arguments;" + "\n"
+				+ "window.myData=arguments;" + "\n"//
 				// if($.isFunction(window.myCb)){window.myCb.apply(setting.context,
 				// arguments); }
-				+ "}" + "\n" + "window.ajaxBack(setting);" + "\n" + "}" + "\n";
+				+ "}" + "\n"//
+				+ "window.ajaxBack(setting);" + "\n" //
+				+ "}" + "\n";
 		String jsEnd = "if($.isFunction(window.myCb)){window.myCb.apply(window.myContext, window.myData); };";
 		String jsClean = "$.ajax=window.ajaxBack;delete window.ajaxBack;delete window.myCb;delete window.myData;";
 		try {
@@ -241,6 +245,9 @@ public class ChinaMobileRemoteExecute {
 				@Override
 				public void run() {
 					for (int i = 1; i <= 6; i++) {
+						if (i > 1) {
+							driver.findElement(By.id("month" + i)).click();
+						}
 						ArrayList<?> myData = (ArrayList<?>) wait.until(new Function<WebDriver, Object>() {
 							public Object apply(@Nullable WebDriver driver) {
 								return ((RemoteWebDriver) driver).executeScript("return window.myData;");
@@ -248,9 +255,6 @@ public class ChinaMobileRemoteExecute {
 						});
 						((RemoteWebDriver) driver).executeScript(jsEnd + "delete window.myData;");
 						Map<String, ?> myMap = (Map<String, ?>) myData.get(0);
-						if (i != 1) {
-							driver.findElement(By.id("month" + i)).click();
-						}
 						// totalNum=44, endDate=20170430, retCode=000000,
 						// retMsg=get data from cache success,
 						// startDate=20170401, curCuror=1
@@ -279,10 +283,12 @@ public class ChinaMobileRemoteExecute {
 							String anotherNm = obj.get("anotherNm");
 							String mealFavorable = obj.get("mealFavorable");
 							String commFee = obj.get("commFee");
-							new Mobile().set("phone", SessionUtils.getPhone(key)).set("commMode", commMode).set("commPlac", commPlac)
-									.set("commType", commType).set("commTime", commTime).set("remark", remark)
-									.set("startTime", startTime).set("anotherNm", anotherNm)
-									.set("mealFavorable", mealFavorable).set("commFee", commFee).save();
+							new Mobile().set("nm", SessionUtils.getPhone(key)).set("commMode", commMode)
+									.set("commPlac", commPlac).set("commType", commType).set("commTime", commTime)
+									.set("remark", remark).set("startTime", startTime).set("anotherNm", anotherNm)
+									// .set("mealFavorable",
+									// mealFavorable).set("commFee", commFee)
+									.save();
 						}
 						System.out.println(myData + "---------------->");
 					}
