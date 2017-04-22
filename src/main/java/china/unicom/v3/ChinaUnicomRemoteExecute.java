@@ -1,7 +1,5 @@
 package china.unicom.v3;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -89,6 +87,7 @@ public class ChinaUnicomRemoteExecute {
 				return new Result(Constants.INPUTERROR, Constants.getMessage(Constants.INPUTERROR));
 			}
 			driver.switchTo().defaultContent();
+			SessionUtils.putPhone(key, login);
 			return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -133,8 +132,11 @@ public class ChinaUnicomRemoteExecute {
 					// if($.isFunction(window.myCb)){window.myCb.apply(setting.context,
 					// arguments); }
 					+ "}" + "\n" + "window.ajaxBack(setting);" + "\n" + "}" + "\n";
-//			String jsEnd = "if($.isFunction(window.myCb)){window.myCb.apply(window.myContext, window.myData); };";
-//			String jsClean = "$.ajax=window.ajaxBack;delete window.ajaxBack;delete window.myCb;delete window.myData;";
+			// String jsEnd =
+			// "if($.isFunction(window.myCb)){window.myCb.apply(window.myContext,
+			// window.myData); };";
+			// String jsClean = "$.ajax=window.ajaxBack;delete
+			// window.ajaxBack;delete window.myCb;delete window.myData;";
 			((RemoteWebDriver) driver).executeScript(jsStart);
 			driver.findElement(By.id("sign_in")).click();
 			// {"flag":"02","error":"codefail"}
@@ -183,17 +185,13 @@ public class ChinaUnicomRemoteExecute {
 								return ((RemoteWebDriver) driver).executeScript("return window.myData;");
 							}
 						});
+						((RemoteWebDriver) driver).executeScript("delete window.myData;");
 						Map<String, ?> result = (Map<String, ?>) myData.get(0);
 						if (result.containsKey("pageMap")) {
 							Map<String, ?> myResult = (Map<String, ?>) result.get("pageMap");
 							ArrayList<Map<String, String>> list = (ArrayList<Map<String, String>>) myResult
 									.get("result");
 							for (Map<String, String> obj : list) {
-								// {commMode=被叫, commPlac=杭州, commType=本地,
-								// commTime=38秒,
-								// remark=null, startTime=04-01 11:51:20,
-								// anotherNm=18857759069, mealFavorable=null,
-								// commFee=0.00}
 								String commMode = obj.get("calltypeName");
 								String commPlac = obj.get("otherareaName");
 								String commType = obj.get("landtype");
@@ -224,4 +222,5 @@ public class ChinaUnicomRemoteExecute {
 		}
 		return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 	}
+
 }
