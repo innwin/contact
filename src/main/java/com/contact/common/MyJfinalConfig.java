@@ -16,8 +16,6 @@ import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.plugin.task.TaskPlugin;
 import com.jfinal.render.ViewType;
 
-import china.mobile.v3.Mobile;
-
 /**
  * API引导式配置
  */

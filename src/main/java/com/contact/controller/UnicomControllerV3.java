@@ -4,6 +4,7 @@ import com.contact.common.Constants;
 import com.contact.common.Result;
 import com.jfinal.core.Controller;
 
+import china.telecom.v3.ChinaTelecomRemoteExecute;
 import china.unicom.v3.ChinaUnicomRemoteExecute;
 
 public class UnicomControllerV3 extends Controller {
@@ -29,4 +30,25 @@ public class UnicomControllerV3 extends Controller {
 		}
 	}
 
+	public void authForm() {
+		render("auth.jsp");
+	}
+
+	public void sendSMS() {
+		String key = this.getSession().getId();
+		Result rs = ChinaUnicomRemoteExecute.sendSMS(key);
+		renderJson(rs);
+	}
+
+	public void auth() {
+		String key = this.getSession().getId();
+		String code = getPara("code");
+		Result rs = ChinaUnicomRemoteExecute.auth(key, code);
+		setAttr("result", rs);
+		if (rs.code != Constants.SUCCESS) {
+			forwardAction("/unicom/authForm");
+		} else {
+			render("result.jsp");
+		}
+	}
 }

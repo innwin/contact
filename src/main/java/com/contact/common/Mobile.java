@@ -1,4 +1,4 @@
-package china.mobile.v3;
+package com.contact.common;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
 

@@ -25,12 +25,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.beust.jcommander.internal.Nullable;
 import com.contact.common.Constants;
+import com.contact.common.Mobile;
 import com.contact.common.Result;
 import com.contact.common.SessionUtils;
 import com.contact.util.ImageUtils;
 import com.jfinal.plugin.task.TaskKit;
-
-import china.mobile.v3.Mobile;
 
 public class ChinaTelecomRemoteExecute {
 
@@ -213,9 +212,8 @@ public class ChinaTelecomRemoteExecute {
 				Calendar calendar = Calendar.getInstance();
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
 				for (int i = 0; i < 6; i++) {
-					doJob(driver, key);
-					if (i < 5) {
-						calendar.add(Calendar.MONTH, -1);
+					calendar.add(Calendar.MONTH, -1);
+					if (i > 0) {
 						((RemoteWebDriver) driver).executeScript(
 								"document.getElementsByName('formtpage')[0].action = \"/zjpr/cdr/getCdrDetail.htm\";");
 						((RemoteWebDriver) driver).executeScript(
@@ -223,6 +221,7 @@ public class ChinaTelecomRemoteExecute {
 								sdf.format(calendar.getTime()));
 						driver.findElement(By.name("cdrCondition.cdrmonth")).submit();
 					}
+					doJob(driver, key);
 				}
 
 			}

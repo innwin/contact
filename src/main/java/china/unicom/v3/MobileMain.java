@@ -66,6 +66,7 @@ public class MobileMain {
 		WebElement button = new WebDriverWait(driver, 10)
 				.until(ExpectedConditions.visibilityOfElementLocated(By.id("huoqu_buttons")));
 		button.click();
+		//{"issuccess":true,"sendcode":true}
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		driver.findElement(By.id("input")).sendKeys(br.readLine());
@@ -73,6 +74,7 @@ public class MobileMain {
 		try{
 			((RemoteWebDriver) driver).executeScript(jsStart);
 			driver.findElement(By.id("sign_in")).click();
+			//{"flag":"02","error":"codefail"}
 			WebDriverWait wait = new WebDriverWait(driver, 5);
 			ArrayList<?> data = (ArrayList<?>)wait.until(new Function<WebDriver, Object>() {
 				public Object apply(@Nullable WebDriver driver) {
