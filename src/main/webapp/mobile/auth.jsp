@@ -49,7 +49,7 @@
 								</div>
 								<input type="text" name="imgCode">
 								<div class="tp">
-									<img src="/mobile/getVerifyCode">
+									<img style="border-radius: inherit" src="/mobile/getVerifyCode">
 								</div>
 								<div class="tp">
 									<input type="submit" value="二次验证">

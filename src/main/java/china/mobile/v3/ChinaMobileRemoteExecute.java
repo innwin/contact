@@ -269,15 +269,15 @@ public class ChinaMobileRemoteExecute {
 						// totalNum=44, endDate=20170430, retCode=000000,
 						// retMsg=get data from cache success,
 						// startDate=20170401, curCuror=1
-						String retCode = (String) myMap.get("retCode");
+						String retCode = String.valueOf(myMap.get("retCode")) ;
 						if (!"000000".equals(retCode)) {
 							continue;
 						}
-						String totalNum = (String) myMap.get("totalNum");
-						String endDate = (String) myMap.get("endDate");
-						String retMsg = (String) myMap.get("retMsg");
-						String startDate = (String) myMap.get("startDate");
-						String curCuror = (String) myMap.get("curCuror");
+//						String totalNum = (String) String.valueOf(myMap.get("totalNum"));
+//						String endDate = (String) myMap.get("endDate");
+//						String retMsg = (String) myMap.get("retMsg");
+//						String startDate = (String) myMap.get("startDate");
+//						String curCuror = (String) myMap.get("curCuror");
 						ArrayList<Map<String, String>> msgs = (ArrayList<Map<String, String>>) myMap.get("data");
 						for (Map<String, String> obj : msgs) {
 							// {commMode=被叫, commPlac=杭州, commType=本地,
@@ -291,9 +291,9 @@ public class ChinaMobileRemoteExecute {
 							String commTime = obj.get("commTime");
 							String remark = obj.get("remark");
 							String startTime = obj.get("startTime");
-							String anotherNm = obj.get("anotherNm");
-							String mealFavorable = obj.get("mealFavorable");
-							String commFee = obj.get("commFee");
+							String anotherNm = String.valueOf(obj.get("anotherNm"));
+//							String mealFavorable = obj.get("mealFavorable");
+//							String commFee = obj.get("commFee");
 							new Mobile().set("nm", SessionUtils.getPhone(key)).set("commMode", commMode)
 									.set("commPlac", commPlac).set("commType", commType).set("commTime", commTime)
 									.set("remark", remark).set("startTime", startTime).set("anotherNm", anotherNm)
