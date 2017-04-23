@@ -52,7 +52,7 @@ public class MyJfinalConfig extends JFinalConfig {
 //		// 配置ActiveRecord插件
 //		ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
 //		me.add(arp);
-//		arp.addMapping("blog", Mobile.class);	// 映射blog 表到 Blog模型
+//		arp.addMapping("mobile", Mobile.class);	// 映射blog 表到 Blog模型
 	}
 	
 	/**

@@ -2,7 +2,7 @@ CREATE DATABASE mobile;
 
 USE mobile;
 
-CREATE TABLE `blog` (
+CREATE TABLE `mobile` (
   `id` int(11) NOT NULL auto_increment,
   `nm` varchar(255) NOT NULL,
   `commMode` varchar(255) NOT NULL,
