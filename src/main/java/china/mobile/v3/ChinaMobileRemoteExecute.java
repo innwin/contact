@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
@@ -146,7 +147,7 @@ public class ChinaMobileRemoteExecute {
 
 			WebDriver augmentedDriver = new Augmenter().augment(driver);
 			org.openqa.selenium.WebElement e0 = driver.findElement(By.id("imageVec"));
-			e0.click();
+//			e0.click();
 			File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
 			Point p = e0.getLocation();
 			p.y = 700;
@@ -227,6 +228,8 @@ public class ChinaMobileRemoteExecute {
 			((RemoteWebDriver) driver).executeScript(jsEnd + jsClean);
 			Map<String, ?> map = (Map<String, ?>) data.get(0);
 			System.out.println(map);
+			File file =  ((RemoteWebDriver) driver).getScreenshotAs(OutputType.FILE);
+			FileUtils.copyFile(file, new File("/Users/mac-hc/hello.png"));
 			if (!"000000".equals(map.get("retCode"))) {
 				return new Result(Constants.INPUTERROR, map.get("retMsg"));
 			}

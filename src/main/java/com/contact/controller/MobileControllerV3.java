@@ -71,7 +71,7 @@ public class MobileControllerV3 extends Controller {
 		Result rs = ChinaMobileRemoteExecute.auth(key, servPwd, smsPwd, imgCode);
 		setAttr("result", rs);
 		if (rs.code != Constants.SUCCESS) {
-			forwardAction("/mobile/authForm");
+			render("auth.jsp");
 		} else {
 			render("result.jsp");
 		}
