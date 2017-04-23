@@ -13,8 +13,8 @@ org/openqa/selenium/phantomjs/PhantomJSDriverService$Builder.class
 org/openqa/selenium/remote/MyProtocolHandshake.class
 com/jfinal/plugin/task/support/ClassUtils.class
 com/jfinal/plugin/task/support/AsyncTaskExecutor.class
-com/jfinal/plugin/task/support/ReflectionUtils$3.class
 china/mobile/v2/Constants.class
+com/jfinal/plugin/task/support/ReflectionUtils$3.class
 org/openqa/selenium/remote/MyProtocolHandshake$Result.class
 china/mobile/v2/ChinaMobileRemoteExecuteTmp.class
 com/jfinal/plugin/task/support/ReflectionUtils$4.class

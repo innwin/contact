@@ -209,9 +209,15 @@ public class ChinaMobileRemoteExecute {
 		String jsClean = "$.ajax=window.ajaxBack;delete window.ajaxBack;delete window.myCb;delete window.myData;";
 		try {
 			((RemoteWebDriver) driver).executeScript(jsStart);
-			driver.findElement(By.id("vec_servpasswd")).sendKeys(servPwd);
-			driver.findElement(By.id("vec_smspasswd")).sendKeys(smsPwd);// 419106
-			driver.findElement(By.id("vec_imgcode")).sendKeys(imgCode);
+			WebElement servpasswd = driver.findElement(By.id("vec_servpasswd"));
+			servpasswd.clear();
+			servpasswd.sendKeys(servPwd);
+			WebElement smspasswd = driver.findElement(By.id("vec_smspasswd"));
+			smspasswd.clear();
+			smspasswd.sendKeys(smsPwd);// 419106
+			WebElement imgcode = driver.findElement(By.id("vec_imgcode"));
+			imgcode.click();
+			imgcode.sendKeys(imgCode);
 			WebDriverWait wait = new WebDriverWait(driver, 5);
 			ArrayList<?> data = (ArrayList<?>) wait.until(new Function<WebDriver, Object>() {// 531234
 				public Object apply(@Nullable WebDriver driver) {
@@ -220,6 +226,7 @@ public class ChinaMobileRemoteExecute {
 			});
 			((RemoteWebDriver) driver).executeScript(jsEnd + jsClean);
 			Map<String, ?> map = (Map<String, ?>) data.get(0);
+			System.out.println(map);
 			if (!"000000".equals(map.get("retCode"))) {
 				return new Result(Constants.INPUTERROR, map.get("retMsg"));
 			}
