@@ -216,7 +216,7 @@ public class ChinaMobileRemoteExecute {
 			smspasswd.clear();
 			smspasswd.sendKeys(smsPwd);// 419106
 			WebElement imgcode = driver.findElement(By.id("vec_imgcode"));
-			imgcode.click();
+			imgcode.clear();
 			imgcode.sendKeys(imgCode);
 			WebDriverWait wait = new WebDriverWait(driver, 5);
 			ArrayList<?> data = (ArrayList<?>) wait.until(new Function<WebDriver, Object>() {// 531234
