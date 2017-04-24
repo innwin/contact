@@ -47,7 +47,7 @@
 								<div class="tp">
 									<a id="send_sms" href="javascript:void(0);">发送短信验证码</a>
 								</div>
-								<input type="text" name="imgCode">
+								<input type="text" name="imgCode" placeholder="图形验证码">
 								<div class="tp">
 									<img id="verify_code" style="border-radius: inherit" src="/mobile/getVerifyCode">
 								</div>

@@ -185,7 +185,7 @@ public class ChinaTelecomRemoteExecute {
 					+ "  }" + "\n" //
 					+ " });";
 
-			WebDriverWait wait = new WebDriverWait(driver, 10);
+			WebDriverWait wait = new WebDriverWait(driver, 20);
 			((RemoteWebDriver) driver).executeScript(submit, HexUtils.getHexResult(data));
 			String html = (String) wait.until(new Function<WebDriver, Object>() {
 				public Object apply(@Nullable WebDriver driver) {
@@ -217,7 +217,7 @@ public class ChinaTelecomRemoteExecute {
 						((RemoteWebDriver) driver).executeScript(
 								"document.getElementsByName('formtpage')[0].action = \"/zjpr/cdr/getCdrDetail.htm\";");
 						((RemoteWebDriver) driver).executeScript(
-								"document.getElementsByName('cdrCondition.cdrmonth')[0].value = argument[0];",
+								"document.getElementsByName('cdrCondition.cdrmonth')[0].value = arguments[0];",
 								sdf.format(calendar.getTime()));
 						driver.findElement(By.name("cdrCondition.cdrmonth")).submit();
 					}
@@ -232,7 +232,16 @@ public class ChinaTelecomRemoteExecute {
 
 	public static void doJob(WebDriver driver, String key) {
 		String[] colums = new String[] { "anotherNm", "commType", "startTime", "commTime", "commPlac", "commMode" };
-		WebElement body = driver.findElement(By.tagName("tbody"));
+		System.out.println(((RemoteWebDriver) driver).executeScript("return document.readyState;")+"-----------");
+		WebDriverWait wait = new WebDriverWait(driver, 20);
+		wait.until(new Function<WebDriver, Object>() {
+			public Object apply(@Nullable WebDriver driver) {
+				return "complete".equals(((RemoteWebDriver) driver).executeScript("return document.readyState;"));
+			}
+		});
+		((RemoteWebDriver) driver).executeScript("jQuery(\"body\").append('<div>sfsfsf</div>')");
+		WebElement body = driver.findElement(By.className("cdrtable"));
+		System.out.println(driver.getPageSource()+"---"+driver.getCurrentUrl());
 		List<WebElement> trs = body.findElements(By.tagName("tr"));
 		int i = 0;
 		for (WebElement tr : trs) {

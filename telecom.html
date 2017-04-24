@@ -1,0 +1,677 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>清单查询详情-产品专区-中国电信网上营业厅·浙江</title>
+<meta name="keywords" content="清单查询详情、我的Wlan清单、话费清单、市话清单、长话清单、信息清单、短信清单、固定电话清单、固话清单、小灵通清单、电信清单、中国电信网上营业厅.浙江、浙江电信、网上营业厅、网上客服中心、10000、话费查询、业务在线办理、在线充值、宽带续包、我的e家、宽带服务、网上营业厅、网上业务办理、小灵通充值、积分查询,电信缴费,充值,购卡,电信营业厅,业务介绍,电信优惠、CMDA">
+<meta http-equiv="Content-Type" content="text/html; charset=gbk">
+<meta name="description" content="中国电信网上营业厅.浙江网站为浙江电信客户提供在线支付、充值缴费、帐单查询、清单查询、业务办理、故障申告、投诉咨询等一系列服务功能，面向全省电信客户打造浙江电信互联网服务平台。">
+<meta name="Author" content="?">
+<title>中国电信网上营业厅.浙江--清单查询</title>
+<link href="http://zj.189.cn/img/zjpr/style/pzone.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="/favicon.ico">
+<style>
+#Pzone_details_content_2 td {padding:0;}
+</style>
+<script type="text/javascript" src="http://zj.189.cn/img/ct10000v5/v5/js/jquery.js"></script>
+<script type="text/javascript">var $j=jQuery.noConflict();</script>
+<script type="text/javascript" src="/js/prototype.js"></script>
+<script type="text/javascript" src="/js/buffalo.js"></script>
+<script language="javascript">
+	var num1 = 1;
+	var num2 = 1;
+	function sub(page){
+		var pro = document.formtpage;
+		document.getElementById("pagenum").value=page;
+		pro.action = "/zjpr/cdr/getCdrDetail.htm";
+ 		pro.submit();
+	}
+	function initPagenation(count,pagesize,page){
+        var pagenum;
+		pagenum=Math.ceil(count/pagesize);
+		var strPageCode="";
+		var value=0;
+		if("0"!=0){
+			var value = 0-2; 
+		}
+		for(var i=1;i<=pagenum-value;i++){
+			if("0"!=0){
+				var n = i+value;
+				strPageCode=strPageCode+"&nbsp;&nbsp;<a href='javascript:sub("+n+");'>"+i+"</a>";
+			}else{
+				strPageCode=strPageCode+"&nbsp;&nbsp;<a href='javascript:sub("+i+");'>"+i+"</a>";
+			}
+		}
+		if("0"==0){
+			if(page==1){
+				if(pagenum==1){
+				document.getElementById("id1").innerHTML="共"+pagenum+"页&nbsp;&nbsp;&nbsp;<a href='javascript:sub(1);'>首页</a>&nbsp;&nbsp;&nbsp;<a href='javascript:sub(1);'>末页</a>";
+				return; 
+				}
+				else{
+				document.getElementById("id1").innerHTML="共"+pagenum+"页"+"&nbsp;&nbsp;&nbsp;<a href='javascript:sub(1);'>首页</a>"+strPageCode+"&nbsp;&nbsp;&nbsp;<a href='javascript:sub("+(page+1)+");'>下一页</a>&nbsp;&nbsp;&nbsp;<a href='javascript:sub("+pagenum+");'>末页</a>";
+				return;
+				}
+			}
+			if(page>1&&page < pagenum){
+				document.getElementById("id1").innerHTML="共"+pagenum+"页"+"&nbsp;&nbsp;&nbsp;<a href='javascript:sub(1);'>首页</a>&nbsp;&nbsp;&nbsp; <a href='javascript:sub("+(page-1)+")' >上一页</a>"+strPageCode+"&nbsp;&nbsp;&nbsp;<a href='javascript:sub("+(page+1)+")'>下一页</a>&nbsp;&nbsp;&nbsp;<a href='javascript:sub("+pagenum+");'>末页</a>";
+				return;
+			}
+			if(pagenum==page){
+				document.getElementById("id1").innerHTML="共"+pagenum+"页"+"&nbsp;&nbsp;&nbsp;<a href='javascript:sub(1);'>首页</a>&nbsp;&nbsp;&nbsp;<a href='javascript:sub("+(page-1)+")'>上一页</a>"+strPageCode+"&nbsp;&nbsp;&nbsp;<a href='javascript:sub("+pagenum+");'>末页</a>";
+				return;
+			}
+		}else{
+			document.getElementById("id1").innerHTML=strPageCode;
+		}
+	}
+	function funcFmtTime(emp){
+		var rstr="";
+		if(emp.toString().indexOf(":")!=-1){
+		   rstr=emp; 	
+		}
+		else{
+		if(emp.toString().indexOf(",")!=-1)
+		{
+			emp=emp.replace(/,/,"");
+		}
+		var i=Math.floor(emp%60);
+		
+		var j=(emp-i)/60;
+		
+		var k=Math.floor(j%60);
+		
+		var m=Math.floor(j/60);
+		
+		if(m<10)
+		{
+		rstr="0"+m+":";
+		}
+		else{
+		rstr=m+":";
+		}
+		
+		if(k<10){
+		rstr+="0"+k+":";
+		}
+		else{
+		rstr+=k+":";
+		}
+		if(i<10){
+		rstr+="0"+i;
+		}
+		else{
+		rstr+=i;	
+		}
+		}
+		document.write(rstr);
+	}
+	function empsub(emp){
+		var str="";
+		if(emp.indexOf("|")!=-1){
+			
+			str=emp.substr(emp.indexOf("|")+1,emp.length-emp.indexOf("|")-1);
+			
+		}
+		else{
+			str=emp;
+		}
+		document.write(str);
+	}
+	
+	function rightsub(emp){
+		var str="";
+		if(emp.indexOf("|")!=-1){	
+			str=emp.substr(emp.indexOf("|")+1,emp.length);
+		}
+		else{
+			str=emp;
+		}
+		document.write(str);
+	}
+	function getbF(bf){
+		if(bf.toString().indexOf(",")!=-1)
+		{
+			bf=bf.replace(/,/,"");
+		}
+	    document.write(bf/100);
+	}
+	
+	function getbFlow(bf){
+		if(bf.toString().indexOf(",")!=-1)
+		{
+			bf=bf.replace(/,/,"");
+		}
+		var n=bf/100;
+// 		alert(n);
+		//数据等于0 则不需要处理 不等于0 直接写入并把列追加上
+		if(n!=0){
+			$j("#newtr td:nth-child(11)").html("<td width='6%' align='center' bgcolor='#DDF0FF' class='pzone_menu_dashed pzone_right_dashed'>转换流量（M）</td>");
+// 			alert($j("#span_msg").html());
+			document.write(bf/100);
+		}
+	}
+	//21的设置
+function getbFlow2(bf){
+		if(bf.toString().indexOf(",")!=-1)
+		{
+			bf=bf.replace(/,/,"");
+		}
+		var n=bf/100;
+// 		alert(n);
+		//数据等于0 则不需要处理 不等于0 直接写入并把列追加上
+		if(n!=0){
+			$j("#llzh").show();
+// 			alert($j("#span_msg").html());
+			document.write(bf);
+		}
+	}
+
+	function trans(bf){
+		if(bf.toString().indexOf(",")!=-1)
+		{
+			bf=bf.replace(/,/,"");
+			return bf;
+		}
+	    	return bf;
+	}
+	function shishicdrdesc(cdrmonth){
+		var myDate = new Date();
+		var year=myDate.getFullYear().toString(); 
+   		var month=(myDate.getMonth()+1).toString(); 
+  		if(month.length<2){
+  			month="0"+month;
+  		}
+  		if((year+month)==cdrmonth){
+  			document.getElementById("id2").innerHTML="手机实时详单做参考，以3日出帐以后的历史详单数据为准";
+  		}else{
+  		    document.getElementById("id2").innerHTML="";
+  		}
+	}
+  	function formateDate(datestring){
+		var str="";
+		str=datestring.replace('T',' ');
+		str=str.substring(0,str.indexOf('.000+'));
+		document.write(str);
+	} 
+	function formateB(datestring,datestring2,id){
+		var none= "<tr style='display:none;'>";
+		var block= "<tr>";
+		if(datestring2==null || datestring2==""){
+			document.write(block);
+			return;
+		}
+		var str = datestring.replace('T',' ');
+		str=str.substring(0,str.indexOf('.000+'));
+	//	var str2 = datestring2.replace('T',' ');
+	//	str2=str2.substring(0,str.indexOf('.000+'));
+		str = str.replace('-','/');
+		datestring2 = datestring2.replace('-','/');
+		var time1 = new Date(str).getTime();
+		var time2 = new Date(datestring2).getTime();
+		if(time1>time2){
+			document.write(block);
+		}else{
+			document.write(none);
+			if(id=="num100"){
+				num2=100;
+			}
+			
+		}
+	}
+	
+	function formateC(datestring,datestring2,id){
+		if(datestring2==null || datestring2==""){
+			document.write(num1++);
+			return;
+		}
+		var str = datestring.replace('T',' ');
+		str=str.substring(0,str.indexOf('.000+'));
+		str = str.replace('-','/');
+		datestring2 = datestring2.replace('-','/');
+	//	var str2 = datestring2.replace('T',' ');
+	//	str2=str2.substring(0,str.indexOf('.000+'));
+		var time1 = new Date(str).getTime();
+		var time2 = new Date(datestring2).getTime();
+		if(time1>time2){
+			document.write(num1++);
+			
+		}else{
+		}
+	}
+	function formateD(){
+		if("0"!=0){
+			document.getElementById("countValue").value=0;
+		}
+		if(num2==100){
+			if("0"!=0){
+				document.getElementById("countValue").value=0+1;
+				sub(0);
+			}else{
+				document.getElementById("countValue").value=3;
+				sub(2);
+			}
+		}
+	}
+	function cdrSubmitmy(){
+	  	var buffalo = new Buffalo("/bfapp");
+		buffalo.remoteCall("cdrService.querycdrasset",[],function(reply){
+			var resultmap = reply.getResult();
+			var cdrlevel=resultmap["cdrlevel"];
+			var otherinfo=resultmap["otherinfo"];
+			var logininfo=resultmap["logininfo"];
+			var intlevel=parseInt(cdrlevel);
+			if(intlevel<3){
+				var logintype=logininfo["serv_type_id"];
+				var loginnbr=logininfo["product_nbr"];
+				var areaid=logininfo["area_id"]+"";
+				var loginname=logininfo["serv_type_name"];
+				var loginintegration=logininfo["integration_id"];				
+		        $j("#productnbr").val(loginnbr);
+		        $j("#integration_id").val(loginintegration);
+		        $j("#areaid").val(areaid);
+		        $j("#product_servtype").val(logintype);
+		        $j("#servtypename").val(loginname);
+
+		        //cdrSubmitmytime();
+		        
+			}
+		});
+		   //var t=window.setTimeout(function(){cdrSubmitmytime()},1000);
+    }
+    function  cdrSubmitmytime(){
+         document.form1.action="/zjpr/cdr/getCdrDetail.htm";
+         document.form1.target="_blank";
+         document.form1.submit();
+    }
+</script></head>
+
+
+<body style="background-color: #FFFFFF;">
+<div>
+<div class="Details_logo"></div></div>
+<div id="Pzone_details_top_2"><img src="http://zj.189.cn/img/ct10000v5/images/pic/pic_pzone_dian.gif">&nbsp;&nbsp;我的清单详情</div>
+<style>
+.accountTotal { padding:10px 0 10px 10px;}
+.accountTotal table.accountTotalT { text-align:left; width:600px; float:left; clear:left;}
+.accountTotal table.accountTotalT td { font-weight:bold; line-height:20px; width:50%;}
+table.accountTotallist{ clear:both; text-align:left; width:600px; border-top:1px #ccc dashed; border-left:1px #ccc dashed; float:left;}
+table.accountTotallist th { background:#ddf0ff;text-align:center; padding:1px 0; line-height:30px;border-bottom:1px #ccc dashed; border-right:1px #ccc dashed;}
+table.accountTotallist th.title { text-align:left; padding-left:10px; font-size:13px; font-weight:bold;}
+table.accountTotallist td { line-height:24px; text-align:center; padding:1px 0; border-bottom:1px #ccc dashed; border-right:1px #ccc dashed;}
+.clearfix{zoom:1;display:block}
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+</style>
+<div class="accountTotal clearfix">
+	<table cellspacing="0" cellpadding="0" border="0" align="center" class="accountTotalT">
+		<tbody><tr>
+			<td>客户姓名：朱美玲</td>
+			<td>查询号码：18066289959</td>
+		</tr>
+		<tr>
+			<td>查询账期：<script>var cdrdate='201704';document.write(cdrdate.substring(0,4)+"年"+cdrdate.substring(4,6)+"月");</script>2017年04月</td>
+			<td>查询日期：<span id="thistime">2017年4月24日</span></td>
+		</tr>
+		<!-- 新增语音详单 -->
+		<tr>
+		<input type="hidden" id="total" value="0">
+				<td>总&nbsp;费&nbsp;用：<script>getbF("0")</script>0（元）</td>
+		</tr>
+		
+	</tbody></table>
+</div>
+<div id="Pzone_details_content_2">
+	<!--表格里面内容为空的时候  请输入&nbsp;-->
+	<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="cdrtable">
+	<tbody><tr>
+		<td bgcolor="#ddf0ff" align="center" width="11%" style="text-align: left; padding-left: 10px; font-size: 13px; font-weight: bold; line-height: 33px; width: 997px;" class="pzone_menu_dashed pzone_right_dashed" colspan="18">清单详情</td>
+	</tr>
+	
+<!-- 以下为新详单格式 -->
+		<tr id="newtr">
+			<td width="7%" align="center" bgcolor="#DDF0FF" class="pzone_menu_dashed pzone_right_dashed">序列号</td>
+			<td width="8%" align="center" bgcolor="#DDF0FF" class="pzone_menu_dashed pzone_right_dashed">对方号码</td>
+			<td width="7%" align="center" bgcolor="#DDF0FF" class="pzone_menu_dashed pzone_right_dashed">呼叫类型</td>
+			<td align="center" bgcolor="#DDF0FF" class="pzone_menu_dashed pzone_right_dashed">通话日期起始时间</td>
+			<td width="7%" align="center" bgcolor="#DDF0FF" class="pzone_menu_dashed pzone_right_dashed">通话时长</td>
+			<td width="7%" align="center" bgcolor="#DDF0FF" class="pzone_menu_dashed pzone_right_dashed">通话地</td>
+			<td width="7%" align="center" bgcolor="#DDF0FF" class="pzone_menu_dashed pzone_right_dashed">通话类型</td>
+			<td width="10%" align="center" bgcolor="#DDF0FF" class="pzone_menu_dashed pzone_right_dashed">本地费或漫游费</td> 
+			<td width="6%" align="center" bgcolor="#DDF0FF" class="pzone_menu_dashed pzone_right_dashed">长途费</td>
+			<td width="6%" align="center" bgcolor="#DDF0FF" class="pzone_menu_dashed pzone_right_dashed">减免</td>
+			<td width="6%" align="center" bgcolor="#DDF0FF" class="pzone_menu_dashed pzone_right_dashed">费用小计</td>
+			<td width="6%" align="center" bgcolor="#DDF0FF" class="pzone_menu_dashed pzone_right_dashed">备注</td>
+			<td width="11%" id="llzh" align="center" bgcolor="#DDF0FF" style="display:none;" class="pzone_menu_dashed pzone_right_dashed">转换流量（M）</td>
+		</tr>
+		
+		<script>formateB("2017-04-01T14:41:41.000+08:00","","num1")</script><tr>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><span name="num1" id="num1">
+			
+			
+		<script>formateC("2017-04-01T14:41:41.000+08:00","","num1")</script>1
+		
+			</span></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">18817777587</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">被叫</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>formateDate("2017-04-01T14:41:41.000+08:00")</script>2017-04-01 14:41:41</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>funcFmtTime("52")</script>00:00:52</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">温州</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>empsub("本地")</script>本地</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0")  </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0")</script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbFlow2("")</script></td>
+		</tr>
+		
+		<script>formateB("2017-04-01T15:02:13.000+08:00","","num2")</script><tr>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><span name="num1" id="num2">
+			
+			
+		<script>formateC("2017-04-01T15:02:13.000+08:00","","num2")</script>2
+		
+			</span></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">15989694132</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">主叫</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>formateDate("2017-04-01T15:02:13.000+08:00")</script>2017-04-01 15:02:13</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>funcFmtTime("92")</script>00:01:32</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">温州</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>empsub("国内长途")</script>国内长途</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("30")  </script>0.3</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("30")</script>0.3</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbFlow2("")</script></td>
+		</tr>
+		
+		<script>formateB("2017-04-02T10:18:00.000+08:00","","num3")</script><tr>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><span name="num1" id="num3">
+			
+			
+		<script>formateC("2017-04-02T10:18:00.000+08:00","","num3")</script>3
+		
+			</span></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">18207108868</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">被叫</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>formateDate("2017-04-02T10:18:00.000+08:00")</script>2017-04-02 10:18:00</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>funcFmtTime("113")</script>00:01:53</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">温州</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>empsub("本地")</script>本地</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0")  </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0")</script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbFlow2("")</script></td>
+		</tr>
+		
+		<script>formateB("2017-04-02T14:17:19.000+08:00","","num4")</script><tr>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><span name="num1" id="num4">
+			
+			
+		<script>formateC("2017-04-02T14:17:19.000+08:00","","num4")</script>4
+		
+			</span></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">13996964557</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">主叫</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>formateDate("2017-04-02T14:17:19.000+08:00")</script>2017-04-02 14:17:19</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>funcFmtTime("110")</script>00:01:50</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">温州</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>empsub("国内长途")</script>国内长途</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("30")  </script>0.3</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("30")</script>0.3</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbFlow2("")</script></td>
+		</tr>
+		
+		<script>formateB("2017-04-02T14:21:35.000+08:00","","num5")</script><tr>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><span name="num1" id="num5">
+			
+			
+		<script>formateC("2017-04-02T14:21:35.000+08:00","","num5")</script>5
+		
+			</span></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">13996964557</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">被叫</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>formateDate("2017-04-02T14:21:35.000+08:00")</script>2017-04-02 14:21:35</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>funcFmtTime("19")</script>00:00:19</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">温州</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>empsub("本地")</script>本地</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0")  </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0")</script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbFlow2("")</script></td>
+		</tr>
+		
+		<script>formateB("2017-04-02T16:16:32.000+08:00","","num6")</script><tr>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><span name="num1" id="num6">
+			
+			
+		<script>formateC("2017-04-02T16:16:32.000+08:00","","num6")</script>6
+		
+			</span></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">13996964557</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">被叫</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>formateDate("2017-04-02T16:16:32.000+08:00")</script>2017-04-02 16:16:32</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>funcFmtTime("29")</script>00:00:29</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">温州</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>empsub("本地")</script>本地</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0")  </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0")</script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbFlow2("")</script></td>
+		</tr>
+		
+		<script>formateB("2017-04-05T13:54:35.000+08:00","","num7")</script><tr>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><span name="num1" id="num7">
+			
+			
+		<script>formateC("2017-04-05T13:54:35.000+08:00","","num7")</script>7
+		
+			</span></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">18695952413</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">主叫</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>formateDate("2017-04-05T13:54:35.000+08:00")</script>2017-04-05 13:54:35</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>funcFmtTime("51")</script>00:00:51</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">温州</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>empsub("国内长途")</script>国内长途</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("15")  </script>0.15</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("15")</script>0.15</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbFlow2("")</script></td>
+		</tr>
+		
+		<script>formateB("2017-04-05T17:19:44.000+08:00","","num8")</script><tr>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><span name="num1" id="num8">
+			
+			
+		<script>formateC("2017-04-05T17:19:44.000+08:00","","num8")</script>8
+		
+			</span></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">18980914935</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">主叫</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>formateDate("2017-04-05T17:19:44.000+08:00")</script>2017-04-05 17:19:44</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>funcFmtTime("16")</script>00:00:16</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">温州</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>empsub("国内长途")</script>国内长途</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("15")  </script>0.15</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("15")</script>0.15</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbFlow2("")</script></td>
+		</tr>
+		
+		<script>formateB("2017-04-05T17:35:03.000+08:00","","num9")</script><tr>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><span name="num1" id="num9">
+			
+			
+		<script>formateC("2017-04-05T17:35:03.000+08:00","","num9")</script>9
+		
+			</span></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">15262868921</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">被叫</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>formateDate("2017-04-05T17:35:03.000+08:00")</script>2017-04-05 17:35:03</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>funcFmtTime("51")</script>00:00:51</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">温州</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>empsub("本地")</script>本地</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0")  </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0")</script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbFlow2("")</script></td>
+		</tr>
+		
+		<script>formateB("2017-04-06T09:18:55.000+08:00","","num10")</script><tr>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><span name="num1" id="num10">
+			
+			
+		<script>formateC("2017-04-06T09:18:55.000+08:00","","num10")</script>10
+		
+			</span></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">18021570686</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">被叫</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>formateDate("2017-04-06T09:18:55.000+08:00")</script>2017-04-06 09:18:55</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>funcFmtTime("42")</script>00:00:42</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">温州</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>empsub("本地")</script>本地</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0")  </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0")</script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbFlow2("")</script></td>
+		</tr>
+		
+		<script>formateB("2017-04-07T11:04:10.000+08:00","","num11")</script><tr>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><span name="num1" id="num11">
+			
+			
+		<script>formateC("2017-04-07T11:04:10.000+08:00","","num11")</script>11
+		
+			</span></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">10000</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">主叫</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>formateDate("2017-04-07T11:04:10.000+08:00")</script>2017-04-07 11:04:10</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>funcFmtTime("37")</script>00:00:37</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">温州</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>empsub("本地")</script>本地</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0")  </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0")</script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbFlow2("")</script></td>
+		</tr>
+		
+		<script>formateB("2017-04-07T11:12:51.000+08:00","","num12")</script><tr>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><span name="num1" id="num12">
+			
+			
+		<script>formateC("2017-04-07T11:12:51.000+08:00","","num12")</script>12
+		
+			</span></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">10000</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">主叫</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>formateDate("2017-04-07T11:12:51.000+08:00")</script>2017-04-07 11:12:51</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>funcFmtTime("130")</script>00:02:10</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">温州</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script>empsub("本地")</script>本地</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0")  </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0")</script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbF("0") </script>0</td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"></td>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed"><script> getbFlow2("")</script></td>
+		</tr>
+        <!--LteType用于隐藏费用减免等  -->
+	</tbody></table>
+	<span id="id2" style="display:none">手机实时详单做参考，以3日出帐以后的历史详单数据为准</span><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="cdrtable">
+		<tbody><tr>
+	 		<td align="right" colspan="18">&nbsp;</td>
+		</tr>
+		<tr>
+			<td bgcolor="#ddf0ff" align="center" width="11%" style="text-align: left; padding-left: 10px; font-size: 13px; font-weight: bold; line-height: 33px; width: 997px;" class="pzone_menu_dashed pzone_right_dashed" colspan="18">用户：18066289959</td>
+		</tr>
+		<tr>
+			<td width="25%" align="center" bgcolor="#DDF0FF" class="pzone_menu_dashed pzone_right_dashed">&nbsp;</td>		 
+			<td width="25%" align="center" bgcolor="#DDF0FF" class="pzone_menu_dashed">费用小计</td>
+		</tr>
+		<tr>
+			<td align="center" class="Pzone_details_dashed pzone_right_dashed">合计</td>
+					<td align="center" class="Pzone_details_dashed"><script>getbF("0")</script>0元</td>
+		</tr>
+		<tr>
+	 		<td align="right" colspan="9"><span id="id1">共1页&nbsp;&nbsp;&nbsp;<a href="javascript:sub(1);">首页</a>&nbsp;&nbsp;&nbsp;<a href="javascript:sub(1);">末页</a></span> </td>
+		</tr>	
+		<tr>
+			<td height="40" colspan="9" align="center" style="line-height:125%">
+		      <span style="color:red;float:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;温馨提示：</span><br> 
+              <span style="color:red;float:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.查询结果仅供参考，实际收费以帐单为准；</span><br> 
+              <span style="color:red;float:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.由于详单涉及您的个人隐私，为保护您的信息安全，请妥善保管您的服务密码。</span><br>      
+				<input class="pzone_button" type="submit" name="button" value="关闭" onclick="javascript:window.close();">
+			</td>
+	    </tr>
+	    
+	</tbody></table>
+</div>
+<form name="formtpage" action="" method="post">
+    <input id="pagenum" type="hidden" name="cdrCondition.pagenum" value="">
+    <input type="hidden" name="cdrCondition.productnbr" value="18066289959">
+    <input type="hidden" name="countValue" id="countValue" value="0">
+	<input type="hidden" name="tiaozhuan" id="tiaozhuan" value="1">
+    <input type="hidden" name="cdrCondition.productid" value="1-GCABA042279">
+    <input type="hidden" name="cdrCondition.areaid" value="577">
+    <input type="hidden" name="cdrCondition.cdrtype" value="11"> 
+    <input type="hidden" name="cdrCondition.cdrmonth" value="201704"> 
+    <input type="hidden" name="cdrCondition.cdrlevel" value="1">   
+    <input type="hidden" name="cdrCondition.randpsw" value="331672">
+    <input type="hidden" name="cdrCondition.product_servtype" value="18">     
+    <input type="hidden" name="cdrCondition.recievenbr" value="移动电话">    
+    <input type="hidden" name="username" value="朱美玲">   
+    <input type="hidden" name="idcard" value="36242719881003036X">
+        
+        
+</form> 
+<script language="javascript" for="window" event="onload">    
+
+        formateD();  
+</script>  
+<div id="Details_copyright_2">
+<!--include页脚(Details_copyright.html)页面-->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody><tr>
+    <td height="23" colspan="2" class="Details_cpyright"></td>
+  </tr>
+  <tr>
+    <td height="60" align="left">&nbsp;&nbsp;<img src="http://zj.189.cn/img/ct10000v5/images/pic/pic_10000.gif" width="156" height="19"></td>
+    <td align="right" valign="middle" style="color:#0152A3">中国电信欢go网·浙江 版权所有&nbsp;&nbsp;</td>
+  </tr>
+</tbody></table>
+</div>
+
+<script type="text/javascript" src="/js/plug/jquery.fixedtableheader.js">
+</script>
+<script type="text/javascript">
+initPagenation(12,100,1);	
+shishicdrdesc(201704);
+var date=new Date();
+var year=date.getYear();
+if(year<2000){
+	year=year+1900;
+}
+//$(function(){
+//	$(".cdrtable").fixedtableheader	({highlightrow: true, headerrowsize:2 });
+//});
+$j("#thistime").html(year+"年"+(date.getMonth()+1)+"月"+date.getDate()+"日")
+</script>
+
+<div>sfsfsf</div></body></html>
