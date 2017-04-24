@@ -49,7 +49,7 @@
 								</div>
 								<input type="text" name="imgCode">
 								<div class="tp">
-									<img style="border-radius: inherit" src="/mobile/getVerifyCode">
+									<img id="verify_code" style="border-radius: inherit" src="/mobile/getVerifyCode">
 								</div>
 								<div class="tp">
 									<input type="submit" value="二次验证">
@@ -92,6 +92,9 @@
 							alert("发送成功");
 						}
 					});
+				});
+				$("#verify_code").click(function() {
+					this.src="/mobile/getVerifyCode?refresh=true&random="+Math.random();
 				});
 			});
 		</script>

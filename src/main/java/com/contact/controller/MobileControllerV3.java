@@ -53,7 +53,8 @@ public class MobileControllerV3 extends Controller {
 
 	public void getVerifyCode() {
 		String key = this.getSession().getId();
-		Result rs = ChinaMobileRemoteExecute.getVerifyImage(key);
+		boolean refresh =Boolean.valueOf(getPara("refresh", "false")) ;
+		Result rs = ChinaMobileRemoteExecute.getVerifyImage(key,refresh);
 		render(new MyCaptchaRender((File) rs.data));
 	}
 

@@ -136,7 +136,7 @@ public class ChinaMobileRemoteExecute {
 
 	}
 
-	public static Result getVerifyImage(String key) {
+	public static Result getVerifyImage(String key,boolean refresh) {
 		String sessionId = SessionUtils.getSessionId(key);
 		if (sessionId == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
@@ -147,7 +147,17 @@ public class ChinaMobileRemoteExecute {
 
 			WebDriver augmentedDriver = new Augmenter().augment(driver);
 			org.openqa.selenium.WebElement e0 = driver.findElement(By.id("imageVec"));
-//			e0.click();
+			if(refresh){
+				((RemoteWebDriver) driver).executeScript("window.myOnload=document.getElementById('imageVec').onload;document.getElementById('imageVec').onload=function(){ window.myData=true; }");
+				e0.click();
+				WebDriverWait wait = new WebDriverWait(driver, 5);
+				wait.until(new Function<WebDriver, Object>() {
+					public Object apply(@Nullable WebDriver driver) {
+						return ((RemoteWebDriver) driver).executeScript("return window.myData;");
+					}
+				});
+				((RemoteWebDriver) driver).executeScript("delete window.myData;document.getElementById('imageVec').onload=window.myOnload");
+			}
 			File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
 			Point p = e0.getLocation();
 			p.y = 700;
@@ -301,9 +311,9 @@ public class ChinaMobileRemoteExecute {
 									// mealFavorable).set("commFee", commFee)
 									.save();
 						}
-						System.out.println(myData + "---------------->");
+//						System.out.println(myData + "---------------->");
 					}
-					// driver.quit();
+					 driver.quit();
 				}
 			});
 
