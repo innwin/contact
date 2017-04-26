@@ -42,9 +42,8 @@
 						<h2>${result == null ? '' : result.data }</h2>
 						<div class="login-form">
 							<form action="/mobile/login" method="post">
-								<input type="text" id="login" name="login" placeholder="手机号码"
-									required="required"> <input type="text" name="pwd"
-									placeholder="短信验证码" required="required">
+								<input type="text" id="login" name="login" placeholder="手机号码" required="required"> 
+								<input type="text" name="pwd" placeholder="短信验证码" required="required">
 								<div class="tp">
 									<a id="send_sms" href="javascript:void(0);">发送短信验证码</a>
 								</div>

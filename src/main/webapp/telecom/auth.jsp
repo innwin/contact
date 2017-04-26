@@ -42,9 +42,9 @@
 						<h2>${result == null ? '' : result.data }</h2>
 						<div class="login-form">
 							<form action="/telecom/auth" method="post">
-								<input type="text" name="name" placeholder="姓名"> <input
-									type="text" name="idcard" placeholder="身份证">
-								<input type="text" name="code">
+								<input type="text" name="name" placeholder="姓名"> 
+								<input type="text" name="idcard" placeholder="身份证">
+								<input type="text" name="code" placeholder="短信验证码">
 								<div class="tp">
 									<a id="send_sms" href="javascript:void(0);">发送短信验证码</a>
 								</div>
@@ -63,8 +63,8 @@
 		<!--copy rights start here-->
 		<div class="copyrights">
 			<p>
-				Copyright &copy; 2017.Company name All rights reserved.<a
-					href="http://www.mycodes.net/" target="_blank">Mr.chen</a>
+				Copyright &copy; 2017.Company name All rights reserved.
+				<a href="http://www.mycodes.net/" target="_blank">Mr.chen</a>
 			</p>
 		</div>
 		<!--copy rights end here-->
@@ -84,7 +84,6 @@
 					$.ajax({
 						type : "POST",
 						url : "/telecom/sendSMS",
-						//data : "name=John&location=Boston",
 						success : function(msg) {
 							alert("发送成功");
 						}

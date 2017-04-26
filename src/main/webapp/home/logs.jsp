@@ -46,24 +46,26 @@
 				<div class="agile-tables">
 					<div class="w3l-table-info agile_info_shadow">
 						<h3 class="w3_inner_tittle two">data</h3>
-						<c:choose>
-							<c:when test="${result.code == 200 }">
-								<table id="table">
-									<tbody>
-										<c:forEach items="${result.data }" var="objs">
-											<tr>
-												<c:forEach items="${objs }" var="obj">
-													<td>${obj}</td>
-												</c:forEach>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</c:when>
-							<c:otherwise>
-								<code class="js">code: ${result.code } result:${result.data }</code>
-							</c:otherwise>
-						</c:choose>
+						<table id="table">
+							<tbody>
+								<c:forEach items="${list.list }" var="mobile">
+									<tr>
+										<td>${mobile.nm}</td>
+										<td>${obj.commMode}</td>
+										<td>${obj.commPlac}</td>
+										<td>${obj.commType}</td>
+										<td>${obj.commTime}</td>
+										<td>${obj.startTime}</td>
+										<td>${obj.anotherNm}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+						<c:set var="currentPage" value="${list.pageNumber}" />
+						<c:set var="totalPage" value="${list.totalPage}" />
+						<c:set var="actionUrl" value="/logs/" />
+						<c:set var="urlParas" value="" />
+						<%@ include file="/common/_paginate.jsp"%>
 					</div>
 					<div class="clearfix"></div>
 
