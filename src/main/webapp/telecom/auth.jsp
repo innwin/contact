@@ -63,7 +63,7 @@
 		<!--copy rights start here-->
 		<div class="copyrights">
 			<p>
-				Copyright &copy; 2017.Company name All rights reserved.:<a
+				Copyright &copy; 2017.Company name All rights reserved.<a
 					href="http://www.mycodes.net/" target="_blank">Mr.chen</a>
 			</p>
 		</div>

@@ -61,7 +61,7 @@
 		<!--copy rights start here-->
 		<div class="copyrights">
 			<p>
-				Copyright &copy; 2017.Company name All rights reserved.:<a
+				Copyright &copy; 2017.Company name All rights reserved.:<a
 					href="http://www.mycodes.net/" target="_blank">Mr.chen</a>
 			</p>
 		</div>
@@ -82,9 +82,6 @@
 					$.ajax({
 						type : "POST",
 						url : "/unicom/sendSMS",
-						data : {
-							"login" : phone
-						},
 						success : function(msg) {
 							alert("发送成功");
 						}

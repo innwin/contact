@@ -43,6 +43,7 @@ public class ChinaUnicomRemoteExecute {
 			driver.get("http://iservice.10010.com/e4/query/bill/call_dan-iframe.html?menuCode=000100030001");
 			driver.manage().window().maximize();
 			driver.switchTo().frame(1);
+			SessionUtils.putSessionId(key, ((RemoteWebDriver) driver).getSessionId().toString());
 			return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,16 +61,23 @@ public class ChinaUnicomRemoteExecute {
 			WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
 			WebElement userName = new WebDriverWait(driver, 10)
 					.until(ExpectedConditions.visibilityOfElementLocated(By.id("userName")));
-			userName.sendKeys(login);// "13017830621"
-			driver.findElement(By.id("userPwd")).sendKeys(pwd);// "720628"
-			String jsStart = "window.ajaxBack = $.ajax;" + "\n" + "$.ajax = function(setting){" + "\n"
-					+ "window.myCb = setting.success;" + "\n" + "window.myContext = setting.context;" + "\n"
-					+ "setting.success = function(){" + "\n"
+			userName.clear();
+			userName.sendKeys(login);
+			WebElement userPwd = driver.findElement(By.id("userPwd"));
+			userPwd.clear();
+			userPwd.sendKeys(pwd);
+			String jsStart = "window.ajaxBack = $.ajax;" + "\n" //
+					+ "$.ajax = function(setting){" + "\n"//
+					+ "window.myCb = setting.success;" + "\n" //
+					+ "window.myContext = setting.context;" + "\n"//
+					+ "setting.success = function(){" + "\n"//
 					// +"window.myArguments = arguments;"+"\n"
-					+ "window.myData=arguments;" + "\n"
+					+ "window.myData=arguments;" + "\n"//
 					// if($.isFunction(window.myCb)){window.myCb.apply(setting.context,
 					// arguments); }
-					+ "}" + "\n" + "window.ajaxBack(setting);" + "\n" + "}" + "\n";
+					+ "}" + "\n" //
+					+ "window.ajaxBack(setting);" + "\n" //
+					+ "}" + "\n";
 			String jsEnd = "if($.isFunction(window.myCb)){window.myCb.apply(window.myContext, window.myData); };";
 			String jsClean = "$.ajax=window.ajaxBack;delete window.ajaxBack;delete window.myCb;delete window.myData;";
 			((RemoteWebDriver) driver).executeScript(jsStart);
@@ -83,7 +91,7 @@ public class ChinaUnicomRemoteExecute {
 			((RemoteWebDriver) driver).executeScript(jsEnd + jsClean);
 			Map<String, ?> map = (Map<String, ?>) data.get(0);
 			SessionUtils.putSessionId(key, ((RemoteWebDriver) driver).getSessionId().toString());
-			if ("false".equals(map.get("resultCode"))) {
+			if (!"0000".equals(map.get("resultCode"))) {
 				return new Result(Constants.INPUTERROR, Constants.getMessage(Constants.INPUTERROR));
 			}
 			driver.switchTo().defaultContent();
@@ -114,6 +122,7 @@ public class ChinaUnicomRemoteExecute {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public static Result auth(String key, String code) {
 		String sessionId = SessionUtils.getSessionId(key);
 		if (sessionId == null) {
@@ -122,47 +131,51 @@ public class ChinaUnicomRemoteExecute {
 
 		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
 		try {
-			// {"issuccess":true,"sendcode":true}
-			driver.findElement(By.id("input")).sendKeys(code);
-			String jsStart = "window.ajaxBack = $.ajax;" + "\n" + "$.ajax = function(setting){" + "\n"
-					+ "window.myCb = setting.success;" + "\n" + "window.myContext = setting.context;" + "\n"
-					+ "setting.success = function(){" + "\n"
+			WebElement input = driver.findElement(By.id("input"));
+			input.clear();
+			input.sendKeys(code);
+			String jsStart = "window.ajaxBack = $.ajax;" + "\n" //
+					+ "$.ajax = function(setting){" + "\n"//
+					+ "	window.myCb = setting.success;" + "\n" //
+					+ "	window.myContext = setting.context;" + "\n"//
+					+ "	setting.success = function(){" + "\n"//
 					// +"window.myArguments = arguments;"+"\n"
-					+ "window.myData=arguments;" + "\n"
+					+ "		window.myData=arguments;" + "\n"//
 					// if($.isFunction(window.myCb)){window.myCb.apply(setting.context,
 					// arguments); }
-					+ "}" + "\n" + "window.ajaxBack(setting);" + "\n" + "}" + "\n";
-			// String jsEnd =
-			// "if($.isFunction(window.myCb)){window.myCb.apply(window.myContext,
-			// window.myData); };";
-			// String jsClean = "$.ajax=window.ajaxBack;delete
-			// window.ajaxBack;delete window.myCb;delete window.myData;";
+					+ "}" + "\n" //
+					+ "window.ajaxBack(setting);" + "\n" //
+					+ "}" + "\n";//
 			((RemoteWebDriver) driver).executeScript(jsStart);
 			driver.findElement(By.id("sign_in")).click();
-			// {"flag":"02","error":"codefail"}
-			WebDriverWait wait = new WebDriverWait(driver, 5);
+			WebDriverWait wait = new WebDriverWait(driver, 10);
 			ArrayList<?> data = (ArrayList<?>) wait.until(new Function<WebDriver, Object>() {
 				public Object apply(@Nullable WebDriver driver) {
 					return ((RemoteWebDriver) driver).executeScript("return window.myData;");
 				}
 			});
+			((RemoteWebDriver) driver).executeScript("$.ajax=window.ajaxBack;");
 			Map<String, ?> map = (Map<String, ?>) data.get(0);
-			System.out.println(data);
-			if (!"".equals(map.get(""))) {
+			if (!"00".equals(map.get("flag"))) {
+				((RemoteWebDriver) driver).executeScript(" delete window.myData; ");
 				return new Result(Constants.INPUTERROR, Constants.getMessage(Constants.INPUTERROR));
 			}
 			String jsStartCustom = "window.ajaxBack = $.ajax;" + "\n" //
-					+ "$.ajax = function(setting){" + "\n"//
-					+ "window.myCb = setting.success;" + "\n" //
-					+ "window.myContext = setting.context;" + "\n"//
-					+ "setting.success = function(){" + "\n" //
-					+ " 	if('isSuccess' in arguments[0]) " + "\n" //
-					+ "			window.myData=arguments;" + "\n"//
-					+ " 	else " + "\n"//
-					+ "    		if($.isFunction(window.myCb)){window.myCb.apply(window.myContext, arguments); };" + "\n"//
-					+ "}" + "\n" //
-					+ "window.ajaxBack(setting);" + "\n" //
-					+ "}" + "\n";
+					+ " $.ajax = function(setting){ " + "\n"//
+					+ "	setting.mySuccess=setting.success; " + "\n" //
+					+ "	setting.myContext=setting.context; " + "\n"//
+					+ "	setting.success = function(){ " + "\n" //
+					+ "		if('isSuccess' in arguments[0]) { " + "\n"//
+					+ "			window.myData = arguments; " + "\n" //
+					+ "			window.myCb = this.mySuccess; " + "\n"//
+					+ "			window.myContext = this.myContext; " + "\n" //
+					+ "		} else { " + "\n"//
+					+ "	 		this.mySuccess.apply(this,arguments); " + "\n" //
+					+ "		} " + "\n" //
+					+ " } " + "\n"//
+					+ "	window.ajaxBack(setting);" + "\n" //
+					+ " } " + "\n";
+			String jsEnd = "if($.isFunction(window.myCb)){window.myCb.apply(window.myContext,window.myData); };";
 			((RemoteWebDriver) driver).executeScript(jsStartCustom);
 			((RemoteWebDriver) driver).executeScript("window.myDataTmp=window.myData;delete window.myData;");
 			((RemoteWebDriver) driver).executeScript(
@@ -173,8 +186,8 @@ public class ChinaUnicomRemoteExecute {
 					Calendar calendar = Calendar.getInstance();
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
 					for (int i = 0; i < 6; i++) {
-						calendar.add(Calendar.MONTH, -1);
 						if (i > 0) {
+							calendar.add(Calendar.MONTH, -1);
 							new WebDriverWait(driver, 10)
 									.until(ExpectedConditions.visibilityOfElementLocated(By
 											.xpath(String.format("//li[@value='%s']", sdf.format(calendar.getTime())))))
@@ -185,7 +198,7 @@ public class ChinaUnicomRemoteExecute {
 								return ((RemoteWebDriver) driver).executeScript("return window.myData;");
 							}
 						});
-						((RemoteWebDriver) driver).executeScript("delete window.myData;");
+						((RemoteWebDriver) driver).executeScript(jsEnd + " delete window.myData;");
 						Map<String, ?> result = (Map<String, ?>) myData.get(0);
 						if (result.containsKey("pageMap")) {
 							Map<String, ?> myResult = (Map<String, ?>) result.get("pageMap");
@@ -196,19 +209,11 @@ public class ChinaUnicomRemoteExecute {
 								String commPlac = obj.get("otherareaName");
 								String commType = obj.get("landtype");
 								String commTime = obj.get("calllonghour");
-								// String remark = obj.get("remark");
 								String startTime = obj.get("calldate");
 								String anotherNm = obj.get("othernum");
-								// String mealFavorable =
-								// obj.get("mealFavorable");
-								// String commFee = obj.get("commFee");
 								new Mobile().set("nm", SessionUtils.getPhone(key)).set("commMode", commMode)
 										.set("commPlac", commPlac).set("commType", commType).set("commTime", commTime)
-										// .set("remark", remark)
 										.set("startTime", startTime).set("anotherNm", anotherNm)
-										// .set("mealFavorable",
-										// mealFavorable).set("commFee",
-										// commFee)
 										.save();
 							}
 						}

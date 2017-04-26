@@ -64,7 +64,9 @@ public class ChinaMobileRemoteExecute {
 		}
 		try {
 			WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
-			driver.findElement(By.id("p_name")).sendKeys(login);// 18868945291
+			WebElement name = driver.findElement(By.id("p_name"));
+			name.clear();
+			name.sendKeys(login);// 18868945291
 			WebElement smsPwd = driver.findElement(By.id("getSMSpwd"));
 			String display = smsPwd.getCssValue("display");
 			if (!"none".equals(display)) {
@@ -84,8 +86,10 @@ public class ChinaMobileRemoteExecute {
 		}
 		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
 		// driver.findElement(By.id("radiobuttonSMS")).click();
-		// driver.findElement(By.id("p_name")).sendKeys(login);// 18868945291
-		driver.findElement(By.id("p_pwd")).sendKeys(pwd);
+//		driver.findElement(By.id("p_name")).sendKeys(login);// 18868945291
+		WebElement pwdElement = driver.findElement(By.id("p_pwd"));
+		pwdElement.clear();
+		pwdElement.sendKeys(pwd);
 		((RemoteWebDriver) driver).executeScript(
 				"window.getJSON=$.getJSON;$.getJSON=function(){ window.funObj=arguments[2]; var myFun=function(data){  window.myData=data;} ; window.getJSON(arguments[0],arguments[1],myFun) }");
 		driver.findElement(By.id("submit_bt")).click();
@@ -136,7 +140,7 @@ public class ChinaMobileRemoteExecute {
 
 	}
 
-	public static Result getVerifyImage(String key,boolean refresh) {
+	public static Result getVerifyImage(String key, boolean refresh) {
 		String sessionId = SessionUtils.getSessionId(key);
 		if (sessionId == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
@@ -147,8 +151,9 @@ public class ChinaMobileRemoteExecute {
 
 			WebDriver augmentedDriver = new Augmenter().augment(driver);
 			org.openqa.selenium.WebElement e0 = driver.findElement(By.id("imageVec"));
-			if(refresh){
-				((RemoteWebDriver) driver).executeScript("window.myOnload=document.getElementById('imageVec').onload;document.getElementById('imageVec').onload=function(){ window.myData=true; }");
+			if (refresh) {
+				((RemoteWebDriver) driver).executeScript(
+						"window.myOnload=document.getElementById('imageVec').onload;document.getElementById('imageVec').onload=function(){ window.myData=true; }");
 				e0.click();
 				WebDriverWait wait = new WebDriverWait(driver, 5);
 				wait.until(new Function<WebDriver, Object>() {
@@ -156,7 +161,8 @@ public class ChinaMobileRemoteExecute {
 						return ((RemoteWebDriver) driver).executeScript("return window.myData;");
 					}
 				});
-				((RemoteWebDriver) driver).executeScript("delete window.myData;document.getElementById('imageVec').onload=window.myOnload");
+				((RemoteWebDriver) driver).executeScript(
+						"delete window.myData;document.getElementById('imageVec').onload=window.myOnload");
 			}
 			File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
 			Point p = e0.getLocation();
@@ -237,9 +243,6 @@ public class ChinaMobileRemoteExecute {
 			});
 			((RemoteWebDriver) driver).executeScript(jsEnd + jsClean);
 			Map<String, ?> map = (Map<String, ?>) data.get(0);
-			System.out.println(map);
-			File file =  ((RemoteWebDriver) driver).getScreenshotAs(OutputType.FILE);
-			FileUtils.copyFile(file, new File("/Users/mac-hc/hello.png"));
 			if (!"000000".equals(map.get("retCode"))) {
 				return new Result(Constants.INPUTERROR, map.get("retMsg"));
 			}
@@ -279,15 +282,16 @@ public class ChinaMobileRemoteExecute {
 						// totalNum=44, endDate=20170430, retCode=000000,
 						// retMsg=get data from cache success,
 						// startDate=20170401, curCuror=1
-						String retCode = String.valueOf(myMap.get("retCode")) ;
+						String retCode = String.valueOf(myMap.get("retCode"));
 						if (!"000000".equals(retCode)) {
 							continue;
 						}
-//						String totalNum = (String) String.valueOf(myMap.get("totalNum"));
-//						String endDate = (String) myMap.get("endDate");
-//						String retMsg = (String) myMap.get("retMsg");
-//						String startDate = (String) myMap.get("startDate");
-//						String curCuror = (String) myMap.get("curCuror");
+						// String totalNum = (String)
+						// String.valueOf(myMap.get("totalNum"));
+						// String endDate = (String) myMap.get("endDate");
+						// String retMsg = (String) myMap.get("retMsg");
+						// String startDate = (String) myMap.get("startDate");
+						// String curCuror = (String) myMap.get("curCuror");
 						ArrayList<Map<String, String>> msgs = (ArrayList<Map<String, String>>) myMap.get("data");
 						for (Map<String, String> obj : msgs) {
 							// {commMode=被叫, commPlac=杭州, commType=本地,
@@ -302,8 +306,8 @@ public class ChinaMobileRemoteExecute {
 							String remark = obj.get("remark");
 							String startTime = obj.get("startTime");
 							String anotherNm = String.valueOf(obj.get("anotherNm"));
-//							String mealFavorable = obj.get("mealFavorable");
-//							String commFee = obj.get("commFee");
+							// String mealFavorable = obj.get("mealFavorable");
+							// String commFee = obj.get("commFee");
 							new Mobile().set("nm", SessionUtils.getPhone(key)).set("commMode", commMode)
 									.set("commPlac", commPlac).set("commType", commType).set("commTime", commTime)
 									.set("remark", remark).set("startTime", startTime).set("anotherNm", anotherNm)
@@ -311,9 +315,9 @@ public class ChinaMobileRemoteExecute {
 									// mealFavorable).set("commFee", commFee)
 									.save();
 						}
-//						System.out.println(myData + "---------------->");
+						// System.out.println(myData + "---------------->");
 					}
-					 driver.quit();
+					driver.quit();
 				}
 			});
 

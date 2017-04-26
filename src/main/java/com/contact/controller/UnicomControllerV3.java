@@ -4,7 +4,6 @@ import com.contact.common.Constants;
 import com.contact.common.Result;
 import com.jfinal.core.Controller;
 
-import china.telecom.v3.ChinaTelecomRemoteExecute;
 import china.unicom.v3.ChinaUnicomRemoteExecute;
 
 public class UnicomControllerV3 extends Controller {

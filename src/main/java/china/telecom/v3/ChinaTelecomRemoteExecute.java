@@ -11,7 +11,6 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -87,40 +86,36 @@ public class ChinaTelecomRemoteExecute {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
-		driver.findElement(By.id("u_account")).clear();
-		driver.findElement(By.id("u_account")).sendKeys(login);
-		driver.findElement(By.id("u_password")).clear();
-		driver.findElement(By.id("u_password")).sendKeys(pwd);
-		driver.findElement(By.id("product_code")).clear();
-		;
-		driver.findElement(By.id("product_code")).sendKeys(code);
+		WebElement account = driver.findElement(By.id("u_account"));
+		account.clear();
+		account.sendKeys(login);
+		WebElement password = driver.findElement(By.id("u_password"));
+		password.clear();
+		password.sendKeys(pwd);
+		WebElement productCode = driver.findElement(By.id("product_code"));
+		productCode.clear();
+		productCode.sendKeys(code);
 		String jsStart = "window.ajaxBack = jQuery.ajax;" + "\n" //
 				+ "jQuery.ajax = function(setting){" + "\n"//
 				+ "window.myCb = setting.success;" + "\n" //
 				+ "window.myContext = setting.context;" + "\n"//
 				+ "setting.success = function(){" + "\n"//
 				// +"window.myArguments = arguments;"+"\n"
-				+ "window.myData=arguments;" + "\n"//
+				+ "		window.myData=arguments; " + "\n"//
 				// if($.isFunction(window.myCb)){window.myCb.apply(setting.context,
 				// arguments); }
 				+ "}" + "\n" //
 				+ "window.ajaxBack(setting);" + "\n" //
 				+ "}";
-		// String jsEnd =
-		// "if(jQuery.isFunction(window.myCb)){window.myCb.apply(window.myContext,
-		// window.myData); };";
-		// String jsClean = "jQuery.ajax=window.ajaxBack;delete
-		// window.ajaxBack;delete window.myCb;delete window.myData;";
 		String jsEndCustom = "jQuery.ajax=window.ajaxBack;delete window.ajaxBack;"
 				+ "if(jQuery.isFunction(window.myCb)){window.myCb.apply(window.myContext, window.myData); };"
 				+ "delete window.myCb;delete window.myData;delete window.myContext;";
 
 		try {
 			((RemoteWebDriver) driver).executeScript(jsStart);
-			// ((RemoteWebDriver) driver).executeScript(test);
 			driver.findElement(By.className("paySub")).click();
 			WebDriverWait wait = new WebDriverWait(driver, 10);
-			ArrayList<?> data = (ArrayList<?>) wait.until(new Function<WebDriver, Object>() {// 531234
+			ArrayList<?> data = (ArrayList<?>) wait.until(new Function<WebDriver, Object>() {
 				public Object apply(@Nullable WebDriver driver) {
 					return ((RemoteWebDriver) driver).executeScript("return window.myData;");
 				}
@@ -170,6 +165,43 @@ public class ChinaTelecomRemoteExecute {
 					idCard);
 			((RemoteWebDriver) driver)
 					.executeScript("document.getElementsByName('cdrCondition.randpsw')[0].value=arguments[0];", code);
+			Result res = submit(driver);
+			if (res.code != Constants.SUCCESS) {
+				return res;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
+		}
+
+		TaskKit.taskExecutor.execute(new Runnable() {
+			@Override
+			public void run() {
+				Calendar calendar = Calendar.getInstance();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+				for (int i = 0; i < 6; i++) {
+					if (i > 0) {
+						calendar.add(Calendar.MONTH, -1);
+						driver.switchTo().defaultContent();
+						((RemoteWebDriver) driver).executeScript(
+								"document.getElementsByName('cdrCondition.cdrmonth')[0].value=arguments[0];",
+								sdf.format(calendar.getTime()));
+						Result res = submit(driver);
+						if (res.code != Constants.SUCCESS) {
+							continue;
+						}
+					}
+					doJob(driver, key);
+				}
+
+			}
+		});
+
+		return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
+	}
+
+	private static Result submit(WebDriver driver) {
+		try {
 			String data = (String) ((RemoteWebDriver) driver)
 					.executeScript("return decodeURIComponent(jQuery(\"form[name='form1']\").serialize());");
 			String submit = "jQuery.ajax({" + "\n" //
@@ -184,8 +216,7 @@ public class ChinaTelecomRemoteExecute {
 					+ "     console.log(\"error:\"+data.responseText);" + "\n" //
 					+ "  }" + "\n" //
 					+ " });";
-
-			WebDriverWait wait = new WebDriverWait(driver, 20);
+			WebDriverWait wait = new WebDriverWait(driver, 60);
 			((RemoteWebDriver) driver).executeScript(submit, HexUtils.getHexResult(data));
 			String html = (String) wait.until(new Function<WebDriver, Object>() {
 				public Object apply(@Nullable WebDriver driver) {
@@ -200,66 +231,67 @@ public class ChinaTelecomRemoteExecute {
 			String success = " jQuery(\"body\").append(\"<iframe  id='myIframe'></iframe>\");" + "\n"
 					+ " document.getElementById('myIframe').srcdoc=arguments[0];";
 			((RemoteWebDriver) driver).executeScript(success, html);
+			((RemoteWebDriver) driver).executeScript("delete window.myData;");
 			driver.switchTo().frame("myIframe");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-
-		TaskKit.taskExecutor.execute(new Runnable() {
-			@Override
-			public void run() {
-				Calendar calendar = Calendar.getInstance();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
-				for (int i = 0; i < 6; i++) {
-					calendar.add(Calendar.MONTH, -1);
-					if (i > 0) {
-						((RemoteWebDriver) driver).executeScript(
-								"document.getElementsByName('formtpage')[0].action = \"/zjpr/cdr/getCdrDetail.htm\";");
-						((RemoteWebDriver) driver).executeScript(
-								"document.getElementsByName('cdrCondition.cdrmonth')[0].value = arguments[0];",
-								sdf.format(calendar.getTime()));
-						driver.findElement(By.name("cdrCondition.cdrmonth")).submit();
-					}
-					doJob(driver, key);
-				}
-
-			}
-		});
-
 		return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 	}
 
-	public static void doJob(WebDriver driver, String key) {
-		String[] colums = new String[] { "anotherNm", "commType", "startTime", "commTime", "commPlac", "commMode" };
-		System.out.println(((RemoteWebDriver) driver).executeScript("return document.readyState;")+"-----------");
-		WebDriverWait wait = new WebDriverWait(driver, 20);
-		wait.until(new Function<WebDriver, Object>() {
-			public Object apply(@Nullable WebDriver driver) {
-				return "complete".equals(((RemoteWebDriver) driver).executeScript("return document.readyState;"));
-			}
-		});
-		((RemoteWebDriver) driver).executeScript("jQuery(\"body\").append('<div>sfsfsf</div>')");
-		WebElement body = driver.findElement(By.className("cdrtable"));
-		System.out.println(driver.getPageSource()+"---"+driver.getCurrentUrl());
-		List<WebElement> trs = body.findElements(By.tagName("tr"));
-		int i = 0;
-		for (WebElement tr : trs) {
-			if (i > 1) {
+	@SuppressWarnings("unchecked")
+	private static void doJob(WebDriver driver, String key) {
+
+		try {
+			String js = " var data=[];" + "\n"//
+					+ " jQuery('.cdrtable:first tbody').find('tr').each(function(index,val){ " + "\n"//
+					+ " 	 if(index>2){" + "\n"//
+					+ " 	 	var myTr=[];" + "\n"//
+					+ " 		jQuery(val).find('td').each(function(i,v){ " + "\n"//
+					+ " 			 if(i>0){ " + "\n"//
+					+ " 			 	myTr.push(v.innerHTML.replace(/<.*?\\/.*?>/g,''));" + "\n"//
+					+ " 			 } " + "\n"//
+					+ " 		 }" + "\n"//
+					+ " 		);" + "\n"//
+					+ " 		if(myTr.length>0){" + "\n"//
+					+ " 		  	data.push(myTr);" + "\n"//
+					+ " 		} " + "\n"//
+					+ " 	} " + "\n"//
+					+ " });" + "\n"//
+					+ " window.myData = data;" + "\n";
+
+			String[] colums = new String[] { "anotherNm", "commType", "startTime", "commTime", "commPlac", "commMode" };
+			WebDriverWait wait = new WebDriverWait(driver, 10);
+			wait.until(new Function<WebDriver, Object>() {
+				public Object apply(@Nullable WebDriver driver) {
+					return "complete".equals(((RemoteWebDriver) driver).executeScript("return document.readyState;"));
+				}
+			});
+			((RemoteWebDriver) driver).executeScript(js);
+			List<List<String>> list = (List<List<String>>) wait.until(new Function<WebDriver, Object>() {
+				public Object apply(@Nullable WebDriver driver) {
+					return ((RemoteWebDriver) driver).executeScript("return window.myData;");
+				}
+			});
+			((RemoteWebDriver) driver).executeScript("delete window.myData;");
+			for (List<String> tr : list) {
 				int j = 0;
-				List<WebElement> tds = tr.findElements(By.tagName("td"));
 				Mobile model = new Mobile().set("nm", SessionUtils.getPhone(key));
-				for (WebElement td : tds) {
+				for (String td : tr) {
 					// 序列号 对方号码 呼叫类型 通话日期起始时间 通话时长 通话地 通话类型 本地费或漫游费 长途费
 					// 减免 费用小计
 					// 备注
-					if (j > 1 && j < 7) {
-						model.set(colums[j - 1], StringEscapeUtils.escapeHtml4(td.getText()));
+					if (j < 6) {
+						model.set(colums[j], td);
 					}
 					j++;
 				}
+				model.save();
 			}
-			i++;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
 	}
 }
