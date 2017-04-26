@@ -51,12 +51,12 @@
 								<c:forEach items="${list.list }" var="mobile">
 									<tr>
 										<td>${mobile.nm}</td>
-										<td>${obj.commMode}</td>
-										<td>${obj.commPlac}</td>
-										<td>${obj.commType}</td>
-										<td>${obj.commTime}</td>
-										<td>${obj.startTime}</td>
-										<td>${obj.anotherNm}</td>
+										<td>${mobile.commMode}</td>
+										<td>${mobile.commPlac}</td>
+										<td>${mobile.commType}</td>
+										<td>${mobile.commTime}</td>
+										<td>${mobile.startTime}</td>
+										<td>${mobile.anotherNm}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
