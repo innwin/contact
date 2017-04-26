@@ -37,7 +37,6 @@
 			<a href="${actionUrl}${2}${urlParas}">${2}</a>
 			<span class="gap">…</span>
 		</c:if>
-		
 		<c:forEach begin="${startPage}" end="${endPage}" var="i">
 			<c:choose>
 				<c:when test="${currentPage == i}">
