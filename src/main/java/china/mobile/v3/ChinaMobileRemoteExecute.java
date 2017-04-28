@@ -24,6 +24,7 @@ import com.contact.common.Constants;
 import com.contact.common.Mobile;
 import com.contact.common.Result;
 import com.contact.common.SessionUtils;
+import com.contact.util.Base64Image;
 import com.contact.util.ImageUtils;
 import com.jfinal.plugin.task.TaskKit;
 
@@ -86,7 +87,7 @@ public class ChinaMobileRemoteExecute {
 		}
 		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
 		// driver.findElement(By.id("radiobuttonSMS")).click();
-//		driver.findElement(By.id("p_name")).sendKeys(login);// 18868945291
+		// driver.findElement(By.id("p_name")).sendKeys(login);// 18868945291
 		WebElement pwdElement = driver.findElement(By.id("p_pwd"));
 		pwdElement.clear();
 		pwdElement.sendKeys(pwd);
@@ -164,11 +165,25 @@ public class ChinaMobileRemoteExecute {
 				((RemoteWebDriver) driver).executeScript(
 						"delete window.myData;document.getElementById('imageVec').onload=window.myOnload");
 			}
-			File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
-			Point p = e0.getLocation();
-			p.y = 680;//700
-			ImageUtils.fixImageSize(screenshot, p, e0.getSize());
-			return new Result(Constants.SUCCESS, screenshot);
+			String js = "window.getBase64Image=function(img) {" + "\n"//
+					+ " var canvas = document.createElement(\"canvas\"); " + "\n"//
+					+ " canvas.width = img.width; " + "\n"//
+					+ " canvas.height = img.height; " + "\n"//
+					+ " var ctx = canvas.getContext(\"2d\"); " + "\n"//
+					+ " ctx.drawImage(img, 0, 0, img.width, img.height); " + "\n"//
+					+ " var dataURL = canvas.toDataURL(\"image/png\"); " + "\n"//
+					+ " return dataURL; " + "\n"//
+					+ " }; " + "\n";//
+			String base64 = (String) ((RemoteWebDriver) driver)
+					.executeScript(js + " return window.getBase64Image(document.getElementById('imageVec')); ");
+			base64 = base64.replace("data:image/png;base64,", "");
+			File file = Base64Image.generateImage(base64);
+			// File screenshot = ((TakesScreenshot)
+			// augmentedDriver).getScreenshotAs(OutputType.FILE);
+			// Point p = e0.getLocation();
+			// p.y = 680;// 700
+			// ImageUtils.fixImageSize(screenshot, p, e0.getSize());
+			return new Result(Constants.SUCCESS, file);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
