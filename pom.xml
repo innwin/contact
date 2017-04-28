@@ -124,7 +124,6 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>7.6.14.v20131031</version>
 				<configuration>
-					<daemon>true</daemon>
 					<connectors>
 						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
 							<port>8080</port>
