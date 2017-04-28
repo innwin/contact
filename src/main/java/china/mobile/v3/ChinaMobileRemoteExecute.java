@@ -166,7 +166,7 @@ public class ChinaMobileRemoteExecute {
 			}
 			File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
 			Point p = e0.getLocation();
-			p.y = 700;
+			p.y = 680;//700
 			ImageUtils.fixImageSize(screenshot, p, e0.getSize());
 			return new Result(Constants.SUCCESS, screenshot);
 		} catch (Exception e) {
