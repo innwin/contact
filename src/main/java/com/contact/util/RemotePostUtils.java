@@ -27,7 +27,7 @@ public class RemotePostUtils {
 				call.put("mine_location", m.get("commPlac"));
 				call.put("category", m.get("commType"));
 				list.add(call);
-
+				i++;
 			}
 			HttpRequestUtils.httpPost("http://zchlhd.com/api/user_calls/get_calls", map);
 		} catch (Exception e) {
