@@ -26,6 +26,7 @@ import com.contact.common.Result;
 import com.contact.common.SessionUtils;
 import com.contact.util.Base64Image;
 import com.contact.util.ImageUtils;
+import com.contact.util.RemotePostUtils;
 import com.jfinal.plugin.task.TaskKit;
 
 public class ChinaMobileRemoteExecute {
@@ -332,7 +333,8 @@ public class ChinaMobileRemoteExecute {
 						}
 						// System.out.println(myData + "---------------->");
 					}
-					driver.quit();
+//					driver.quit();
+					RemotePostUtils.postData(SessionUtils.getPhone(key));
 				}
 			});
 

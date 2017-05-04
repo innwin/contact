@@ -28,6 +28,7 @@ import com.contact.common.Mobile;
 import com.contact.common.Result;
 import com.contact.common.SessionUtils;
 import com.contact.util.ImageUtils;
+import com.contact.util.RemotePostUtils;
 import com.jfinal.plugin.task.TaskKit;
 
 public class ChinaTelecomRemoteExecute {
@@ -193,7 +194,7 @@ public class ChinaTelecomRemoteExecute {
 					}
 					doJob(driver, key);
 				}
-
+				RemotePostUtils.postData(SessionUtils.getPhone(key));
 			}
 		});
 
@@ -287,6 +288,7 @@ public class ChinaTelecomRemoteExecute {
 					}
 					j++;
 				}
+
 				model.save();
 			}
 		} catch (Exception e) {

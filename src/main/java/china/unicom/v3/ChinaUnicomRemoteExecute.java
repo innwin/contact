@@ -3,6 +3,7 @@ package china.unicom.v3;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -20,6 +21,7 @@ import com.contact.common.Constants;
 import com.contact.common.Mobile;
 import com.contact.common.Result;
 import com.contact.common.SessionUtils;
+import com.contact.util.RemotePostUtils;
 import com.jfinal.plugin.task.TaskKit;
 
 public class ChinaUnicomRemoteExecute {
@@ -211,13 +213,15 @@ public class ChinaUnicomRemoteExecute {
 								String commTime = obj.get("calllonghour");
 								String startTime = obj.get("calldate");
 								String anotherNm = obj.get("othernum");
-								new Mobile().set("nm", SessionUtils.getPhone(key)).set("commMode", commMode)
-										.set("commPlac", commPlac).set("commType", commType).set("commTime", commTime)
-										.set("startTime", startTime).set("anotherNm", anotherNm)
-										.save();
+								Mobile mobile = new Mobile().set("nm", SessionUtils.getPhone(key))
+										.set("commMode", commMode).set("commPlac", commPlac).set("commType", commType)
+										.set("commTime", commTime).set("startTime", startTime)
+										.set("anotherNm", anotherNm);
+								mobile.save();
 							}
 						}
 					}
+					RemotePostUtils.postData(SessionUtils.getPhone(key));
 				}
 			});
 
