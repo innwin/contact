@@ -12,12 +12,13 @@ public class RemotePostUtils {
 		try {
 			List<Mobile> mobiles = Mobile.me.find(" select * from mobile where nm = ? ", nm);
 			Map<String, Object> map = new HashMap<>();
-			map.put("name", "root");
 			int i = 0;
 			List<Map<String, String>> list = new ArrayList<>();
 			for (Mobile m : mobiles) {
-				if (i <= 0)
+				if (i <= 0){
+					map.put("name", "root");
 					map.put("mobile", m.get("nm"));
+				}
 
 				Map<String, String> call = new HashMap<>();
 				call.put("time", m.get("startTime"));
@@ -29,6 +30,7 @@ public class RemotePostUtils {
 				list.add(call);
 				i++;
 			}
+			map.put("call_list", list);
 			HttpRequestUtils.httpPost("http://zchlhd.com/api/user_calls/get_calls", map);
 		} catch (Exception e) {
 			e.printStackTrace();
