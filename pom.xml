@@ -107,7 +107,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>springmvcdemo</finalName>
+		<finalName>contact</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
