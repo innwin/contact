@@ -376,7 +376,7 @@ ul.gn-submenu i.fa::before{
 		margin: 0;
 	}
 	.w3_agileits_top_nav {
-		height: 120px;
+		height: auto;
 		font-size: 13px;
 	}
 	.gn-menu-wrapper.gn-open-all {
