@@ -90,7 +90,7 @@ class PhantomJSCommandExecutor extends MyHttpCommandExecutor {
 		try {
 
 			SocketAddress remoteAddr = new InetSocketAddress("127.0.0.1", service.getPort());
-			socket.connect(remoteAddr, 3000);
+			socket.connect(remoteAddr, 30000);
 		} catch (IOException e) {
 			if (DriverCommand.NEW_SESSION.equals(command.getName())) {
 				try {
