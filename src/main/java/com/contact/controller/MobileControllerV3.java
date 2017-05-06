@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.contact.common.Constants;
 import com.contact.common.Result;
+import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.render.MyCaptchaRender;
 
@@ -17,6 +18,7 @@ public class MobileControllerV3 extends Controller {
 		render("login.jsp");
 	}
 
+	@Before(MyValidator.class)
 	public void login() {
 		String key = this.getSession().getId();
 		String phone = getPara("login");
@@ -26,7 +28,7 @@ public class MobileControllerV3 extends Controller {
 		if (rs.code != Constants.SUCCESS) {
 			setAttr("login", phone);
 			setAttr("pwd", pwd);
-			forwardAction("/mobile/loginForm");
+			render("login.jsp");
 		} else {
 			forwardAction("/mobile/authForm");
 		}
@@ -42,13 +44,8 @@ public class MobileControllerV3 extends Controller {
 
 	public void authForm() {
 		String key = this.getSession().getId();
-		Result rs = ChinaMobileRemoteExecute.authForm(key);
-		setAttr("result", rs);
-		if (rs.code != Constants.SUCCESS) {
-			forwardAction("/mobile/authForm");
-		} else {
-			render("auth.jsp");
-		}
+		ChinaMobileRemoteExecute.authForm(key);
+		render("auth.jsp");
 	}
 
 	public void getVerifyCode() {
@@ -63,7 +60,8 @@ public class MobileControllerV3 extends Controller {
 		Result rs = ChinaMobileRemoteExecute.sendSMS(key);
 		renderJson(rs);
 	}
-
+	
+	@Before(MyValidator.class)
 	public void auth() {
 		String key = this.getSession().getId();
 		String servPwd = getPara("servPwd");

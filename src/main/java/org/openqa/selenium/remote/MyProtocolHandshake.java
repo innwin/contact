@@ -29,21 +29,6 @@ import static org.openqa.selenium.remote.BrowserType.OPERA;
 import static org.openqa.selenium.remote.BrowserType.OPERA_BLINK;
 import static org.openqa.selenium.remote.BrowserType.SAFARI;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonWriter;
-
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.SessionNotCreatedException;
-import org.openqa.selenium.remote.http.HttpClient;
-import org.openqa.selenium.remote.http.HttpMethod;
-import org.openqa.selenium.remote.http.HttpRequest;
-import org.openqa.selenium.remote.http.HttpResponse;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -52,7 +37,9 @@ import java.net.HttpURLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -61,6 +48,22 @@ import java.util.logging.Logger;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.SessionNotCreatedException;
+import org.openqa.selenium.remote.http.HttpClient;
+import org.openqa.selenium.remote.http.HttpMethod;
+import org.openqa.selenium.remote.http.HttpRequest;
+import org.openqa.selenium.remote.http.HttpResponse;
+
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonWriter;
 
 public class MyProtocolHandshake {
 
@@ -125,6 +128,30 @@ public class MyProtocolHandshake {
 				"Unable to create new remote session. " + "desired capabilities = %s, required capabilities = %s",
 				desired, required));
 	}
+	
+//	public List<String> sessionAll(HttpClient client) throws IOException {
+//
+//		HttpRequest request = new HttpRequest(HttpMethod.GET, "/sessions");
+//
+//		request.setHeader(CONTENT_TYPE, JSON_UTF_8.toString());
+//		HttpResponse response = client.execute(request, true);
+//
+//		Map<?, ?> jsonBlob = null;
+//		String resultString = response.getContentString();
+//		try {
+//			jsonBlob = new JsonToBeanConverter().convert(Map.class, resultString);
+//		} catch (ClassCastException e) {
+//			LOG.info("Unable to parse response from server: " + resultString);
+//			return Collections.EMPTY_LIST;
+//		} catch (JsonException e) {
+//			// Fine. Handle that below
+//			LOG.log(Level.FINE, "Unable to parse json response. Will continue but diagnostic follows", e);
+//		}
+//		if (jsonBlob == null) {
+//			return Collections.EMPTY_LIST;
+//		}
+//		return (List<String>) jsonBlob.get("value");
+//	}
 
 	public Result connSession(HttpClient client, SessionId id) throws IOException {
 

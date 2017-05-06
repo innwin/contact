@@ -1,6 +1,7 @@
 package com.contact.controller;
 
 import com.contact.common.Result;
+import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.render.MyCaptchaRender;
 

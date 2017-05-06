@@ -27,6 +27,7 @@ import com.contact.common.Constants;
 import com.contact.common.Mobile;
 import com.contact.common.Result;
 import com.contact.common.SessionUtils;
+import com.contact.common.SessionUtils.SessionExpire;
 import com.contact.util.ImageUtils;
 import com.contact.util.RemotePostUtils;
 import com.jfinal.plugin.task.TaskKit;
@@ -40,7 +41,7 @@ public class ChinaTelecomRemoteExecute {
 	public static Result loginForm(String key) {
 		if (SessionUtils.getSessionId(key) != null) {
 			try {
-				new MyPhantomJSDriver(SessionUtils.getSessionId(key), 48105).quit();
+				SessionUtils.cleanSession(key);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -52,7 +53,7 @@ public class ChinaTelecomRemoteExecute {
 			driver.get(
 					"http://zj.189.cn/wt_uac/auth.html?app=wt&login_goto_url=my%2Fben%2Fzhanghu%2Fxiangdan%2F&module=null&auth=uam_login_auth&template=uam_login_page");// https://login.10086.cn?backUrl=about:blank
 			driver.manage().window().maximize();
-			SessionUtils.putSessionId(key, ((RemoteWebDriver) driver).getSessionId().toString());
+			SessionUtils.putSessionId(key, new SessionExpire(((RemoteWebDriver) driver).getSessionId().toString(),System.currentTimeMillis()));
 			return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,11 +63,11 @@ public class ChinaTelecomRemoteExecute {
 	}
 
 	public static Result getVerifyImage(String key) {
-		String sessionId = SessionUtils.getSessionId(key);
-		if (sessionId == null) {
+		SessionExpire session = SessionUtils.getSessionId(key);
+		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
+		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 		driver.manage().window().maximize();
 		try {
 			WebDriver augmentedDriver = new Augmenter().augment(driver);
@@ -82,11 +83,11 @@ public class ChinaTelecomRemoteExecute {
 	}
 
 	public static Result login(String key, String login, String pwd, String code) {
-		String sessionId = SessionUtils.getSessionId(key);
-		if (sessionId == null) {
+		SessionExpire session = SessionUtils.getSessionId(key);
+		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
+		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 		WebElement account = driver.findElement(By.id("u_account"));
 		account.clear();
 		account.sendKeys(login);
@@ -136,11 +137,11 @@ public class ChinaTelecomRemoteExecute {
 	}
 
 	public static Result sendCode(String key) {
-		String sessionId = SessionUtils.getSessionId(key);
-		if (sessionId == null) {
+		SessionExpire session = SessionUtils.getSessionId(key);
+		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
+		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 		try {
 			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("codekey")))
 					.click();// 120s
@@ -152,11 +153,11 @@ public class ChinaTelecomRemoteExecute {
 	}
 
 	public static Result auth(String key, String name, String idCard, String code) {
-		String sessionId = SessionUtils.getSessionId(key);
-		if (sessionId == null) {
+		SessionExpire session = SessionUtils.getSessionId(key);
+		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
+		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 		try {
 			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("codekey")));
 			((RemoteWebDriver) driver).executeScript(
@@ -195,6 +196,7 @@ public class ChinaTelecomRemoteExecute {
 					doJob(driver, key);
 				}
 				RemotePostUtils.postData(SessionUtils.getPhone(key));
+				SessionUtils.cleanSession(key);
 			}
 		});
 

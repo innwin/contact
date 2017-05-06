@@ -142,6 +142,7 @@ public class PhantomJSDriver extends RemoteWebDriver implements TakesScreenshot 
         String base64 = (String) execute(DriverCommand.SCREENSHOT).getValue();
         return target.convertFromBase64Png(base64);
     }
+    
 
     /**
      * Execute a PhantomJS fragment.  Provides extra functionality not found in WebDriver

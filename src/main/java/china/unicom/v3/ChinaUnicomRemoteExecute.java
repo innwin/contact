@@ -21,6 +21,7 @@ import com.contact.common.Constants;
 import com.contact.common.Mobile;
 import com.contact.common.Result;
 import com.contact.common.SessionUtils;
+import com.contact.common.SessionUtils.SessionExpire;
 import com.contact.util.RemotePostUtils;
 import com.jfinal.plugin.task.TaskKit;
 
@@ -33,7 +34,7 @@ public class ChinaUnicomRemoteExecute {
 	public static Result loginForm(String key) {
 		if (SessionUtils.getSessionId(key) != null) {
 			try {
-				new MyPhantomJSDriver(SessionUtils.getSessionId(key), 48105).quit();
+				SessionUtils.cleanSession(key);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -45,7 +46,7 @@ public class ChinaUnicomRemoteExecute {
 			driver.get("http://iservice.10010.com/e4/query/bill/call_dan-iframe.html?menuCode=000100030001");
 			driver.manage().window().maximize();
 			driver.switchTo().frame(1);
-			SessionUtils.putSessionId(key, ((RemoteWebDriver) driver).getSessionId().toString());
+			SessionUtils.putSessionId(key, new SessionExpire(((RemoteWebDriver) driver).getSessionId().toString(),System.currentTimeMillis()));
 			return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -55,12 +56,12 @@ public class ChinaUnicomRemoteExecute {
 	}
 
 	public static Result login(String key, String login, String pwd) {
-		String sessionId = SessionUtils.getSessionId(key);
-		if (sessionId == null) {
+		SessionExpire session = SessionUtils.getSessionId(key);
+		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		try {
-			WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
+			WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 			WebElement userName = new WebDriverWait(driver, 10)
 					.until(ExpectedConditions.visibilityOfElementLocated(By.id("userName")));
 			userName.clear();
@@ -92,7 +93,7 @@ public class ChinaUnicomRemoteExecute {
 			});
 			((RemoteWebDriver) driver).executeScript(jsEnd + jsClean);
 			Map<String, ?> map = (Map<String, ?>) data.get(0);
-			SessionUtils.putSessionId(key, ((RemoteWebDriver) driver).getSessionId().toString());
+//			SessionUtils.putSessionId(key, ((RemoteWebDriver) driver).getSessionId().toString());
 			if (!"0000".equals(map.get("resultCode"))) {
 				return new Result(Constants.INPUTERROR, Constants.getMessage(Constants.INPUTERROR));
 			}
@@ -107,12 +108,12 @@ public class ChinaUnicomRemoteExecute {
 	}
 
 	public static Result sendSMS(String key) {
-		String sessionId = SessionUtils.getSessionId(key);
-		if (sessionId == null) {
+		SessionExpire session = SessionUtils.getSessionId(key);
+		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		try {
-			WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
+			WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 			WebElement button = new WebDriverWait(driver, 10)
 					.until(ExpectedConditions.visibilityOfElementLocated(By.id("huoqu_buttons")));
 			button.click();
@@ -126,12 +127,12 @@ public class ChinaUnicomRemoteExecute {
 
 	@SuppressWarnings("unchecked")
 	public static Result auth(String key, String code) {
-		String sessionId = SessionUtils.getSessionId(key);
-		if (sessionId == null) {
+		SessionExpire session = SessionUtils.getSessionId(key);
+		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 
-		WebDriver driver = new MyPhantomJSDriver(sessionId, 48105);
+		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 		try {
 			WebElement input = driver.findElement(By.id("input"));
 			input.clear();
@@ -222,6 +223,7 @@ public class ChinaUnicomRemoteExecute {
 						}
 					}
 					RemotePostUtils.postData(SessionUtils.getPhone(key));
+					SessionUtils.cleanSession(key);
 				}
 			});
 

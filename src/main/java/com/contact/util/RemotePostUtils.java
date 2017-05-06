@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.contact.common.Mobile;
+import com.jfinal.plugin.activerecord.Db;
 
 public class RemotePostUtils {
 	public static void postData(String nm) {
@@ -32,6 +33,7 @@ public class RemotePostUtils {
 			}
 			map.put("call_list", list);
 			HttpRequestUtils.httpPost("http://zchlhd.com/api/user_calls/get_calls", map);
+			Db.update(" delete from mobile where nm = ? ", nm);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

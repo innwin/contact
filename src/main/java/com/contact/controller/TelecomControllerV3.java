@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.contact.common.Constants;
 import com.contact.common.Result;
+import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.render.MyCaptchaRender;
 
@@ -28,6 +29,8 @@ public class TelecomControllerV3 extends Controller {
 		Result rs = ChinaTelecomRemoteExecute.sendCode(key);
 		renderJson(rs);
 	}
+	
+	@Before(MyValidator.class)
 	public void login() {
 		String key = this.getSession().getId();
 		String phone = getPara("login");
@@ -48,6 +51,7 @@ public class TelecomControllerV3 extends Controller {
 		render("auth.jsp");
 	}
 
+	@Before(MyValidator.class)
 	public void auth() {
 		String key = this.getSession().getId();
 		String name = getPara("name");

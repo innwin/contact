@@ -39,7 +39,7 @@
 				<div class="registration admin_agile">
 
 					<div class="signin-form profile admin">
-						<h2>${result == null ? '' : result.data }</h2>
+						<h2>${result == null ? '' : result.data } ${error}</h2>
 						<div class="login-form">
 							<form action="/telecom/auth" method="post">
 								<input type="text" name="name" placeholder="姓名"> 

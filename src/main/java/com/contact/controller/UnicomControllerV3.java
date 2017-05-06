@@ -2,6 +2,7 @@ package com.contact.controller;
 
 import com.contact.common.Constants;
 import com.contact.common.Result;
+import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 
 import china.unicom.v3.ChinaUnicomRemoteExecute;
@@ -14,6 +15,7 @@ public class UnicomControllerV3 extends Controller {
 		render("login.jsp");
 	}
 
+	@Before(MyValidator.class)
 	public void login() {
 		String key = this.getSession().getId();
 		String phone = getPara("login");
@@ -39,6 +41,7 @@ public class UnicomControllerV3 extends Controller {
 		renderJson(rs);
 	}
 
+	@Before(MyValidator.class)
 	public void auth() {
 		String key = this.getSession().getId();
 		String code = getPara("code");
