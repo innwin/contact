@@ -43,9 +43,9 @@ public class ChinaUnicomRemoteExecute {
 		try {
 			WebDriver driver = new MyPhantomJSDriver("", 48105);
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			driver.get("http://iservice.10010.com/e4/query/bill/call_dan-iframe.html?menuCode=000100030001");
+			driver.get("http://uac.10010.com/portal/hallLogin");
 			driver.manage().window().maximize();
-			driver.switchTo().frame(1);
+//			driver.switchTo().frame(1);
 			SessionUtils.putSessionId(key, new SessionExpire(((RemoteWebDriver) driver).getSessionId().toString(),System.currentTimeMillis()));
 			return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 		} catch (Exception e) {
@@ -97,7 +97,8 @@ public class ChinaUnicomRemoteExecute {
 			if (!"0000".equals(map.get("resultCode"))) {
 				return new Result(Constants.INPUTERROR, Constants.getMessage(Constants.INPUTERROR));
 			}
-			driver.switchTo().defaultContent();
+//			driver.switchTo().defaultContent();
+			driver.get("http://iservice.10010.com/e4/query/bill/call_dan-iframe.html?menuCode=000100030001");
 			SessionUtils.putPhone(key, login);
 			return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 		} catch (Exception e) {
