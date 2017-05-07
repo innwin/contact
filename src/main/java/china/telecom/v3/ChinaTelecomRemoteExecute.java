@@ -30,6 +30,7 @@ import com.contact.common.SessionUtils;
 import com.contact.common.SessionUtils.SessionExpire;
 import com.contact.util.ImageUtils;
 import com.contact.util.RemotePostUtils;
+import com.contact.util.ToolUtils;
 import com.jfinal.plugin.task.TaskKit;
 
 public class ChinaTelecomRemoteExecute {
@@ -48,7 +49,7 @@ public class ChinaTelecomRemoteExecute {
 
 		}
 		try {
-			WebDriver driver = new MyPhantomJSDriver("", 48105);
+			WebDriver driver = new MyPhantomJSDriver("", ToolUtils.getPort(key));
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.get(
 					"http://zj.189.cn/wt_uac/auth.html?app=wt&login_goto_url=my%2Fben%2Fzhanghu%2Fxiangdan%2F&module=null&auth=uam_login_auth&template=uam_login_page");// https://login.10086.cn?backUrl=about:blank
@@ -68,7 +69,7 @@ public class ChinaTelecomRemoteExecute {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
+		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
 		driver.manage().window().maximize();
 		try {
 			WebDriver augmentedDriver = new Augmenter().augment(driver);
@@ -89,7 +90,7 @@ public class ChinaTelecomRemoteExecute {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
+		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
 		WebElement account = driver.findElement(By.id("u_account"));
 		account.clear();
 		account.sendKeys(login);
@@ -144,7 +145,7 @@ public class ChinaTelecomRemoteExecute {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
+		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
 		try {
 			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("codekey")))
 					.click();// 120s
@@ -161,7 +162,7 @@ public class ChinaTelecomRemoteExecute {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
+		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
 		try {
 			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("codekey")));
 			((RemoteWebDriver) driver).executeScript(

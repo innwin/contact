@@ -28,6 +28,7 @@ import com.contact.common.SessionUtils.SessionExpire;
 import com.contact.util.Base64Image;
 import com.contact.util.ImageUtils;
 import com.contact.util.RemotePostUtils;
+import com.contact.util.ToolUtils;
 import com.jfinal.plugin.task.TaskKit;
 
 public class ChinaMobileRemoteExecute {
@@ -46,7 +47,7 @@ public class ChinaMobileRemoteExecute {
 
 		}
 		try {
-			WebDriver driver = new MyPhantomJSDriver("", 48105);
+			WebDriver driver = new MyPhantomJSDriver("", ToolUtils.getPort(key));
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.get("https://login.10086.cn/login.html?channelID=12003&backUrl=http://shop.10086.cn/i/");// https://login.10086.cn?backUrl=about:blank
 			driver.manage().window().maximize();
@@ -67,7 +68,7 @@ public class ChinaMobileRemoteExecute {
 		}
 		session.time = System.currentTimeMillis();
 		try {
-			WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
+			WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
 			WebElement name = driver.findElement(By.id("p_name"));
 			name.clear();
 			name.sendKeys(login);// 18868945291
@@ -89,7 +90,7 @@ public class ChinaMobileRemoteExecute {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
+		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
 		// driver.findElement(By.id("radiobuttonSMS")).click();
 		// driver.findElement(By.id("p_name")).sendKeys(login);// 18868945291
 		WebElement pwdElement = driver.findElement(By.id("p_pwd"));
@@ -125,7 +126,7 @@ public class ChinaMobileRemoteExecute {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
+		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
 		try {
 			boolean exist = (Boolean) ((RemoteWebDriver) driver)
 					.executeScript("return document.getElementById('imageVec') != null ? true : false ; ");
@@ -152,7 +153,7 @@ public class ChinaMobileRemoteExecute {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
+		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
 		driver.manage().window().maximize();
 		try {
 
@@ -203,7 +204,7 @@ public class ChinaMobileRemoteExecute {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
+		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
 		try {
 			((RemoteWebDriver) driver).executeScript("window.alert=function(data){ window.myData=data; };");
 			WebElement we = driver.findElement(By.id("stc-send-sms"));
@@ -232,7 +233,7 @@ public class ChinaMobileRemoteExecute {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
+		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
 		String jsStart = "window.ajaxBack = $.ajax;" + "\n" //
 				+ "$.ajax = function(setting){" + "\n"//
 				+ "window.myCb = setting.success;" + "\n" //

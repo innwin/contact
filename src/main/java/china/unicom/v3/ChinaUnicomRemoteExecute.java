@@ -23,6 +23,7 @@ import com.contact.common.Result;
 import com.contact.common.SessionUtils;
 import com.contact.common.SessionUtils.SessionExpire;
 import com.contact.util.RemotePostUtils;
+import com.contact.util.ToolUtils;
 import com.jfinal.plugin.task.TaskKit;
 
 public class ChinaUnicomRemoteExecute {
@@ -41,7 +42,7 @@ public class ChinaUnicomRemoteExecute {
 
 		}
 		try {
-			WebDriver driver = new MyPhantomJSDriver("", 48105);
+			WebDriver driver = new MyPhantomJSDriver("", ToolUtils.getPort(key));
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.get("http://uac.10010.com/portal/hallLogin");
 			driver.manage().window().maximize();
@@ -63,7 +64,7 @@ public class ChinaUnicomRemoteExecute {
 		}
 		session.time = System.currentTimeMillis();
 		try {
-			WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
+			WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
 			WebElement userName = new WebDriverWait(driver, 10)
 					.until(ExpectedConditions.visibilityOfElementLocated(By.id("userName")));
 			userName.clear();
@@ -118,7 +119,7 @@ public class ChinaUnicomRemoteExecute {
 		}
 		session.time = System.currentTimeMillis();
 		try {
-			WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
+			WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
 			WebElement button = new WebDriverWait(driver, 10)
 					.until(ExpectedConditions.visibilityOfElementLocated(By.id("huoqu_buttons")));
 			button.click();
@@ -137,7 +138,7 @@ public class ChinaUnicomRemoteExecute {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
+		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
 		try {
 			WebElement input = driver.findElement(By.id("input"));
 			input.clear();

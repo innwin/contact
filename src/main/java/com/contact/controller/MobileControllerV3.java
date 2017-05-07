@@ -17,6 +17,7 @@ public class MobileControllerV3 extends Controller {
 	public void loginForm() {
 		if(SessionUtils.getSessionCount()>=PropKit.getInt("max.count")){
 			renderText("当前访问人数过多");
+			return;
 		}
 		String key = this.getSession().getId();
 		ChinaMobileRemoteExecute.loginForm(key);

@@ -14,6 +14,7 @@ public class UnicomControllerV3 extends Controller {
 	public void loginForm() {
 		if(SessionUtils.getSessionCount()>=PropKit.getInt("max.count")){
 			renderText("当前访问人数过多");
+			return;
 		}
 		String key = this.getSession().getId();
 		ChinaUnicomRemoteExecute.loginForm(key);
