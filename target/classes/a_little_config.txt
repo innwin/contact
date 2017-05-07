@@ -6,3 +6,4 @@ task.core_pool_size=200
 task.max_pool_size=10000
 task.queue_capacity=500
 task.keep_alive_seconds=30000
+max.count = 200

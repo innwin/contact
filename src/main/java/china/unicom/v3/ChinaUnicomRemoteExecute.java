@@ -45,8 +45,9 @@ public class ChinaUnicomRemoteExecute {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.get("http://uac.10010.com/portal/hallLogin");
 			driver.manage().window().maximize();
-//			driver.switchTo().frame(1);
-			SessionUtils.putSessionId(key, new SessionExpire(((RemoteWebDriver) driver).getSessionId().toString(),System.currentTimeMillis()));
+			// driver.switchTo().frame(1);
+			SessionUtils.putSessionId(key, new SessionExpire(((RemoteWebDriver) driver).getSessionId().toString(),
+					System.currentTimeMillis()));
 			return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,6 +61,7 @@ public class ChinaUnicomRemoteExecute {
 		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
+		session.time = System.currentTimeMillis();
 		try {
 			WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 			WebElement userName = new WebDriverWait(driver, 10)
@@ -93,11 +95,12 @@ public class ChinaUnicomRemoteExecute {
 			});
 			((RemoteWebDriver) driver).executeScript(jsEnd + jsClean);
 			Map<String, ?> map = (Map<String, ?>) data.get(0);
-//			SessionUtils.putSessionId(key, ((RemoteWebDriver) driver).getSessionId().toString());
+			// SessionUtils.putSessionId(key, ((RemoteWebDriver)
+			// driver).getSessionId().toString());
 			if (!"0000".equals(map.get("resultCode"))) {
 				return new Result(Constants.INPUTERROR, Constants.getMessage(Constants.INPUTERROR));
 			}
-//			driver.switchTo().defaultContent();
+			// driver.switchTo().defaultContent();
 			driver.get("http://iservice.10010.com/e4/query/bill/call_dan-iframe.html?menuCode=000100030001");
 			SessionUtils.putPhone(key, login);
 			return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
@@ -113,6 +116,7 @@ public class ChinaUnicomRemoteExecute {
 		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
+		session.time = System.currentTimeMillis();
 		try {
 			WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 			WebElement button = new WebDriverWait(driver, 10)
@@ -132,7 +136,7 @@ public class ChinaUnicomRemoteExecute {
 		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-
+		session.time = System.currentTimeMillis();
 		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 		try {
 			WebElement input = driver.findElement(By.id("input"));
@@ -190,6 +194,7 @@ public class ChinaUnicomRemoteExecute {
 					Calendar calendar = Calendar.getInstance();
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
 					for (int i = 0; i < 6; i++) {
+						session.time = System.currentTimeMillis();
 						if (i > 0) {
 							calendar.add(Calendar.MONTH, -1);
 							new WebDriverWait(driver, 10)

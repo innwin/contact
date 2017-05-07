@@ -67,6 +67,7 @@ public class ChinaTelecomRemoteExecute {
 		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
+		session.time = System.currentTimeMillis();
 		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 		driver.manage().window().maximize();
 		try {
@@ -87,6 +88,7 @@ public class ChinaTelecomRemoteExecute {
 		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
+		session.time = System.currentTimeMillis();
 		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 		WebElement account = driver.findElement(By.id("u_account"));
 		account.clear();
@@ -141,6 +143,7 @@ public class ChinaTelecomRemoteExecute {
 		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
+		session.time = System.currentTimeMillis();
 		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 		try {
 			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("codekey")))
@@ -157,6 +160,7 @@ public class ChinaTelecomRemoteExecute {
 		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
+		session.time = System.currentTimeMillis();
 		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 		try {
 			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("codekey")));
@@ -182,6 +186,7 @@ public class ChinaTelecomRemoteExecute {
 				Calendar calendar = Calendar.getInstance();
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
 				for (int i = 0; i < 6; i++) {
+					session.time = System.currentTimeMillis();
 					if (i > 0) {
 						calendar.add(Calendar.MONTH, -1);
 						driver.switchTo().defaultContent();

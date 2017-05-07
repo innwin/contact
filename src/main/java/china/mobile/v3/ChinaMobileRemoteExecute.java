@@ -65,6 +65,7 @@ public class ChinaMobileRemoteExecute {
 		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
+		session.time = System.currentTimeMillis();
 		try {
 			WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 			WebElement name = driver.findElement(By.id("p_name"));
@@ -87,6 +88,7 @@ public class ChinaMobileRemoteExecute {
 		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
+		session.time = System.currentTimeMillis();
 		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 		// driver.findElement(By.id("radiobuttonSMS")).click();
 		// driver.findElement(By.id("p_name")).sendKeys(login);// 18868945291
@@ -122,6 +124,7 @@ public class ChinaMobileRemoteExecute {
 		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
+		session.time = System.currentTimeMillis();
 		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 		try {
 			boolean exist = (Boolean) ((RemoteWebDriver) driver)
@@ -148,6 +151,7 @@ public class ChinaMobileRemoteExecute {
 		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
+		session.time = System.currentTimeMillis();
 		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 		driver.manage().window().maximize();
 		try {
@@ -198,6 +202,7 @@ public class ChinaMobileRemoteExecute {
 		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
+		session.time = System.currentTimeMillis();
 		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 		try {
 			((RemoteWebDriver) driver).executeScript("window.alert=function(data){ window.myData=data; };");
@@ -226,6 +231,7 @@ public class ChinaMobileRemoteExecute {
 		if (session == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
+		session.time = System.currentTimeMillis();
 		WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
 		String jsStart = "window.ajaxBack = $.ajax;" + "\n" //
 				+ "$.ajax = function(setting){" + "\n"//
@@ -286,6 +292,7 @@ public class ChinaMobileRemoteExecute {
 				@Override
 				public void run() {
 					for (int i = 1; i <= 6; i++) {
+						session.time = System.currentTimeMillis();
 						if (i > 1) {
 							driver.findElement(By.id("month" + i)).click();
 						}

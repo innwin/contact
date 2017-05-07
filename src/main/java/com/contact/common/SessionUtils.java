@@ -20,7 +20,9 @@ public class SessionUtils {
 		}
 		public long time;
 	}
-
+	public static int getSessionCount() {
+		return mapSessionId.size();
+	}
 	public static void cleanSession(String key) {
 		SessionExpire session = SessionUtils.getSessionId(key);
 		try {
@@ -40,7 +42,7 @@ public class SessionUtils {
 		executor.scheduleWithFixedDelay(new Runnable() {
 			public void run() {
 				for (Entry<String, SessionExpire> kv : mapSessionId.entrySet()) {
-					if (System.currentTimeMillis() - kv.getValue().time > 1000 * 60 * 10) {
+					if (System.currentTimeMillis() - kv.getValue().time > 1000 * 60 * 3) {
 						cleanSession(kv.getKey());
 					}
 				}

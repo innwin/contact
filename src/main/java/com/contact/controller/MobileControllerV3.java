@@ -4,15 +4,20 @@ import java.io.File;
 
 import com.contact.common.Constants;
 import com.contact.common.Result;
+import com.contact.common.SessionUtils;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.render.MyCaptchaRender;
+import com.jfinal.kit.PropKit;
 
 import china.mobile.v3.ChinaMobileRemoteExecute;
 
 public class MobileControllerV3 extends Controller {
 
 	public void loginForm() {
+		if(SessionUtils.getSessionCount()>=PropKit.getInt("max.count")){
+			renderText("当前访问人数过多");
+		}
 		String key = this.getSession().getId();
 		ChinaMobileRemoteExecute.loginForm(key);
 		render("login.jsp");
