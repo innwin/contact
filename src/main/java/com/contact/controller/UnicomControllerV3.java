@@ -2,7 +2,7 @@ package com.contact.controller;
 
 import com.contact.common.Constants;
 import com.contact.common.Result;
-import com.contact.common.SessionUtils;
+import com.contact.util.SessionUtils;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.PropKit;

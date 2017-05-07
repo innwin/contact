@@ -1,4 +1,4 @@
-package com.contact.common;
+package com.contact.util;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -14,20 +14,24 @@ import org.openqa.selenium.phantomjs.MyPhantomJSDriver;
 public class SessionUtils {
 	public static class SessionExpire {
 		public String sessionId;
+
 		public SessionExpire(String sessionId, long time) {
 			this.sessionId = sessionId;
 			this.time = time;
 		}
+
 		public long time;
 	}
+
 	public static int getSessionCount() {
 		return mapSessionId.size();
 	}
+
 	public static void cleanSession(String key) {
 		SessionExpire session = SessionUtils.getSessionId(key);
 		try {
 			if (session != null && !StringUtils.isEmpty(session.sessionId)) {
-				WebDriver driver = new MyPhantomJSDriver(session.sessionId, 48105);
+				WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
 				driver.quit();
 			}
 		} catch (Exception e) {

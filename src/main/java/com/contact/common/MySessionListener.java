@@ -7,7 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.MyPhantomJSDriver;
 
-import com.contact.common.SessionUtils.SessionExpire;
+import com.contact.util.SessionUtils;
+import com.contact.util.SessionUtils.SessionExpire;
 
 public class MySessionListener implements HttpSessionListener {
 
