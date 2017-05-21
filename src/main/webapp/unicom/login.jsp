@@ -59,8 +59,7 @@
 		<!--copy rights start here-->
 		<div class="copyrights">
 			<p>
-				Copyright &copy; 2017.Company name All rights reserved.<a
-					href="http://www.mycodes.net/" target="_blank">Mr.chen</a>
+				服务密码是指你在登陆服务商的密码
 			</p>
 		</div>
 		<!--copy rights end here-->

@@ -26,6 +26,7 @@ china/mobile/v2/ChinaMobileRemoteExecuteTmp2$1.class
 com/jfinal/plugin/task/support/ClassUtils.class
 com/jfinal/plugin/task/support/AsyncTaskExecutor.class
 china/mobile/v2/Constants.class
+com/contact/util/SessionUtils.class
 com/jfinal/plugin/task/support/ReflectionUtils$3.class
 org/openqa/selenium/remote/MyProtocolHandshake$Result.class
 china/telecom/v3/ChinaTelecomRemoteExecute$1.class
@@ -42,6 +43,7 @@ china/telecom/v3/MobileMain.class
 com/contact/controller/UnicomControllerV3.class
 com/jfinal/plugin/task/support/ReflectionUtils$4.class
 china/mobile/v2/ChinaMobileRemoteExecuteTmp2$2.class
+com/contact/util/SessionUtils$SessionExpire.class
 china/telecom/v3/ChinaTelecomRemoteExecute$2.class
 china/unicom/v3/MobileMain$1.class
 com/jfinal/plugin/task/support/ReflectionUtils$5.class
@@ -65,13 +67,13 @@ com/jfinal/plugin/task/support/ReflectionUtils$2.class
 china/telecom/v3/MobileMain$1.class
 com/jfinal/plugin/task/support/ReflectionUtils$FieldCallback.class
 china/mobile/v2/MobileMain$1.class
-com/contact/common/SessionUtils.class
 china/mobile/v2/MobileMain.class
 org/openqa/selenium/phantomjs/PhantomJSDriverService$1.class
 com/contact/util/Base64Image.class
 org/openqa/selenium/phantomjs/PhantomJSCommandExecutor.class
 china/telecom/v3/ChinaTelecomRemoteExecute$4.class
 com/jfinal/plugin/task/support/TaskExecutor.class
+com/contact/util/ToolUtils.class
 com/jfinal/plugin/task/TaskPlugin.class
 china/unicom/v3/ChinaUnicomRemoteExecute$1.class
 china/unicom/v3/MobileMain.class
@@ -96,3 +98,4 @@ china/mobile/v2/ChinaMobileRemoteExecuteTmp$1.class
 org/openqa/selenium/phantomjs/MyPhantomJSDriver.class
 org/openqa/selenium/remote/MyHttpCommandExecutor.class
 china/mobile/v2/ChinaMobileRemoteExecute$3.class
+com/contact/util/SessionUtils$1.class

@@ -376,8 +376,13 @@ ul.gn-submenu i.fa::before{
 		margin: 0;
 	}
 	.w3_agileits_top_nav {
-		height: auto;
+		height: 50px;
 		font-size: 13px;
+		background: #e74c3c
+	}
+	
+	.w3_font_white{
+		color: white;
 	}
 	.gn-menu-wrapper.gn-open-all {
 		z-index: 9999;

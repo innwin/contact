@@ -41,7 +41,7 @@
 		<div class="inner_content">
 
 			<div class="inner_content_w3_agile_info two_in">
-				<h2 class="w3_inner_tittle">请选择</h2>
+				<!-- <h2 class="w3_inner_tittle">请选择</h2> -->
 				<!-- tables -->
 
 				<div class="agile-tables">
@@ -50,7 +50,7 @@
 						<table id="table">
 							<tbody>
 									<tr>
-										<td><a href="/mobile/loginForm">中国移动</a></td>
+										<td class="w3_font_white" ><a href="/mobile/loginForm">中国移动</a></td>
 										<td><a href="/unicom/loginForm">中国联通</a></td>
 										<td><a href="/telecom/loginForm">中国电信</a></td>
 									</tr>
@@ -68,8 +68,7 @@
 		<!--copy rights start here-->
 		<div class="copyrights">
 			<p>
-				Copyright &copy; 2017.Company name All rights reserved. <a
-					href="http://www.mycodes.net/" target="_blank">Mr.chen</a>
+				Copyright &copy; 2017.Company name All rights reserved.
 			</p>
 		</div>
 		<!--copy rights end here-->
