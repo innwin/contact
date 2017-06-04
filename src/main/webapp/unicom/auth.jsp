@@ -33,25 +33,18 @@
 			</ul>
 			<div class="js-tabconts">
 				<div class="js-tabcont selected">
-					<form action="/mobile/auth" method="post">
+					<form action="/unicom/auth" method="post">
 						<div class="login-input-group" id="login-form-mobile">
 
 							<div class="login-input-item">
 								<i class="icon-mobile"></i> 
 								<input class="login-input"
-									type="text" name="servPwd" placeholder="服务密码" required="required" />
+									type="text" name="code" placeholder="短信验证码" required="required" />
 								<i class="clear"></i>
 							</div>
 							<div class="login-input-item">
 								<i class="icon-lock"></i> 
-								<input class="login-input login-input-dyn" type="text" name="imgCode"
-									placeholder="短信验证码" maxlength="6" /> 
-								<i class="clear clear-dyn"></i>
-								<img class="dyn-pwd-btn" id="verify_code" src="/mobile/getVerifyCode">
-							</div>
-							<div class="login-input-item">
-								<i class="icon-lock"></i> 
-								<input class="login-input login-input-dyn" type="text" name="smsPwd"
+								<input class="login-input login-input-dyn" type="text" name="code"
 									placeholder="短信验证码" maxlength="6" /> 
 								<i class="clear clear-dyn"></i>
 								<div class="dyn-pwd-btn" id="send_sms"
@@ -87,25 +80,13 @@
 <script>
 	$(function() {
 		$("#send_sms").click(function() {
-			var phone = $("#login").val();
-			if (!phone) {
-				$.dialog.tips("请输入手机号", 1)
-				return;
-			}
 			$.ajax({
 				type : "POST",
-				url : "/mobile/sendSMS",
-				data : {
-					"login" : phone
-				},
+				url : "/unicom/sendSMS",
 				success : function(msg) {
 					$.dialog.tips("发送成功", 1)
 				}
 			});
-		});
-		
-		$("#verify_code").click(function() {
-			this.src="/mobile/getVerifyCode?refresh=true&random="+Math.random();
 		});
 		
 		var c = $("#login-tips"), d = $(".forget-pwd-pop"), u = d.find(".ok");

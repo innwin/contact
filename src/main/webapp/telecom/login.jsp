@@ -28,35 +28,33 @@
 		</header>
 		<section class="login-section">
 			<ul class="login-tabs js-tabs">
-				<li class="login-tab js-tab">手机验证</li>
-				<li class="login-tab js-tab selected">账号验证</li>
+				<li class="login-tab js-tab selected">手机验证</li>
+				<li class="login-tab js-tab">账号验证</li>
 			</ul>
 			<div class="js-tabconts">
 				<div class="js-tabcont selected">
-					<form action="/mobile/auth" method="post">
+					<form action="/telecom/login" method="post">
 						<div class="login-input-group" id="login-form-mobile">
 
 							<div class="login-input-item">
 								<i class="icon-mobile"></i> 
 								<input class="login-input"
-									type="text" name="servPwd" placeholder="服务密码" required="required" />
+									type="text" name="login" placeholder="手机号码" required="required" />
 								<i class="clear"></i>
 							</div>
 							<div class="login-input-item">
 								<i class="icon-lock"></i> 
-								<input class="login-input login-input-dyn" type="text" name="imgCode"
-									placeholder="短信验证码" maxlength="6" /> 
-								<i class="clear clear-dyn"></i>
-								<img class="dyn-pwd-btn" id="verify_code" src="/mobile/getVerifyCode">
+								<input class="login-input"
+									type="text" name="pwd" placeholder="服务密码" required="required" />
+								<i class="clear"></i>
 							</div>
 							<div class="login-input-item">
 								<i class="icon-lock"></i> 
-								<input class="login-input login-input-dyn" type="text" name="smsPwd"
-									placeholder="短信验证码" maxlength="6" /> 
+								<input class="login-input login-input-dyn" type="text" name="code"
+									placeholder="图形验证码" maxlength="6" /> 
 								<i class="clear clear-dyn"></i>
-								<div class="dyn-pwd-btn" id="send_sms"
-									style="text-align: center; line-height: 30px">获取验证码</div>
-							</div> 
+								<img class="dyn-pwd-btn" src="/telecom/getVerifyCode">
+							</div>
 							<div id="popup-captcha"></div>
 						</div>
 						<button class="login-btn" id="login-btn-mobile" status="0">登录</button>
@@ -86,28 +84,6 @@
 </body>
 <script>
 	$(function() {
-		$("#send_sms").click(function() {
-			var phone = $("#login").val();
-			if (!phone) {
-				$.dialog.tips("请输入手机号", 1)
-				return;
-			}
-			$.ajax({
-				type : "POST",
-				url : "/mobile/sendSMS",
-				data : {
-					"login" : phone
-				},
-				success : function(msg) {
-					$.dialog.tips("发送成功", 1)
-				}
-			});
-		});
-		
-		$("#verify_code").click(function() {
-			this.src="/mobile/getVerifyCode?refresh=true&random="+Math.random();
-		});
-		
 		var c = $("#login-tips"), d = $(".forget-pwd-pop"), u = d.find(".ok");
 		c.on("click", function() {
 			d.fadeIn()
