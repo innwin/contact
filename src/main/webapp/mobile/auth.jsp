@@ -45,7 +45,7 @@
 							<div class="login-input-item">
 								<i class="icon-lock"></i> 
 								<input class="login-input login-input-dyn" type="text" name="imgCode"
-									placeholder="短信验证码" maxlength="6" /> 
+									placeholder="图形验证码" maxlength="6" /> 
 								<i class="clear clear-dyn"></i>
 								<img class="dyn-pwd-btn" id="verify_code" src="/mobile/getVerifyCode">
 							</div>
@@ -87,11 +87,6 @@
 <script>
 	$(function() {
 		$("#send_sms").click(function() {
-			var phone = $("#login").val();
-			if (!phone) {
-				$.dialog.tips("请输入手机号", 1)
-				return;
-			}
 			$.ajax({
 				type : "POST",
 				url : "/mobile/sendSMS",
