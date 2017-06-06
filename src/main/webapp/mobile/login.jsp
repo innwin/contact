@@ -39,7 +39,7 @@
 							<div class="login-input-item">
 								<i class="icon-mobile"></i> 
 								<input class="login-input"
-									type="tel" name="login" placeholder="手机号码" required="required" />
+									type="tel" id="login" name="login" placeholder="手机号码" required="required" />
 								<i class="clear"></i>
 							</div>
 							<div class="login-input-item">
