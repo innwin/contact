@@ -90,9 +90,6 @@
 			$.ajax({
 				type : "POST",
 				url : "/mobile/sendSMS",
-				data : {
-					"login" : phone
-				},
 				success : function(msg) {
 					$.dialog.tips("发送成功", 1)
 				}
