@@ -35,13 +35,6 @@
 				<div class="js-tabcont selected">
 					<form action="/unicom/auth" method="post">
 						<div class="login-input-group" id="login-form-mobile">
-
-							<div class="login-input-item">
-								<i class="icon-mobile"></i> 
-								<input class="login-input"
-									type="text" name="code" placeholder="短信验证码" required="required" />
-								<i class="clear"></i>
-							</div>
 							<div class="login-input-item">
 								<i class="icon-lock"></i> 
 								<input class="login-input login-input-dyn" type="text" name="code"
