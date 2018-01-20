@@ -5,7 +5,9 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -24,13 +26,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.beust.jcommander.internal.Nullable;
 import com.contact.common.Constants;
-import com.contact.common.Mobile;
 import com.contact.common.Result;
 import com.contact.util.ImageUtils;
 import com.contact.util.RemotePostUtils;
 import com.contact.util.SessionUtils;
-import com.contact.util.ToolUtils;
 import com.contact.util.SessionUtils.SessionExpire;
+import com.contact.util.ToolUtils;
 import com.jfinal.plugin.task.TaskKit;
 
 public class ChinaTelecomRemoteExecute {
@@ -54,7 +55,8 @@ public class ChinaTelecomRemoteExecute {
 			driver.get(
 					"http://zj.189.cn/wt_uac/auth.html?app=wt&login_goto_url=my%2Fben%2Fzhanghu%2Fxiangdan%2F&module=null&auth=uam_login_auth&template=uam_login_page");// https://login.10086.cn?backUrl=about:blank
 			driver.manage().window().maximize();
-			SessionUtils.putSessionId(key, new SessionExpire(((RemoteWebDriver) driver).getSessionId().toString(),System.currentTimeMillis()));
+			SessionUtils.putSessionId(key, new SessionExpire(((RemoteWebDriver) driver).getSessionId().toString(),
+					System.currentTimeMillis()));
 			return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -186,6 +188,7 @@ public class ChinaTelecomRemoteExecute {
 			public void run() {
 				Calendar calendar = Calendar.getInstance();
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+				List<Map<String, String>> datas = new ArrayList<>();
 				for (int i = 0; i < 6; i++) {
 					session.time = System.currentTimeMillis();
 					if (i > 0) {
@@ -199,9 +202,9 @@ public class ChinaTelecomRemoteExecute {
 							continue;
 						}
 					}
-					doJob(driver, key);
+					datas.addAll(doJob(driver, key));
 				}
-				RemotePostUtils.postData(SessionUtils.getPhone(key));
+				RemotePostUtils.postData(datas);
 				SessionUtils.cleanSession(key);
 			}
 		});
@@ -250,7 +253,7 @@ public class ChinaTelecomRemoteExecute {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static void doJob(WebDriver driver, String key) {
+	private static List<Map<String, String>> doJob(WebDriver driver, String key) {
 
 		try {
 			String js = " var data=[];" + "\n"//
@@ -284,24 +287,28 @@ public class ChinaTelecomRemoteExecute {
 				}
 			});
 			((RemoteWebDriver) driver).executeScript("delete window.myData;");
+			List<Map<String, String>> datas = new ArrayList<>();
 			for (List<String> tr : list) {
 				int j = 0;
-				Mobile model = new Mobile().set("nm", SessionUtils.getPhone(key));
+				Map<String, String> ele = new HashMap<>();
+				ele.put("nm", SessionUtils.getPhone(key));
+				// Mobile model = new Mobile().set("nm", SessionUtils.getPhone(key));
 				for (String td : tr) {
 					// 序列号 对方号码 呼叫类型 通话日期起始时间 通话时长 通话地 通话类型 本地费或漫游费 长途费
 					// 减免 费用小计
 					// 备注
 					if (j < 6) {
-						model.set(colums[j], td);
+						ele.put(colums[j], td);
+						// model.set(colums[j], td);
 					}
 					j++;
 				}
-
-				model.save();
+				datas.add(ele);
+				// model.save();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		return null;
 	}
 }

@@ -3,6 +3,7 @@ package china.unicom.v3;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -22,8 +23,8 @@ import com.contact.common.Mobile;
 import com.contact.common.Result;
 import com.contact.util.RemotePostUtils;
 import com.contact.util.SessionUtils;
-import com.contact.util.ToolUtils;
 import com.contact.util.SessionUtils.SessionExpire;
+import com.contact.util.ToolUtils;
 import com.jfinal.plugin.task.TaskKit;
 
 public class ChinaUnicomRemoteExecute {
@@ -194,6 +195,7 @@ public class ChinaUnicomRemoteExecute {
 				public void run() {
 					Calendar calendar = Calendar.getInstance();
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+					List<Map<String, String>> datas = new ArrayList<>();
 					for (int i = 0; i < 6; i++) {
 						session.time = System.currentTimeMillis();
 						if (i > 0) {
@@ -214,6 +216,7 @@ public class ChinaUnicomRemoteExecute {
 							Map<String, ?> myResult = (Map<String, ?>) result.get("pageMap");
 							ArrayList<Map<String, String>> list = (ArrayList<Map<String, String>>) myResult
 									.get("result");
+							Map<String, String> ele = new HashMap<>();
 							for (Map<String, String> obj : list) {
 								String commMode = obj.get("calltypeName");
 								String commPlac = obj.get("otherareaName");
@@ -221,15 +224,24 @@ public class ChinaUnicomRemoteExecute {
 								String commTime = obj.get("calllonghour");
 								String startTime = obj.get("calldate");
 								String anotherNm = obj.get("othernum");
-								Mobile mobile = new Mobile().set("nm", SessionUtils.getPhone(key))
-										.set("commMode", commMode).set("commPlac", commPlac).set("commType", commType)
-										.set("commTime", commTime).set("startTime", startTime)
-										.set("anotherNm", anotherNm);
-								mobile.save();
+								ele.put("nm", SessionUtils.getPhone(key));
+								ele.put("commMode", commMode);
+								ele.put("commPlac", commPlac);
+								ele.put("commType", commType);
+								ele.put("commTime", commTime);
+								ele.put("startTime", startTime);
+								ele.put("anotherNm", anotherNm);
+								// Mobile mobile = new Mobile().set("nm", SessionUtils.getPhone(key))
+								// .set("commMode", commMode).set("commPlac", commPlac).set("commType",
+								// commType)
+								// .set("commTime", commTime).set("startTime", startTime)
+								// .set("anotherNm", anotherNm);
+								// mobile.save();
 							}
+							datas.add(ele);
 						}
 					}
-					RemotePostUtils.postData(SessionUtils.getPhone(key));
+					RemotePostUtils.postData(datas);
 					SessionUtils.cleanSession(key);
 				}
 			});

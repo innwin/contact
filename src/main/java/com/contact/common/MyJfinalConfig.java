@@ -49,12 +49,13 @@ public class MyJfinalConfig extends JFinalConfig {
 		TaskPlugin taskPlugin = new TaskPlugin();
 		me.add(taskPlugin);
 		// 配置C3p0数据库连接池插件
-		C3p0Plugin c3p0Plugin = new C3p0Plugin(PropKit.get("jdbcUrl"), PropKit.get("user"), PropKit.get("password").trim());
-		me.add(c3p0Plugin);
+		// C3p0Plugin c3p0Plugin = new C3p0Plugin(PropKit.get("jdbcUrl"),
+		// PropKit.get("user"), PropKit.get("password").trim());
+		// me.add(c3p0Plugin);
 		// 配置ActiveRecord插件
-		ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
-		me.add(arp);
-		arp.addMapping("mobile", Mobile.class);	// 映射blog 表到 Blog模型
+		// ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
+		// me.add(arp);
+		// arp.addMapping("mobile", Mobile.class); // 映射blog 表到 Blog模型
 	}
 	
 	/**

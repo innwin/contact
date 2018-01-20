@@ -1,9 +1,14 @@
 package com.contact.util;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
+
+import org.eclipse.jetty.util.ajax.JSON;
 
 import com.contact.common.Mobile;
 import com.jfinal.kit.PropKit;
@@ -12,11 +17,20 @@ import com.jfinal.plugin.activerecord.Db;
 public class RemotePostUtils {
 
 	public static void postData(List<Map<String, String>> datas) {
-		try {
-			HttpRequestUtils.httpPost(PropKit.get("post.url"), datas);
-		} catch (Exception e) {
-			e.printStackTrace();
+		Pattern pattern = Pattern
+				.compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
+		String url = PropKit.get("post.url");
+		if (pattern.matcher(url).matches()) {
+			try {
+				HttpRequestUtils.httpPost(url, datas);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.printf("%s data: %s ", JSON.toString(datas),
+					new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		}
+
 	}
 
 	public static void postData(String nm) {
