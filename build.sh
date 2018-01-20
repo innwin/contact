@@ -7,7 +7,11 @@ build(){
 }
 
 start(){	
-	docker run --net=host -d --name=contact ${tag}
+	if [ `docker ps -aqf name=contact`x!=''x  ]; then
+		docker rm -f contact
+	fi
+	id=`docker run --net=host -d --name=contact ${tag}`
+	docker logs -f ${id}
 }
 
 push(){

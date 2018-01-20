@@ -2,15 +2,13 @@ package china.mobile.v3;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.phantomjs.MyPhantomJSDriver;
@@ -21,14 +19,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.beust.jcommander.internal.Nullable;
 import com.contact.common.Constants;
-import com.contact.common.Mobile;
 import com.contact.common.Result;
 import com.contact.util.Base64Image;
-import com.contact.util.ImageUtils;
 import com.contact.util.RemotePostUtils;
 import com.contact.util.SessionUtils;
-import com.contact.util.ToolUtils;
 import com.contact.util.SessionUtils.SessionExpire;
+import com.contact.util.ToolUtils;
 import com.jfinal.plugin.task.TaskKit;
 
 public class ChinaMobileRemoteExecute {
@@ -52,7 +48,8 @@ public class ChinaMobileRemoteExecute {
 			driver.get("https://login.10086.cn/login.html?channelID=12003&backUrl=http://shop.10086.cn/i/");// https://login.10086.cn?backUrl=about:blank
 			driver.manage().window().maximize();
 			driver.findElement(By.id("radiobuttonSMS")).click();
-			SessionUtils.putSessionId(key, new SessionExpire(((RemoteWebDriver) driver).getSessionId().toString(),System.currentTimeMillis()));
+			SessionUtils.putSessionId(key, new SessionExpire(((RemoteWebDriver) driver).getSessionId().toString(),
+					System.currentTimeMillis()));
 			return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -289,6 +286,7 @@ public class ChinaMobileRemoteExecute {
 			if (!"000000".equals(map.get("retCode"))) {
 				return new Result(Constants.INPUTERROR, map.get("retMsg"));
 			}
+			List<Map<String, String>> datas = new ArrayList<>();
 			TaskKit.taskExecutor.execute(new Runnable() {
 				@Override
 				public void run() {
@@ -331,19 +329,30 @@ public class ChinaMobileRemoteExecute {
 							String remark = obj.get("remark");
 							String startTime = obj.get("startTime");
 							String anotherNm = String.valueOf(obj.get("anotherNm"));
+							Map<String, String> ele = new HashMap<>();
+							ele.put("nm", SessionUtils.getPhone(key));
+							ele.put("commMode", commMode);
+							ele.put("commPlac", commPlac);
+							ele.put("commType", commType);
+							ele.put("commTime", commTime);
+							datas.add(ele);
+							// .set("remark", remark).set("startTime", startTime).set("anotherNm",
+							// anotherNm)
+							// datas.add(new )
 							// String mealFavorable = obj.get("mealFavorable");
 							// String commFee = obj.get("commFee");
-							new Mobile().set("nm", SessionUtils.getPhone(key)).set("commMode", commMode)
-									.set("commPlac", commPlac).set("commType", commType).set("commTime", commTime)
-									.set("remark", remark).set("startTime", startTime).set("anotherNm", anotherNm)
-									// .set("mealFavorable",
-									// mealFavorable).set("commFee", commFee)
-									.save();
+							// new Mobile().set("nm", SessionUtils.getPhone(key)).set("commMode", commMode)
+							// .set("commPlac", commPlac).set("commType", commType).set("commTime",
+							// commTime)
+							// .set("remark", remark).set("startTime", startTime).set("anotherNm",
+							// anotherNm)
+							// // .set("mealFavorable",
+							// // mealFavorable).set("commFee", commFee)
+							// .save();
 						}
-						// System.out.println(myData + "---------------->");
 					}
-//					driver.quit();
-					RemotePostUtils.postData(SessionUtils.getPhone(key));
+					// driver.quit();
+					RemotePostUtils.postData(datas);
 					SessionUtils.cleanSession(key);
 				}
 			});

@@ -23,20 +23,20 @@ import org.eclipse.jetty.util.ajax.JSON;
 
 public class HttpRequestUtils {
 
-	public static String httpPost(String url, Map<String, Object> map) {
+	public static String httpPost(String url, Object body) {
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 		HttpPost method = new HttpPost(url);
 		try {
-			if (null != map) {
-				 StringEntity entity = new  StringEntity(JSON.toString(map), "utf-8");
-				 entity.setContentEncoding("UTF-8");
-				 entity.setContentType("application/json");
-				 method.setEntity(entity);
-//				List<NameValuePair> params = new ArrayList<NameValuePair>();
-//				for (Entry<String, String> kv : map.entrySet()) {
-//					params.add(new BasicNameValuePair(kv.getKey(), kv.getValue()));
-//				}
-//				method.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+			if (null != body) {
+				StringEntity entity = new StringEntity(JSON.toString(body), "utf-8");
+				entity.setContentEncoding("UTF-8");
+				entity.setContentType("application/json");
+				method.setEntity(entity);
+				// List<NameValuePair> params = new ArrayList<NameValuePair>();
+				// for (Entry<String, String> kv : map.entrySet()) {
+				// params.add(new BasicNameValuePair(kv.getKey(), kv.getValue()));
+				// }
+				// method.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
 
 			}
 			HttpResponse result = httpClient.execute(method);
