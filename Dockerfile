@@ -6,7 +6,8 @@ apt-get -y install oracle-java8-installer
 ENV dir /var/contact
 
 COPY src ${dir}/src
-COPY pom.xml ${dir}/
+COPY pom.xml mvnw ${dir}/
+COPY .mvn ${dir}/.mvn
 COPY phantomjs /usr/bin/
 
 WORKDIR ${dir}
