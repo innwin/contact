@@ -7,6 +7,10 @@ build(){
 }
 
 start(){	
+	if [ {$1}x==""x ]; then
+		echo "POST_URL is needed"
+		exit(1)
+	fi
 	if [ `docker ps -aqf name=contact`x!=''x  ]; then
 		docker rm -f contact
 	fi
@@ -23,7 +27,7 @@ case $1 in
 	build
 	;;
 	start)
-	start
+	start $2
 	;;
 	push)
 	push

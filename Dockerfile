@@ -16,6 +16,8 @@ COPY pom.xml mvnw ${dir}/
 COPY .mvn ${dir}/.mvn
 COPY phantomjs /usr/bin/
 
+RUN sed -i "s/post.url=__blank/post.url=${POST_URL}/g" ${dir}/src/main/resources/a_little_config.txt
+
 WORKDIR ${dir}
 
 CMD ./mvnw jetty:run
