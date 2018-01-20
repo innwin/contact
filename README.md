@@ -2,7 +2,7 @@
 
 ```
 sudo ./build build
-sudo ./build start
+sudo ./build start ${POST_URL} # send the record to the url
 ```
 
 ### 情景
