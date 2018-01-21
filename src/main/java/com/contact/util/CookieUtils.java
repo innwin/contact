@@ -62,7 +62,7 @@ public class CookieUtils {
 					}
 				}
 			}
-		}, 0, 100, TimeUnit.MILLISECONDS);
+		}, 0, 1, TimeUnit.SECONDS);
 
 	}
 
@@ -71,7 +71,6 @@ public class CookieUtils {
 	}
 
 	public static void putNm(Controller c, String nm) {
-		String id = getSessionId(c);
 		put(c, "", nm);
 	}
 
