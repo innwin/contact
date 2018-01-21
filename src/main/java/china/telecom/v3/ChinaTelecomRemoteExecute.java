@@ -13,6 +13,7 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -29,8 +30,8 @@ import com.contact.common.Constants;
 import com.contact.common.Result;
 import com.contact.util.ImageUtils;
 import com.contact.util.RemotePostUtils;
-import com.contact.util.SessionUtils;
-import com.contact.util.SessionUtils.SessionExpire;
+import com.contact.util.CookieUtils;
+import com.contact.util.CookieUtils.SessionExpire;
 import com.contact.util.ToolUtils;
 import com.jfinal.plugin.task.TaskKit;
 
@@ -41,23 +42,14 @@ public class ChinaTelecomRemoteExecute {
 	}
 
 	public static Result loginForm(String key) {
-		if (SessionUtils.getSessionId(key) != null) {
-			try {
-				SessionUtils.cleanSession(key);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}
+		CookieUtils.cleanSession(key);
 		try {
 			WebDriver driver = new MyPhantomJSDriver("", ToolUtils.getPort(key));
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.get(
 					"http://zj.189.cn/wt_uac/auth.html?app=wt&login_goto_url=my%2Fben%2Fzhanghu%2Fxiangdan%2F&module=null&auth=uam_login_auth&template=uam_login_page");// https://login.10086.cn?backUrl=about:blank
 			driver.manage().window().maximize();
-			SessionUtils.putSessionId(key, new SessionExpire(((RemoteWebDriver) driver).getSessionId().toString(),
-					System.currentTimeMillis()));
-			return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
+			return new Result(Constants.SUCCESS, ((RemoteWebDriver) driver).getSessionId().toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
@@ -65,13 +57,11 @@ public class ChinaTelecomRemoteExecute {
 
 	}
 
-	public static Result getVerifyImage(String key) {
-		SessionExpire session = SessionUtils.getSessionId(key);
-		if (session == null) {
+	public static Result getVerifyImage(String sessionId,String key) {
+		if (StringUtils.isEmpty(sessionId)) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
+		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
 		driver.manage().window().maximize();
 		try {
 			WebDriver augmentedDriver = new Augmenter().augment(driver);
@@ -86,13 +76,11 @@ public class ChinaTelecomRemoteExecute {
 		}
 	}
 
-	public static Result login(String key, String login, String pwd, String code) {
-		SessionExpire session = SessionUtils.getSessionId(key);
-		if (session == null) {
+	public static Result login(String sessionId,String key, String login, String pwd, String code) {
+		if (StringUtils.isEmpty(sessionId)) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
+		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
 		WebElement account = driver.findElement(By.id("u_account"));
 		account.clear();
 		account.sendKeys(login);
@@ -132,7 +120,6 @@ public class ChinaTelecomRemoteExecute {
 			if (result == null || result.indexOf("success") != 0) {
 				return new Result(Constants.INPUTERROR, Constants.getMessage(Constants.INPUTERROR));
 			}
-			SessionUtils.putPhone(key, login);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
@@ -141,13 +128,11 @@ public class ChinaTelecomRemoteExecute {
 
 	}
 
-	public static Result sendCode(String key) {
-		SessionExpire session = SessionUtils.getSessionId(key);
-		if (session == null) {
+	public static Result sendCode(String sessionId,String key) {
+		if (StringUtils.isEmpty(sessionId)) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
+		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
 		try {
 			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("codekey")))
 					.click();// 120s
@@ -158,13 +143,11 @@ public class ChinaTelecomRemoteExecute {
 		return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 	}
 
-	public static Result auth(String key, String name, String idCard, String code) {
-		SessionExpire session = SessionUtils.getSessionId(key);
-		if (session == null) {
+	public static Result auth(String sessionId, String key, String name, String idCard, String code) {
+		if (StringUtils.isEmpty(sessionId)) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
+		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
 		try {
 			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("codekey")));
 			((RemoteWebDriver) driver).executeScript(
@@ -190,7 +173,6 @@ public class ChinaTelecomRemoteExecute {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
 				List<Map<String, String>> datas = new ArrayList<>();
 				for (int i = 0; i < 6; i++) {
-					session.time = System.currentTimeMillis();
 					if (i > 0) {
 						calendar.add(Calendar.MONTH, -1);
 						driver.switchTo().defaultContent();
@@ -205,7 +187,7 @@ public class ChinaTelecomRemoteExecute {
 					datas.addAll(doJob(driver, key));
 				}
 				RemotePostUtils.postData(datas);
-				SessionUtils.cleanSession(key);
+				CookieUtils.cleanSession(key);
 			}
 		});
 
@@ -291,7 +273,7 @@ public class ChinaTelecomRemoteExecute {
 			for (List<String> tr : list) {
 				int j = 0;
 				Map<String, String> ele = new HashMap<>();
-				ele.put("nm", SessionUtils.getPhone(key));
+				ele.put("nm", key);
 				// Mobile model = new Mobile().set("nm", SessionUtils.getPhone(key));
 				for (String td : tr) {
 					// 序列号 对方号码 呼叫类型 通话日期起始时间 通话时长 通话地 通话类型 本地费或漫游费 长途费

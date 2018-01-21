@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,8 +23,8 @@ import com.contact.common.Constants;
 import com.contact.common.Result;
 import com.contact.util.Base64Image;
 import com.contact.util.RemotePostUtils;
-import com.contact.util.SessionUtils;
-import com.contact.util.SessionUtils.SessionExpire;
+import com.contact.util.CookieUtils;
+import com.contact.util.CookieUtils.SessionExpire;
 import com.contact.util.ToolUtils;
 import com.jfinal.plugin.task.TaskKit;
 
@@ -34,23 +35,17 @@ public class ChinaMobileRemoteExecute {
 	}
 
 	public static Result loginForm(String key) {
-		if (SessionUtils.getSessionId(key) != null) {
-			try {
-				SessionUtils.cleanSession(key);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}
+		CookieUtils.cleanSession(key);
 		try {
 			WebDriver driver = new MyPhantomJSDriver("", ToolUtils.getPort(key));
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.get("https://login.10086.cn/login.html?channelID=12003&backUrl=http://shop.10086.cn/i/");// https://login.10086.cn?backUrl=about:blank
 			driver.manage().window().maximize();
 			driver.findElement(By.id("radiobuttonSMS")).click();
-			SessionUtils.putSessionId(key, new SessionExpire(((RemoteWebDriver) driver).getSessionId().toString(),
-					System.currentTimeMillis()));
-			return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
+			// SessionUtils.putSessionId(key, new SessionExpire(((RemoteWebDriver)
+			// driver).getSessionId().toString(),
+			// System.currentTimeMillis()));
+			return new Result(Constants.SUCCESS, ((RemoteWebDriver) driver).getSessionId().toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
@@ -58,14 +53,12 @@ public class ChinaMobileRemoteExecute {
 
 	}
 
-	public static Result getSMSPwd(String key, String login) {
-		SessionExpire session = SessionUtils.getSessionId(key);
-		if (session == null) {
+	public static Result getSMSPwd(String sessionId, String key, String login) {
+		if (StringUtils.isEmpty(sessionId)) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		session.time = System.currentTimeMillis();
 		try {
-			WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
+			WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
 			WebElement name = driver.findElement(By.id("p_name"));
 			name.clear();
 			name.sendKeys(login);// 18868945291
@@ -81,13 +74,11 @@ public class ChinaMobileRemoteExecute {
 		}
 	}
 
-	public static Result login(String key, String login, String pwd) {
-		SessionExpire session = SessionUtils.getSessionId(key);
-		if (session == null) {
+	public static Result login(String sessionId, String key, String login, String pwd) {
+		if (StringUtils.isEmpty(sessionId)) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
+		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
 		// driver.findElement(By.id("radiobuttonSMS")).click();
 		// driver.findElement(By.id("p_name")).sendKeys(login);// 18868945291
 		WebElement pwdElement = driver.findElement(By.id("p_pwd"));
@@ -109,7 +100,6 @@ public class ChinaMobileRemoteExecute {
 			if (!"0000".equals(data.get("code"))) {
 				return new Result(Constants.INPUTERROR, data.get("desc"));
 			}
-			SessionUtils.putPhone(key, login);
 			return new Result(Constants.SUCCESS, data.get("desc"));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -117,13 +107,11 @@ public class ChinaMobileRemoteExecute {
 		}
 	}
 
-	public static Result authForm(String key) {
-		SessionExpire session = SessionUtils.getSessionId(key);
-		if (session == null) {
+	public static Result authForm(String sessionId, String key) {
+		if (StringUtils.isEmpty(sessionId)) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
+		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
 		try {
 			boolean exist = (Boolean) ((RemoteWebDriver) driver)
 					.executeScript("return document.getElementById('imageVec') != null ? true : false ; ");
@@ -144,13 +132,11 @@ public class ChinaMobileRemoteExecute {
 
 	}
 
-	public static Result getVerifyImage(String key, boolean refresh) {
-		SessionExpire session = SessionUtils.getSessionId(key);
-		if (session == null) {
+	public static Result getVerifyImage(String sessionId, String key, boolean refresh) {
+		if (StringUtils.isEmpty(sessionId)) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
+		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
 		driver.manage().window().maximize();
 		try {
 
@@ -195,13 +181,11 @@ public class ChinaMobileRemoteExecute {
 
 	}
 
-	public static Result sendSMS(String key) {
-		SessionExpire session = SessionUtils.getSessionId(key);
-		if (session == null) {
+	public static Result sendSMS(String sessionId, String key) {
+		if (StringUtils.isEmpty(sessionId)) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
+		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
 		try {
 			((RemoteWebDriver) driver).executeScript("window.alert=function(data){ window.myData=data; };");
 			WebElement we = driver.findElement(By.id("stc-send-sms"));
@@ -224,13 +208,11 @@ public class ChinaMobileRemoteExecute {
 
 	}
 
-	public static Result auth(String key, String servPwd, String smsPwd, String imgCode) {
-		SessionExpire session = SessionUtils.getSessionId(key);
-		if (session == null) {
+	public static Result auth(String sessionId, String key, String servPwd, String smsPwd, String imgCode) {
+		if (StringUtils.isEmpty(sessionId)) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
+		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
 		String jsStart = "window.ajaxBack = $.ajax;" + "\n" //
 				+ "$.ajax = function(setting){" + "\n"//
 				+ "window.myCb = setting.success;" + "\n" //
@@ -291,7 +273,6 @@ public class ChinaMobileRemoteExecute {
 				@Override
 				public void run() {
 					for (int i = 1; i <= 6; i++) {
-						session.time = System.currentTimeMillis();
 						if (i > 1) {
 							driver.findElement(By.id("month" + i)).click();
 						}
@@ -330,7 +311,7 @@ public class ChinaMobileRemoteExecute {
 							String startTime = obj.get("startTime");
 							String anotherNm = String.valueOf(obj.get("anotherNm"));
 							Map<String, String> ele = new HashMap<>();
-							ele.put("nm", SessionUtils.getPhone(key));
+							ele.put("nm", key);
 							ele.put("commMode", commMode);
 							ele.put("commPlac", commPlac);
 							ele.put("commType", commType);
@@ -353,7 +334,7 @@ public class ChinaMobileRemoteExecute {
 					}
 					// driver.quit();
 					RemotePostUtils.postData(datas);
-					SessionUtils.cleanSession(key);
+					CookieUtils.cleanSession(key);
 				}
 			});
 

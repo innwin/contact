@@ -4,7 +4,7 @@ import java.io.File;
 
 import com.contact.common.Constants;
 import com.contact.common.Result;
-import com.contact.util.SessionUtils;
+import com.contact.util.CookieUtils;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.render.MyCaptchaRender;
@@ -15,34 +15,38 @@ import china.telecom.v3.ChinaTelecomRemoteExecute;
 public class TelecomControllerV3 extends Controller {
 
 	public void loginForm() {
-		if(SessionUtils.getSessionCount()>=PropKit.getInt("max.count")){
-			renderText("当前访问人数过多");
-			return;
-		}
-		String key = this.getSession().getId();
-		ChinaTelecomRemoteExecute.loginForm(key);
+		String key = CookieUtils.getNm(this);
+		Result rs = ChinaTelecomRemoteExecute.loginForm(key);
+		String sessionId = (String) rs.getData();
+		CookieUtils.putSessionId(this, sessionId);
 		render("login.jsp");
 	}
 
 	public void getVerifyCode() {
-		String key = this.getSession().getId();
-		Result rs = ChinaTelecomRemoteExecute.getVerifyImage(key);
+		String sessionId = CookieUtils.getSessionId(this);
+		String key = CookieUtils.getNm(this);
+		Result rs = ChinaTelecomRemoteExecute.getVerifyImage(sessionId, key);
+		CookieUtils.updateLastTime(this);
 		render(new MyCaptchaRender((File) rs.data));
 	}
 
-	public void sendSMS(){
-		String key = this.getSession().getId();
-		Result rs = ChinaTelecomRemoteExecute.sendCode(key);
+	public void sendSMS() {
+		String sessionId = CookieUtils.getSessionId(this);
+		String key = CookieUtils.getNm(this);
+		Result rs = ChinaTelecomRemoteExecute.sendCode(sessionId, key);
+		CookieUtils.updateLastTime(this);
 		renderJson(rs);
 	}
-	
+
 	@Before(MyValidator.class)
 	public void login() {
-		String key = this.getSession().getId();
+		String sessionId = CookieUtils.getSessionId(this);
+		String key = CookieUtils.getNm(this);
 		String phone = getPara("login");
 		String pwd = getPara("pwd");
 		String code = getPara("code");
-		Result rs = ChinaTelecomRemoteExecute.login(key, phone, pwd, code);
+		Result rs = ChinaTelecomRemoteExecute.login(sessionId, key, phone, pwd, code);
+		CookieUtils.putNm(this, phone);
 		setAttr("result", rs);
 		if (rs.code != Constants.SUCCESS) {
 			setAttr("login", phone);
@@ -59,11 +63,13 @@ public class TelecomControllerV3 extends Controller {
 
 	@Before(MyValidator.class)
 	public void auth() {
-		String key = this.getSession().getId();
+		String sessionId = CookieUtils.getSessionId(this);
+		String key = CookieUtils.getNm(this);
 		String name = getPara("name");
 		String idcard = getPara("idcard");
 		String code = getPara("code");
-		Result rs = ChinaTelecomRemoteExecute.auth(key, name, idcard, code);
+		Result rs = ChinaTelecomRemoteExecute.auth(sessionId, key, name, idcard, code);
+		CookieUtils.updateLastTime(this);
 		setAttr("result", rs);
 		if (rs.code != Constants.SUCCESS) {
 			forwardAction("/telecom/authForm");

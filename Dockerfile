@@ -5,7 +5,8 @@ RUN wget --no-cookies --no-check-certificate --header \
 "http://download.oracle.com/otn-pub/java/jdk/8u141-b15/336fa29ff2bb4ef291e347e091f7f4a7/jdk-8u141-linux-x64.tar.gz" 
 
 RUN tar /tmp/jdk-8u141-linux-x64.tar.gz -zxf -C /usr/local/ && \
-rm -rf /tmp/jdk-8u141-linux-x64.tar.gz
+rm -rf /tmp/jdk-8u141-linux-x64.tar.gz && \
+apt-get install phantomjs
 
 ENV dir /var/contact
 ENV JAVA_HOME /usr/local/jdk1.8.0_141

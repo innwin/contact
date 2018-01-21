@@ -34,7 +34,7 @@ public class MyHttpCommandExecutor implements CommandExecutor, NeedsLocalLogs {
 	private LocalLogs logs = LocalLogs.getNullLogger();
 
 	public MyHttpCommandExecutor(URL addressOfRemoteServer) {
-		this( ImmutableMap.of(), addressOfRemoteServer);
+		this(ImmutableMap.of(), addressOfRemoteServer);
 	}
 
 	public MyHttpCommandExecutor(Map<String, CommandInfo> additionalCommands, URL addressOfRemoteServer) {
@@ -88,6 +88,25 @@ public class MyHttpCommandExecutor implements CommandExecutor, NeedsLocalLogs {
 				throw new NoSuchSessionException("Session ID is null. Using WebDriver after calling quit()?");
 			}
 		}
+
+		if ("getAllSessions".equals(command.getName())) {
+			if (this.commandCodec != null) {
+				throw new SessionNotCreatedException("Session already exists");
+			}
+			MyProtocolHandshake handshake = new MyProtocolHandshake();
+			log("profiler", new HttpProfilerLogEntry(command.getName(), true));
+			MyProtocolHandshake.Result result = handshake.sessionAll(client, command);
+			Dialect dialect = result.getDialect();
+
+			this.commandCodec = dialect.getCommandCodec();
+			for (Map.Entry<String, CommandInfo> entry : this.additionalCommands.entrySet()) {
+				defineCommand((String) entry.getKey(), (CommandInfo) entry.getValue());
+			}
+			this.responseCodec = dialect.getResponseCodec();
+			log("profiler", new HttpProfilerLogEntry(command.getName(), false));
+			return result.createResponse();
+		}
+
 		if ("newSession".equals(command.getName())) {
 			if (this.commandCodec != null) {
 				throw new SessionNotCreatedException("Session already exists");
@@ -109,7 +128,7 @@ public class MyHttpCommandExecutor implements CommandExecutor, NeedsLocalLogs {
 			MyProtocolHandshake handshake = new MyProtocolHandshake();
 			MyProtocolHandshake.Result result = handshake.connSession(this.client, command.getSessionId());
 			Dialect dialect = result.getDialect();
-			this.commandCodec =  dialect.getCommandCodec();
+			this.commandCodec = dialect.getCommandCodec();
 			this.responseCodec = dialect.getResponseCodec();
 			// throw new WebDriverException("No command or response codec has
 			// been defined. Unable to proceed");

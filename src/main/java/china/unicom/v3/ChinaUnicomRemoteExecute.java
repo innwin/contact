@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,8 +23,8 @@ import com.contact.common.Constants;
 import com.contact.common.Mobile;
 import com.contact.common.Result;
 import com.contact.util.RemotePostUtils;
-import com.contact.util.SessionUtils;
-import com.contact.util.SessionUtils.SessionExpire;
+import com.contact.util.CookieUtils;
+import com.contact.util.CookieUtils.SessionExpire;
 import com.contact.util.ToolUtils;
 import com.jfinal.plugin.task.TaskKit;
 
@@ -34,23 +35,14 @@ public class ChinaUnicomRemoteExecute {
 	}
 
 	public static Result loginForm(String key) {
-		if (SessionUtils.getSessionId(key) != null) {
-			try {
-				SessionUtils.cleanSession(key);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}
+		CookieUtils.cleanSession(key);
 		try {
 			WebDriver driver = new MyPhantomJSDriver("", ToolUtils.getPort(key));
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.get("http://uac.10010.com/portal/hallLogin");
 			driver.manage().window().maximize();
 			// driver.switchTo().frame(1);
-			SessionUtils.putSessionId(key, new SessionExpire(((RemoteWebDriver) driver).getSessionId().toString(),
-					System.currentTimeMillis()));
-			return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
+			return new Result(Constants.SUCCESS, ((RemoteWebDriver) driver).getSessionId().toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
@@ -58,14 +50,12 @@ public class ChinaUnicomRemoteExecute {
 
 	}
 
-	public static Result login(String key, String login, String pwd) {
-		SessionExpire session = SessionUtils.getSessionId(key);
-		if (session == null) {
+	public static Result login(String sessionId, String key, String login, String pwd) {
+		if (StringUtils.isEmpty(sessionId)) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		session.time = System.currentTimeMillis();
 		try {
-			WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
+			WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
 			WebElement userName = new WebDriverWait(driver, 10)
 					.until(ExpectedConditions.visibilityOfElementLocated(By.id("userName")));
 			userName.clear();
@@ -104,7 +94,6 @@ public class ChinaUnicomRemoteExecute {
 			}
 			// driver.switchTo().defaultContent();
 			driver.get("http://iservice.10010.com/e4/query/bill/call_dan-iframe.html?menuCode=000100030001");
-			SessionUtils.putPhone(key, login);
 			return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -113,14 +102,12 @@ public class ChinaUnicomRemoteExecute {
 
 	}
 
-	public static Result sendSMS(String key) {
-		SessionExpire session = SessionUtils.getSessionId(key);
-		if (session == null) {
+	public static Result sendSMS(String sessionId, String key) {
+		if (StringUtils.isEmpty(sessionId)) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		session.time = System.currentTimeMillis();
 		try {
-			WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
+			WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
 			WebElement button = new WebDriverWait(driver, 10)
 					.until(ExpectedConditions.visibilityOfElementLocated(By.id("huoqu_buttons")));
 			button.click();
@@ -133,13 +120,11 @@ public class ChinaUnicomRemoteExecute {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static Result auth(String key, String code) {
-		SessionExpire session = SessionUtils.getSessionId(key);
-		if (session == null) {
+	public static Result auth(String sessionId, String key, String code) {
+		if (StringUtils.isEmpty(sessionId)) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		session.time = System.currentTimeMillis();
-		WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
+		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
 		try {
 			WebElement input = driver.findElement(By.id("input"));
 			input.clear();
@@ -197,7 +182,6 @@ public class ChinaUnicomRemoteExecute {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
 					List<Map<String, String>> datas = new ArrayList<>();
 					for (int i = 0; i < 6; i++) {
-						session.time = System.currentTimeMillis();
 						if (i > 0) {
 							calendar.add(Calendar.MONTH, -1);
 							new WebDriverWait(driver, 10)
@@ -224,7 +208,7 @@ public class ChinaUnicomRemoteExecute {
 								String commTime = obj.get("calllonghour");
 								String startTime = obj.get("calldate");
 								String anotherNm = obj.get("othernum");
-								ele.put("nm", SessionUtils.getPhone(key));
+								ele.put("nm", key);
 								ele.put("commMode", commMode);
 								ele.put("commPlac", commPlac);
 								ele.put("commType", commType);
@@ -242,7 +226,7 @@ public class ChinaUnicomRemoteExecute {
 						}
 					}
 					RemotePostUtils.postData(datas);
-					SessionUtils.cleanSession(key);
+					CookieUtils.cleanSession(key);
 				}
 			});
 

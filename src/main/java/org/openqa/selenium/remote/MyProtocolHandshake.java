@@ -129,29 +129,51 @@ public class MyProtocolHandshake {
 				desired, required));
 	}
 	
-//	public List<String> sessionAll(HttpClient client) throws IOException {
-//
-//		HttpRequest request = new HttpRequest(HttpMethod.GET, "/sessions");
-//
-//		request.setHeader(CONTENT_TYPE, JSON_UTF_8.toString());
-//		HttpResponse response = client.execute(request, true);
-//
-//		Map<?, ?> jsonBlob = null;
-//		String resultString = response.getContentString();
-//		try {
-//			jsonBlob = new JsonToBeanConverter().convert(Map.class, resultString);
-//		} catch (ClassCastException e) {
-//			LOG.info("Unable to parse response from server: " + resultString);
-//			return Collections.EMPTY_LIST;
-//		} catch (JsonException e) {
-//			// Fine. Handle that below
-//			LOG.log(Level.FINE, "Unable to parse json response. Will continue but diagnostic follows", e);
-//		}
-//		if (jsonBlob == null) {
-//			return Collections.EMPTY_LIST;
-//		}
-//		return (List<String>) jsonBlob.get("value");
-//	}
+	public Result sessionAll(HttpClient client, Command command) throws IOException {
+
+		HttpRequest request = new HttpRequest(HttpMethod.GET, "/sessions");
+
+		request.setHeader(CONTENT_TYPE, JSON_UTF_8.toString());
+		HttpResponse response = client.execute(request, true);
+		
+		Capabilities required = (Capabilities) command.getParameters().get("requiredCapabilities");
+		required = required == null ? new DesiredCapabilities() : required;
+
+		Map<?, ?> jsonBlob = null;
+		String resultString = response.getContentString();
+		try {
+			jsonBlob = new JsonToBeanConverter().convert(Map.class, resultString);
+		} catch (ClassCastException e) {
+			LOG.info("Unable to parse response from server: " + resultString);
+			return (Result) Optional.empty().get();
+		} catch (JsonException e) {
+			// Fine. Handle that below
+			LOG.log(Level.FINE, "Unable to parse json response. Will continue but diagnostic follows", e);
+		}
+		if (jsonBlob == null) {
+			return (Result) Optional.empty().get();
+		}
+		Object value = jsonBlob.get("value");
+		Object w3cError = jsonBlob.get("error");
+		Object ossStatus = jsonBlob.get("status");
+		
+		if (value != null && value instanceof Map) {
+			Map<?, ?> mappedValue = (Map<?, ?>) value;
+			if (mappedValue.containsKey("value") && mappedValue.containsKey("sessionId")) {
+				value = mappedValue.get("value");
+			}
+			if (mappedValue.containsKey("error")) {
+				w3cError = mappedValue.get("error");
+			}
+		}
+		
+		if (response.getStatus() == HttpURLConnection.HTTP_OK) {
+				Dialect dialect = ossStatus == null ? Dialect.W3C : Dialect.OSS;
+				return Optional.of(new Result(dialect, "", required.asMap())).get();
+		}
+		
+		return (Result) Optional.empty().get();
+	}
 
 	public Result connSession(HttpClient client, SessionId id) throws IOException {
 

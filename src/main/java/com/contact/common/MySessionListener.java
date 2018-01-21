@@ -7,8 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.MyPhantomJSDriver;
 
-import com.contact.util.SessionUtils;
-import com.contact.util.SessionUtils.SessionExpire;
+import com.contact.util.CookieUtils;
+import com.contact.util.CookieUtils.SessionExpire;
 
 public class MySessionListener implements HttpSessionListener {
 
@@ -17,6 +17,6 @@ public class MySessionListener implements HttpSessionListener {
 
 	public void sessionDestroyed(HttpSessionEvent se) {
 		String key = se.getSession().getId();
-		SessionUtils.cleanSession(key);
+		CookieUtils.cleanSession(key);
 	}
 }

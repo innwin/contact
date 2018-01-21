@@ -2,7 +2,7 @@ package com.contact.controller;
 
 import com.contact.common.Constants;
 import com.contact.common.Result;
-import com.contact.util.SessionUtils;
+import com.contact.util.CookieUtils;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.PropKit;
@@ -12,21 +12,21 @@ import china.unicom.v3.ChinaUnicomRemoteExecute;
 public class UnicomControllerV3 extends Controller {
 
 	public void loginForm() {
-		if(SessionUtils.getSessionCount()>=PropKit.getInt("max.count")){
-			renderText("当前访问人数过多");
-			return;
-		}
 		String key = this.getSession().getId();
-		ChinaUnicomRemoteExecute.loginForm(key);
+		Result rs = ChinaUnicomRemoteExecute.loginForm(key);
+		String sessionId = (String) rs.getData();
+		CookieUtils.putSessionId(this, sessionId);
 		render("login.jsp");
 	}
 
 	@Before(MyValidator.class)
 	public void login() {
-		String key = this.getSession().getId();
+		String sessionId = CookieUtils.getSessionId(this);
+		String key = CookieUtils.getNm(this);
 		String phone = getPara("login");
 		String pwd = getPara("pwd");
-		Result rs = ChinaUnicomRemoteExecute.login(key, phone, pwd);
+		Result rs = ChinaUnicomRemoteExecute.login(sessionId, key, phone, pwd);
+		CookieUtils.putNm(this, phone);
 		setAttr("result", rs);
 		if (rs.code != Constants.SUCCESS) {
 			setAttr("login", phone);
@@ -42,16 +42,20 @@ public class UnicomControllerV3 extends Controller {
 	}
 
 	public void sendSMS() {
-		String key = this.getSession().getId();
-		Result rs = ChinaUnicomRemoteExecute.sendSMS(key);
+		String sessionId = CookieUtils.getSessionId(this);
+		String key = CookieUtils.getNm(this);
+		Result rs = ChinaUnicomRemoteExecute.sendSMS(sessionId, key);
+		CookieUtils.updateLastTime(this);
 		renderJson(rs);
 	}
 
 	@Before(MyValidator.class)
 	public void auth() {
-		String key = this.getSession().getId();
+		String sessionId = CookieUtils.getSessionId(this);
+		String key = CookieUtils.getNm(this);
 		String code = getPara("code");
-		Result rs = ChinaUnicomRemoteExecute.auth(key, code);
+		Result rs = ChinaUnicomRemoteExecute.auth(sessionId, key, code);
+		CookieUtils.updateLastTime(this);
 		setAttr("result", rs);
 		if (rs.code != Constants.SUCCESS) {
 			forwardAction("/unicom/authForm");
