@@ -1,6 +1,7 @@
 package com.contact.util;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
@@ -42,6 +43,16 @@ public class CookieUtils {
 	}
 
 	static {
+
+		for (int port : ToolUtils.portAll()) {
+			MyPhantomJSDriver driver = new MyPhantomJSDriver("", port);
+			List<Map<String, ?>> sessions = driver.getAllSessions();
+			for (Map<String, ?> map : sessions) {
+				String sessionId = (String) map.get("id");
+				new MyPhantomJSDriver(sessionId, port).quit();
+			}
+		}
+
 		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 		executor.scheduleWithFixedDelay(new Runnable() {
 			public void run() {
@@ -52,6 +63,7 @@ public class CookieUtils {
 				}
 			}
 		}, 0, 100, TimeUnit.MILLISECONDS);
+
 	}
 
 	public static void putSessionId(Controller c, String sessionId) {

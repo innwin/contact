@@ -129,7 +129,7 @@ public class MyProtocolHandshake {
 				desired, required));
 	}
 	
-	public Result sessionAll(HttpClient client, Command command) throws IOException {
+	public Response sessionAll(HttpClient client, Command command) throws IOException {
 
 		HttpRequest request = new HttpRequest(HttpMethod.GET, "/sessions");
 
@@ -145,13 +145,13 @@ public class MyProtocolHandshake {
 			jsonBlob = new JsonToBeanConverter().convert(Map.class, resultString);
 		} catch (ClassCastException e) {
 			LOG.info("Unable to parse response from server: " + resultString);
-			return (Result) Optional.empty().get();
+			return (Response) Optional.empty().get();
 		} catch (JsonException e) {
 			// Fine. Handle that below
 			LOG.log(Level.FINE, "Unable to parse json response. Will continue but diagnostic follows", e);
 		}
 		if (jsonBlob == null) {
-			return (Result) Optional.empty().get();
+			return (Response) Optional.empty().get();
 		}
 		Object value = jsonBlob.get("value");
 		Object w3cError = jsonBlob.get("error");
@@ -168,11 +168,13 @@ public class MyProtocolHandshake {
 		}
 		
 		if (response.getStatus() == HttpURLConnection.HTTP_OK) {
-				Dialect dialect = ossStatus == null ? Dialect.W3C : Dialect.OSS;
-				return Optional.of(new Result(dialect, "", required.asMap())).get();
+				Response resp = new Response();
+				resp.setValue(value);
+				resp.setStatus(ErrorCodes.SUCCESS);
+				return resp;
 		}
 		
-		return (Result) Optional.empty().get();
+		return (Response) Optional.empty().get();
 	}
 
 	public Result connSession(HttpClient client, SessionId id) throws IOException {

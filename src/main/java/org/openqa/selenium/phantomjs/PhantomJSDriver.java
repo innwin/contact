@@ -42,6 +42,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.internal.WebElementToJsonConverter;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.openqa.selenium.remote.http.HttpMethod.POST;
@@ -99,6 +100,8 @@ public class PhantomJSDriver extends RemoteWebDriver implements TakesScreenshot 
 	 * @see org.openqa.selenium.phantomjs.PhantomJSDriverService#createDefaultService()
 	 *      for configuration details.
 	 */
+	private Capabilities desiredCapabilities = null;
+
 	public PhantomJSDriver() {
 		this(DesiredCapabilities.phantomjs(), 0);
 	}
@@ -130,6 +133,7 @@ public class PhantomJSDriver extends RemoteWebDriver implements TakesScreenshot 
 	 */
 	public PhantomJSDriver(PhantomJSDriverService service, Capabilities desiredCapabilities) {
 		super(new PhantomJSCommandExecutor(service), desiredCapabilities);
+		this.desiredCapabilities = desiredCapabilities;
 	}
 
 	/**
@@ -142,6 +146,7 @@ public class PhantomJSDriver extends RemoteWebDriver implements TakesScreenshot 
 	 */
 	public PhantomJSDriver(MyHttpCommandExecutor executor, Capabilities desiredCapabilities) {
 		super(executor, desiredCapabilities);
+		this.desiredCapabilities = desiredCapabilities;
 	}
 
 	/**
@@ -159,8 +164,11 @@ public class PhantomJSDriver extends RemoteWebDriver implements TakesScreenshot 
 		return target.convertFromBase64Png(base64);
 	}
 
-	public Object getAllSessions() {
-		return execute(COMMAND_GET_ALL_SESSIONS).getValue();
+	public List<Map<String, ?>> getAllSessions() {
+		ImmutableMap.Builder<String, Capabilities> paramBuilder = new ImmutableMap.Builder();
+		paramBuilder.put("desiredCapabilities", desiredCapabilities);
+		Map<String, ?> parameters = paramBuilder.build();
+		return (List<Map<String, ?>>) execute(COMMAND_GET_ALL_SESSIONS, parameters).getValue();
 	}
 
 	/**

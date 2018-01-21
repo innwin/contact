@@ -90,21 +90,14 @@ public class MyHttpCommandExecutor implements CommandExecutor, NeedsLocalLogs {
 		}
 
 		if ("getAllSessions".equals(command.getName())) {
-			if (this.commandCodec != null) {
-				throw new SessionNotCreatedException("Session already exists");
-			}
 			MyProtocolHandshake handshake = new MyProtocolHandshake();
 			log("profiler", new HttpProfilerLogEntry(command.getName(), true));
-			MyProtocolHandshake.Result result = handshake.sessionAll(client, command);
-			Dialect dialect = result.getDialect();
-
-			this.commandCodec = dialect.getCommandCodec();
+			Response resp = handshake.sessionAll(client, command);
 			for (Map.Entry<String, CommandInfo> entry : this.additionalCommands.entrySet()) {
 				defineCommand((String) entry.getKey(), (CommandInfo) entry.getValue());
 			}
-			this.responseCodec = dialect.getResponseCodec();
 			log("profiler", new HttpProfilerLogEntry(command.getName(), false));
-			return result.createResponse();
+			return resp;
 		}
 
 		if ("newSession".equals(command.getName())) {

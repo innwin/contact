@@ -14,6 +14,10 @@ public class ToolUtils {
 		}
 	}
 
+	public static int[] portAll() {
+		return ports;
+	}
+
 	private static int hash(String s) {
 		int h = 0;
 		for (int i = 0; i < s.length(); i++) {
