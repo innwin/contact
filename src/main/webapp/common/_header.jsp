@@ -20,7 +20,7 @@
 	$(window).unload(function() {
 		$.ajax({
 			type : "POST",
-			url : "/mobile/sendSMS",
+			url : "/close",
 			success : function(msg) {
 				$.dialog.tips("发送成功", 1)
 			}
