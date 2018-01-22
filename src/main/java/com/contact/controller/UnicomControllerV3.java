@@ -12,7 +12,7 @@ import china.unicom.v3.ChinaUnicomRemoteExecute;
 public class UnicomControllerV3 extends Controller {
 
 	public void loginForm() {
-		String key = this.getSession().getId();
+		String key = CookieUtils.getWebSession(this);
 		Result rs = ChinaUnicomRemoteExecute.loginForm(key);
 		String sessionId = (String) rs.getData();
 		CookieUtils.putSessionId(this, sessionId);
@@ -22,10 +22,9 @@ public class UnicomControllerV3 extends Controller {
 	@Before(MyValidator.class)
 	public void login() {
 		String sessionId = CookieUtils.getSessionId(this);
-		String key = CookieUtils.getNm(this);
 		String phone = getPara("login");
 		String pwd = getPara("pwd");
-		Result rs = ChinaUnicomRemoteExecute.login(sessionId, key, phone, pwd);
+		Result rs = ChinaUnicomRemoteExecute.login(sessionId, phone, pwd);
 		CookieUtils.putNm(this, phone);
 		setAttr("result", rs);
 		if (rs.code != Constants.SUCCESS) {
@@ -43,8 +42,7 @@ public class UnicomControllerV3 extends Controller {
 
 	public void sendSMS() {
 		String sessionId = CookieUtils.getSessionId(this);
-		String key = CookieUtils.getNm(this);
-		Result rs = ChinaUnicomRemoteExecute.sendSMS(sessionId, key);
+		Result rs = ChinaUnicomRemoteExecute.sendSMS(sessionId);
 		CookieUtils.updateLastTime(this);
 		renderJson(rs);
 	}
@@ -52,9 +50,8 @@ public class UnicomControllerV3 extends Controller {
 	@Before(MyValidator.class)
 	public void auth() {
 		String sessionId = CookieUtils.getSessionId(this);
-		String key = CookieUtils.getNm(this);
 		String code = getPara("code");
-		Result rs = ChinaUnicomRemoteExecute.auth(sessionId, key, code);
+		Result rs = ChinaUnicomRemoteExecute.auth(sessionId, code);
 		CookieUtils.updateLastTime(this);
 		setAttr("result", rs);
 		if (rs.code != Constants.SUCCESS) {

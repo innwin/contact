@@ -14,7 +14,7 @@ import china.mobile.v3.ChinaMobileRemoteExecute;
 public class MobileControllerV3 extends Controller {
 
 	public void loginForm() {
-		String key = CookieUtils.getNm(this);
+		String key = CookieUtils.getWebSession(this);
 		Result rs = ChinaMobileRemoteExecute.loginForm(key);
 		String sessionId = (String) rs.getData();
 		CookieUtils.putSessionId(this, sessionId);
@@ -24,10 +24,9 @@ public class MobileControllerV3 extends Controller {
 	@Before(MyValidator.class)
 	public void login() {
 		String sessionId = CookieUtils.getSessionId(this);
-		String key = CookieUtils.getNm(this);
 		String phone = getPara("login");
 		String pwd = getPara("pwd");
-		Result rs = ChinaMobileRemoteExecute.login(sessionId, key, phone, pwd);
+		Result rs = ChinaMobileRemoteExecute.login(sessionId, phone, pwd);
 		CookieUtils.putNm(this, phone);
 		setAttr("result", rs);
 		if (rs.code != Constants.SUCCESS) {
@@ -42,34 +41,30 @@ public class MobileControllerV3 extends Controller {
 
 	public void getSMSCode() {
 		String sessionId = CookieUtils.getSessionId(this);
-		String key = CookieUtils.getNm(this);
 		String phone = getPara("login");
-		Result rs = ChinaMobileRemoteExecute.getSMSPwd(sessionId, key, phone);
+		Result rs = ChinaMobileRemoteExecute.getSMSPwd(sessionId, phone);
 		CookieUtils.updateLastTime(this);
 		renderJson(rs);
 	}
 
 	public void authForm() {
 		String sessionId = CookieUtils.getSessionId(this);
-		String key = CookieUtils.getNm(this);
-		ChinaMobileRemoteExecute.authForm(sessionId, key);
+		ChinaMobileRemoteExecute.authForm(sessionId);
 		CookieUtils.updateLastTime(this);
 		render("auth.jsp");
 	}
 
 	public void getVerifyCode() {
 		String sessionId = CookieUtils.getSessionId(this);
-		String key = CookieUtils.getNm(this);
 		boolean refresh = Boolean.valueOf(getPara("refresh", "false"));
-		Result rs = ChinaMobileRemoteExecute.getVerifyImage(sessionId, key, refresh);
+		Result rs = ChinaMobileRemoteExecute.getVerifyImage(sessionId, refresh);
 		CookieUtils.updateLastTime(this);
 		render(new MyCaptchaRender((File) rs.data));
 	}
 
 	public void sendSMS() {
 		String sessionId = CookieUtils.getSessionId(this);
-		String key = CookieUtils.getNm(this);
-		Result rs = ChinaMobileRemoteExecute.sendSMS(sessionId, key);
+		Result rs = ChinaMobileRemoteExecute.sendSMS(sessionId);
 		CookieUtils.updateLastTime(this);
 		renderJson(rs);
 	}
@@ -77,11 +72,10 @@ public class MobileControllerV3 extends Controller {
 	@Before(MyValidator.class)
 	public void auth() {
 		String sessionId = CookieUtils.getSessionId(this);
-		String key = CookieUtils.getNm(this);
 		String servPwd = getPara("servPwd");
 		String smsPwd = getPara("smsPwd");
 		String imgCode = getPara("imgCode");
-		Result rs = ChinaMobileRemoteExecute.auth(sessionId, key, servPwd, smsPwd, imgCode);
+		Result rs = ChinaMobileRemoteExecute.auth(sessionId, servPwd, smsPwd, imgCode);
 		CookieUtils.updateLastTime(this);
 		setAttr("result", rs);
 		if (rs.code != Constants.SUCCESS) {

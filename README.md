@@ -4,6 +4,7 @@
 sudo ./build build
 sudo ./build start ${POST_URL} # send the record to the url
 ```
+web UI console: http://localhost:8080
 
 ### 情景
 

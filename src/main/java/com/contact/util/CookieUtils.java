@@ -20,7 +20,10 @@ public class CookieUtils {
 		public String sessionId = "";
 		public long time = 0;
 
-		public SessionExpire(String sessionId, long time) {
+		public String nm = "";
+		public String key = "";
+
+		public SessionExpire(String sessionId, String nm, long time) {
 			this.sessionId = sessionId;
 			this.time = time;
 		}
@@ -29,16 +32,16 @@ public class CookieUtils {
 
 	private static Map<String, SessionExpire> mapSessionId = new ConcurrentHashMap<>();
 
-	public static void cleanSession(String key) {
-		SessionExpire session = CookieUtils.mapSessionId.get(key);
+	public static void cleanSession(String sessionId) {
+		SessionExpire session = CookieUtils.mapSessionId.get(sessionId);
 		try {
-			if (session != null && !StringUtils.isEmpty(session.sessionId)) {
-				WebDriver driver = new MyPhantomJSDriver(session.sessionId, ToolUtils.getPort(key));
+			if (session != null && !StringUtils.isEmpty(sessionId)) {
+				WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(session.key));
 				driver.quit();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			CookieUtils.mapSessionId.remove(key);
+			CookieUtils.mapSessionId.remove(sessionId);
 		}
 	}
 
@@ -67,34 +70,45 @@ public class CookieUtils {
 	}
 
 	public static void putSessionId(Controller c, String sessionId) {
-		put(c, sessionId, "");
+		put(c, sessionId, "", "");
+	}
+
+	public static void putWebSessionId(Controller c, String webSessionId) {
+		put(c, "", "", webSessionId);
 	}
 
 	public static void putNm(Controller c, String nm) {
-		put(c, "", nm);
+		put(c, "", nm, "");
 	}
 
 	public static void updateLastTime(Controller c) {
-		put(c, "", "");
+		put(c, "", "", "");
 	}
 
-	public static void put(Controller c, String sessionId, String nm) {
+	public static SessionExpire getSessionExpire(String sessionId) {
+		return mapSessionId.get(sessionId);
+	}
+
+	public static void put(Controller c, String sessionId, String nm, String webSessionId) {
 		int expire = 24 * 60 * 60;
-		if (StringUtils.isNotEmpty(sessionId)) {
-			c.setCookie("sessionId", sessionId, expire, "/");
-		}
 		long now = System.currentTimeMillis();
 		c.setCookie("lastTime", String.valueOf(now), expire, "/");
-		SessionExpire sessionExpire = mapSessionId.get(nm);
+		if (StringUtils.isNotEmpty(sessionId)) {
+			c.setCookie("sessionId", sessionId, expire, "/");
+			SessionExpire sessionExpire = new SessionExpire(sessionId, nm, now);
+			sessionExpire.key = getWebSession(c);
+			mapSessionId.put(sessionId, sessionExpire);
+		}
+		SessionExpire sessionExpire = mapSessionId.get(sessionId);
 		if (sessionExpire != null) {
 			sessionExpire.time = now;
 		}
 		if (StringUtils.isNotEmpty(nm)) {
 			c.setCookie("nm", nm, expire, "/");
-			if (StringUtils.isEmpty(sessionId)) {
-				sessionId = getSessionId(c);
-			}
-			mapSessionId.put(nm, new SessionExpire(sessionId, Long.valueOf(nm)));
+			sessionExpire.nm = nm;
+		}
+		if (StringUtils.isNotEmpty(webSessionId)) {
+			c.setCookie("webSessionId", nm, expire, "/");
 		}
 	}
 
@@ -102,11 +116,22 @@ public class CookieUtils {
 		String sessionId = c.getCookie("sessionId");
 		String nm = c.getCookie("nm");
 		String lastTime = c.getCookie("lastTime");
+		String webSessionId = c.getCookie("webSessionId");
 		Map<String, String> map = new HashMap<>();
 		map.put("sessionId", sessionId);
 		map.put("nm", nm);
 		map.put("lastTime", lastTime);
+		map.put("webSessionId", webSessionId);
 		return map;
+	}
+
+	public static String getWebSession(Controller c) {
+		String id = get(c).get("webSessionId");
+		if (StringUtils.isEmpty(id)) {
+			id = c.getSession().getId();
+		}
+		putWebSessionId(c, id);
+		return id;
 	}
 
 	public static String getSessionId(Controller c) {

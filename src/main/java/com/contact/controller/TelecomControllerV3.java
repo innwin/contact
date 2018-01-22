@@ -15,7 +15,7 @@ import china.telecom.v3.ChinaTelecomRemoteExecute;
 public class TelecomControllerV3 extends Controller {
 
 	public void loginForm() {
-		String key = CookieUtils.getNm(this);
+		String key = CookieUtils.getWebSession(this);
 		Result rs = ChinaTelecomRemoteExecute.loginForm(key);
 		String sessionId = (String) rs.getData();
 		CookieUtils.putSessionId(this, sessionId);
@@ -24,16 +24,14 @@ public class TelecomControllerV3 extends Controller {
 
 	public void getVerifyCode() {
 		String sessionId = CookieUtils.getSessionId(this);
-		String key = CookieUtils.getNm(this);
-		Result rs = ChinaTelecomRemoteExecute.getVerifyImage(sessionId, key);
+		Result rs = ChinaTelecomRemoteExecute.getVerifyImage(sessionId);
 		CookieUtils.updateLastTime(this);
 		render(new MyCaptchaRender((File) rs.data));
 	}
 
 	public void sendSMS() {
 		String sessionId = CookieUtils.getSessionId(this);
-		String key = CookieUtils.getNm(this);
-		Result rs = ChinaTelecomRemoteExecute.sendCode(sessionId, key);
+		Result rs = ChinaTelecomRemoteExecute.sendCode(sessionId);
 		CookieUtils.updateLastTime(this);
 		renderJson(rs);
 	}
@@ -41,11 +39,10 @@ public class TelecomControllerV3 extends Controller {
 	@Before(MyValidator.class)
 	public void login() {
 		String sessionId = CookieUtils.getSessionId(this);
-		String key = CookieUtils.getNm(this);
 		String phone = getPara("login");
 		String pwd = getPara("pwd");
 		String code = getPara("code");
-		Result rs = ChinaTelecomRemoteExecute.login(sessionId, key, phone, pwd, code);
+		Result rs = ChinaTelecomRemoteExecute.login(sessionId, phone, pwd, code);
 		CookieUtils.putNm(this, phone);
 		setAttr("result", rs);
 		if (rs.code != Constants.SUCCESS) {
@@ -64,11 +61,10 @@ public class TelecomControllerV3 extends Controller {
 	@Before(MyValidator.class)
 	public void auth() {
 		String sessionId = CookieUtils.getSessionId(this);
-		String key = CookieUtils.getNm(this);
 		String name = getPara("name");
 		String idcard = getPara("idcard");
 		String code = getPara("code");
-		Result rs = ChinaTelecomRemoteExecute.auth(sessionId, key, name, idcard, code);
+		Result rs = ChinaTelecomRemoteExecute.auth(sessionId, name, idcard, code);
 		CookieUtils.updateLastTime(this);
 		setAttr("result", rs);
 		if (rs.code != Constants.SUCCESS) {

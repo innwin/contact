@@ -50,12 +50,13 @@ public class ChinaUnicomRemoteExecute {
 
 	}
 
-	public static Result login(String sessionId, String key, String login, String pwd) {
-		if (StringUtils.isEmpty(sessionId)) {
+	public static Result login(String sessionId, String login, String pwd) {
+		SessionExpire sessionExpire = CookieUtils.getSessionExpire(sessionId);
+		if (StringUtils.isEmpty(sessionId) || sessionExpire == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		try {
-			WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
+			WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
 			WebElement userName = new WebDriverWait(driver, 10)
 					.until(ExpectedConditions.visibilityOfElementLocated(By.id("userName")));
 			userName.clear();
@@ -102,12 +103,13 @@ public class ChinaUnicomRemoteExecute {
 
 	}
 
-	public static Result sendSMS(String sessionId, String key) {
-		if (StringUtils.isEmpty(sessionId)) {
+	public static Result sendSMS(String sessionId) {
+		SessionExpire sessionExpire = CookieUtils.getSessionExpire(sessionId);
+		if (StringUtils.isEmpty(sessionId) || sessionExpire == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		try {
-			WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
+			WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
 			WebElement button = new WebDriverWait(driver, 10)
 					.until(ExpectedConditions.visibilityOfElementLocated(By.id("huoqu_buttons")));
 			button.click();
@@ -120,11 +122,12 @@ public class ChinaUnicomRemoteExecute {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static Result auth(String sessionId, String key, String code) {
-		if (StringUtils.isEmpty(sessionId)) {
+	public static Result auth(String sessionId, String code) {
+		SessionExpire sessionExpire = CookieUtils.getSessionExpire(sessionId);
+		if (StringUtils.isEmpty(sessionId) || sessionExpire == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
+		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
 		try {
 			WebElement input = driver.findElement(By.id("input"));
 			input.clear();
@@ -208,7 +211,7 @@ public class ChinaUnicomRemoteExecute {
 								String commTime = obj.get("calllonghour");
 								String startTime = obj.get("calldate");
 								String anotherNm = obj.get("othernum");
-								ele.put("nm", key);
+								ele.put("nm", CookieUtils.getSessionExpire(sessionId).nm);
 								ele.put("commMode", commMode);
 								ele.put("commPlac", commPlac);
 								ele.put("commType", commType);
@@ -226,7 +229,7 @@ public class ChinaUnicomRemoteExecute {
 						}
 					}
 					RemotePostUtils.postData(datas);
-					CookieUtils.cleanSession(key);
+					CookieUtils.cleanSession(sessionId);
 				}
 			});
 

@@ -57,11 +57,12 @@ public class ChinaTelecomRemoteExecute {
 
 	}
 
-	public static Result getVerifyImage(String sessionId,String key) {
-		if (StringUtils.isEmpty(sessionId)) {
+	public static Result getVerifyImage(String sessionId) {
+		SessionExpire sessionExpire = CookieUtils.getSessionExpire(sessionId);
+		if (StringUtils.isEmpty(sessionId) || sessionExpire == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
+		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
 		driver.manage().window().maximize();
 		try {
 			WebDriver augmentedDriver = new Augmenter().augment(driver);
@@ -76,11 +77,12 @@ public class ChinaTelecomRemoteExecute {
 		}
 	}
 
-	public static Result login(String sessionId,String key, String login, String pwd, String code) {
-		if (StringUtils.isEmpty(sessionId)) {
+	public static Result login(String sessionId, String login, String pwd, String code) {
+		SessionExpire sessionExpire = CookieUtils.getSessionExpire(sessionId);
+		if (StringUtils.isEmpty(sessionId) || sessionExpire == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
+		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
 		WebElement account = driver.findElement(By.id("u_account"));
 		account.clear();
 		account.sendKeys(login);
@@ -128,11 +130,12 @@ public class ChinaTelecomRemoteExecute {
 
 	}
 
-	public static Result sendCode(String sessionId,String key) {
-		if (StringUtils.isEmpty(sessionId)) {
+	public static Result sendCode(String sessionId) {
+		SessionExpire sessionExpire = CookieUtils.getSessionExpire(sessionId);
+		if (StringUtils.isEmpty(sessionId) || sessionExpire == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
+		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
 		try {
 			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("codekey")))
 					.click();// 120s
@@ -143,11 +146,12 @@ public class ChinaTelecomRemoteExecute {
 		return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 	}
 
-	public static Result auth(String sessionId, String key, String name, String idCard, String code) {
-		if (StringUtils.isEmpty(sessionId)) {
+	public static Result auth(String sessionId, String name, String idCard, String code) {
+		SessionExpire sessionExpire = CookieUtils.getSessionExpire(sessionId);
+		if (StringUtils.isEmpty(sessionId) || sessionExpire == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(key));
+		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
 		try {
 			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("codekey")));
 			((RemoteWebDriver) driver).executeScript(
@@ -184,10 +188,10 @@ public class ChinaTelecomRemoteExecute {
 							continue;
 						}
 					}
-					datas.addAll(doJob(driver, key));
+					datas.addAll(doJob(driver, sessionId));
 				}
 				RemotePostUtils.postData(datas);
-				CookieUtils.cleanSession(key);
+				CookieUtils.cleanSession(sessionId);
 			}
 		});
 
@@ -235,7 +239,7 @@ public class ChinaTelecomRemoteExecute {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static List<Map<String, String>> doJob(WebDriver driver, String key) {
+	private static List<Map<String, String>> doJob(WebDriver driver, String sessionId) {
 
 		try {
 			String js = " var data=[];" + "\n"//
@@ -273,7 +277,7 @@ public class ChinaTelecomRemoteExecute {
 			for (List<String> tr : list) {
 				int j = 0;
 				Map<String, String> ele = new HashMap<>();
-				ele.put("nm", key);
+				ele.put("nm", CookieUtils.getSessionExpire(sessionId).nm);
 				// Mobile model = new Mobile().set("nm", SessionUtils.getPhone(key));
 				for (String td : tr) {
 					// 序列号 对方号码 呼叫类型 通话日期起始时间 通话时长 通话地 通话类型 本地费或漫游费 长途费
