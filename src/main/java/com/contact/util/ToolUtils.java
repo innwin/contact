@@ -1,8 +1,36 @@
 package com.contact.util;
 
+import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.jfinal.kit.PropKit;
 
 public class ToolUtils {
+
+	public static String filerTime(String content) {
+		String pattern0 = "\\d*-\\d*-\\d* \\d*:\\d*:\\d*";
+		String pattern1 = "(\\d*)-\\d* \\d*:\\d*:\\d*";
+
+		boolean isMatch0 = Pattern.matches(pattern0, content);
+		boolean isMatch1 = Pattern.matches(pattern1, content);
+		if (isMatch0) {
+			return content;
+		} else if (isMatch1) {
+			Matcher matcher = Pattern.compile(pattern1).matcher(content);
+			if (matcher.find()) {
+				String monthGive = matcher.group(1);
+				Calendar calendar = Calendar.getInstance();
+				int monthCurrent = calendar.get(Calendar.MONTH) + 1;
+				if (monthCurrent < Integer.valueOf(monthGive)) {
+					return (calendar.get(Calendar.YEAR) - 1) + "-" + content;
+				} else {
+					return calendar.get(Calendar.YEAR) + content;
+				}
+			}
+		}
+		return content;
+	}
 
 	private static int length = PropKit.getInt("max.port.count");
 	private static int[] ports = new int[length];

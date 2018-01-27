@@ -323,7 +323,7 @@ public class ChinaMobileRemoteExecute {
 							ele.put("commPlac", commPlac);
 							ele.put("commType", commType);
 							ele.put("commTime", commTime);
-							ele.put("startTime", startTime);
+							ele.put("startTime", ToolUtils.filerTime(startTime));
 							ele.put("anotherNm", anotherNm);
 							ele.put("remark", remark);
 							datas.add(ele);
