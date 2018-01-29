@@ -30,6 +30,7 @@ import com.contact.common.Constants;
 import com.contact.common.Result;
 import com.contact.util.ImageUtils;
 import com.contact.util.RemotePostUtils;
+import com.contact.util.Base64Image;
 import com.contact.util.CookieUtils;
 import com.contact.util.CookieUtils.SessionExpire;
 import com.contact.util.ToolUtils;
@@ -249,7 +250,7 @@ public class ChinaTelecomRemoteExecute {
 					+ " 		jQuery(val).find('td').each(function(i,v){ " + "\n"//
 					+ " 			 if(i>0){ " + "\n"//
 					+ " 			 	myTr.push(v.innerHTML.replace(/<.*?\\/.*?>/g,''));" + "\n"//
-					+ " 			 } " + "\n"//
+					+ " 			 } http://www.189.cn/dqmh/my189/initMy189home.do" + "\n"//
 					+ " 		 }" + "\n"//
 					+ " 		);" + "\n"//
 					+ " 		if(myTr.length>0){" + "\n"//

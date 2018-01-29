@@ -2,7 +2,7 @@ package com.contact.common;
 
 import com.contact.controller.HomeController;
 import com.contact.controller.MobileControllerV3;
-import com.contact.controller.TelecomControllerV3;
+import com.contact.controller.TelecomController0V3;
 import com.contact.controller.UnicomControllerV3;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -12,8 +12,6 @@ import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
 import com.jfinal.kit.PropKit;
-import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
-import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.plugin.task.TaskPlugin;
 import com.jfinal.render.ViewType;
 
@@ -38,7 +36,7 @@ public class MyJfinalConfig extends JFinalConfig {
 	public void configRoute(Routes me) {
 		me.add("/mobile", MobileControllerV3.class);	// 第三个参数为该Controller的视图存放路径
 		me.add("/unicom", UnicomControllerV3.class);
-		me.add("/telecom", TelecomControllerV3.class);
+		me.add("/telecom", TelecomController0V3.class);
 		me.add("/", HomeController.class,"/home");
 	}
 	

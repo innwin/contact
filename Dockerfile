@@ -4,9 +4,12 @@ RUN wget --no-cookies --no-check-certificate --header \
 "Cookie: gpw_e24=http://www.oracle.com/; oraclelicense=accept-securebackup-cookie" \
 "http://download.oracle.com/otn-pub/java/jdk/8u141-b15/336fa29ff2bb4ef291e347e091f7f4a7/jdk-8u141-linux-x64.tar.gz" 
 
+
+COPY phantomjs /usr/bin/
+
 RUN tar /tmp/jdk-8u141-linux-x64.tar.gz -zxf -C /usr/local/ && \
 rm -rf /tmp/jdk-8u141-linux-x64.tar.gz && \
-apt-get -y install phantomjs
+chmod +x /usr/bin/phantomjs
 
 ENV dir /var/contact
 ENV JAVA_HOME /usr/local/jdk1.8.0_141

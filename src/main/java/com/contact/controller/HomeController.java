@@ -25,5 +25,6 @@ public class HomeController extends Controller {
 
 	public void close() {
 		CookieUtils.cleanSession(CookieUtils.getSessionId(this));
+		renderJson();
 	}
 }

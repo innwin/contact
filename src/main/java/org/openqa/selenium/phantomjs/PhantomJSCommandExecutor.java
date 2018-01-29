@@ -88,7 +88,6 @@ class PhantomJSCommandExecutor extends MyHttpCommandExecutor {
 
 		Socket socket = new Socket();
 		try {
-
 			SocketAddress remoteAddr = new InetSocketAddress("127.0.0.1", service.getPort());
 			socket.connect(remoteAddr, 30000);
 		} catch (IOException e) {
@@ -111,6 +110,7 @@ class PhantomJSCommandExecutor extends MyHttpCommandExecutor {
 		try {
 			return super.execute(command);
 		} catch (Throwable t) {
+			t.printStackTrace();
 			Throwable rootCause = Throwables.getRootCause(t);
 			if (rootCause instanceof ConnectException && "Connection refused".equals(rootCause.getMessage())
 					&& !service.isRunning()) {

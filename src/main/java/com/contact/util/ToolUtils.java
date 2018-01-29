@@ -35,6 +35,10 @@ public class ToolUtils {
 	private static int length = PropKit.getInt("max.port.count");
 	private static int[] ports = new int[length];
 
+	static {
+		init();
+	}
+
 	private static void init() {
 		int port = 48105;
 		for (int i = 0; i < length; i++) {
@@ -65,7 +69,6 @@ public class ToolUtils {
 	}
 
 	public static int getPort(String key) {
-		init();
 		return ports[index_for(key, length)];
 	}
 

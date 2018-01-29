@@ -33,6 +33,9 @@ public class CookieUtils {
 	private static Map<String, SessionExpire> mapSessionId = new ConcurrentHashMap<>();
 
 	public static void cleanSession(String sessionId) {
+		if (sessionId == null) {
+			return;
+		}
 		SessionExpire session = CookieUtils.mapSessionId.get(sessionId);
 		try {
 			if (session != null && !StringUtils.isEmpty(sessionId)) {
@@ -73,7 +76,7 @@ public class CookieUtils {
 		put(c, sessionId, "", "");
 	}
 
-	public static void putWebSessionId(Controller c, String webSessionId) {
+	private static void putWebSessionId(Controller c, String webSessionId) {
 		put(c, "", "", webSessionId);
 	}
 
@@ -129,8 +132,8 @@ public class CookieUtils {
 		String id = get(c).get("webSessionId");
 		if (StringUtils.isEmpty(id)) {
 			id = c.getSession().getId();
+			putWebSessionId(c, id);
 		}
-		putWebSessionId(c, id);
 		return id;
 	}
 

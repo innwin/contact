@@ -3,6 +3,7 @@
 <html lang="en" style="background-color: #fff">
 <head>
 	<jsp:include page="../common/_header.jsp"></jsp:include>
+	<jsp:include page="../common/_common_js.jsp"></jsp:include>
 </head>
 
 <body style="background-color: #fff">
@@ -38,11 +39,11 @@
 								<input class="login-input login-input-dyn" type="text" name="code"
 									placeholder="图形验证码" maxlength="6" /> 
 								<i class="clear clear-dyn"></i>
-								<img class="dyn-pwd-btn" src="/telecom/getVerifyCode">
+								<img class="dyn-pwd-btn" src="getVerifyImage">
 							</div>
 							<div id="popup-captcha"></div>
 						</div>
-						<button class="login-btn" id="login-btn-mobile" status="0">登录</button>
+						<div class="login-btn" id="login-btn-mobile" status="0">登录</div>
 					</form>
 					<p class="login-tips">${result == null ? '' : result.data }
 						${error}</p>
@@ -65,17 +66,7 @@
 			</div>
 		</section>
 	</div>
-
+<jsp:include page="../common/_bottom.jsp"></jsp:include>
 </body>
-<script>
-	$(function() {
-		var c = $("#login-tips"), d = $(".forget-pwd-pop"), u = d.find(".ok");
-		c.on("click", function() {
-			d.fadeIn()
-		}), u.on("click", function() {
-			d.fadeOut()
-		})
-	});
-</script>
 </html>
 

@@ -16,14 +16,3 @@
 <script src="/js/jquery.js"></script>
 <!--[if lt IE 9]>
 <script src="http://lapp.xinli001.com/jsmin/html5.min.js" ></script><![endif]-->
-<script type="text/javascript" language="javascript">
-	$(window).unload(function() {
-		$.ajax({
-			type : "POST",
-			url : "/close",
-			success : function(msg) {
-				$.dialog.tips("发送成功", 1)
-			}
-		});
-	});
-</script>
