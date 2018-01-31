@@ -80,7 +80,7 @@ public class ChinaTelecomRemoteExecute {
 			});
 			((RemoteWebDriver) driver).executeScript("delete window.myData;");
 			if (!"success".equals(msg)) {
-				return new Result(Constants.SYSTEMERROR, msg);
+				return new Result(Constants.INPUTERROR, msg);
 			}
 			doJob(sessionId);
 		} catch (Exception e) {
