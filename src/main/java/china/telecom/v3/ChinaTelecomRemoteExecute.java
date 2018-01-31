@@ -157,7 +157,7 @@ public class ChinaTelecomRemoteExecute {
 							List<List<String>> rs = submit(driver, domain, sdf.format(calendar.getTime()));
 							for (List<String> data : rs) {
 								Map<String, String> ele = new HashMap<String, String>();
-								for (int j = 1; j < colums.length; j++) {
+								for (int j = 1; j <= colums.length; j++) {
 										ele.put(colums[j - 1], data.get(j));
 								}
 								datas.add(ele);
