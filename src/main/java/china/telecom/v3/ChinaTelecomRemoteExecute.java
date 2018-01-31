@@ -77,7 +77,7 @@ public class ChinaTelecomRemoteExecute {
 		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
 		driver.manage().window().maximize();
 		try {
-			((RemoteWebDriver) driver).executeScript("$(\"#txtAccount\").val(\"" + login + "\").blur();"//
+			((RemoteWebDriver) driver).executeScript("delete loadLoginCaptcha;$(\"#txtAccount\").val(\"" + login + "\").blur();"//
 					+ "$(\"#txtPassword\").val(\"" + pwd + "\");" //
 					+ "$(\"#txtCaptcha\").val(\"" + code + "\");");
 			String loginJs = "if(!document.getElementById(\"myIframe\")){ \n" + //
