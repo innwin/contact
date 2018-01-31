@@ -1,7 +1,8 @@
 package china.telecom.v3;
 
 import java.io.File;
-import java.net.URLEncoder;
+import java.io.IOException;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,14 +14,24 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.params.HttpClientParams;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpProtocolParams;
+import org.apache.http.util.EntityUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.phantomjs.MyPhantomJSDriver;
-import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -28,11 +39,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.beust.jcommander.internal.Nullable;
 import com.contact.common.Constants;
 import com.contact.common.Result;
-import com.contact.util.ImageUtils;
-import com.contact.util.RemotePostUtils;
 import com.contact.util.Base64Image;
 import com.contact.util.CookieUtils;
 import com.contact.util.CookieUtils.SessionExpire;
+import com.contact.util.RemotePostUtils;
 import com.contact.util.ToolUtils;
 import com.jfinal.plugin.task.TaskKit;
 
@@ -42,103 +52,28 @@ public class ChinaTelecomRemoteExecute {
 		System.setProperty("phantomjs.binary.path", "/usr/bin/phantomjs");
 	}
 
-	public static Result loginForm(String key) {
-		CookieUtils.cleanSession(key);
+	public static Result loginForm(String key, String sessionId) {
+		CookieUtils.cleanSession(sessionId);
 		try {
 			WebDriver driver = new MyPhantomJSDriver("", ToolUtils.getPort(key));
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			driver.get(
-					"http://zj.189.cn/wt_uac/auth.html?app=wt&login_goto_url=my%2Fben%2Fzhanghu%2Fxiangdan%2F&module=null&auth=uam_login_auth&template=uam_login_page");// https://login.10086.cn?backUrl=about:blank
+			driver.get("http://login.189.cn/web/login");
 			driver.manage().window().maximize();
 			return new Result(Constants.SUCCESS, ((RemoteWebDriver) driver).getSessionId().toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-
 	}
 
-	public static Result getVerifyImage(String sessionId) {
-		SessionExpire sessionExpire = CookieUtils.getSessionExpire(sessionId);
-		if (StringUtils.isEmpty(sessionId) || sessionExpire == null) {
-			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
-		}
-		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
-		driver.manage().window().maximize();
-		try {
-			WebDriver augmentedDriver = new Augmenter().augment(driver);
-			org.openqa.selenium.WebElement e0 = driver.findElement(By.id("imgbar"));
-			// e0.click();
-			File screenshot = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
-			ImageUtils.fixImageSize(screenshot, e0.getLocation(), e0.getSize());
-			return new Result(Constants.SUCCESS, screenshot);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
-		}
-	}
-
-	public static Result login(String sessionId, String login, String pwd, String code) {
-		SessionExpire sessionExpire = CookieUtils.getSessionExpire(sessionId);
-		if (StringUtils.isEmpty(sessionId) || sessionExpire == null) {
-			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
-		}
-		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
-		WebElement account = driver.findElement(By.id("u_account"));
-		account.clear();
-		account.sendKeys(login);
-		WebElement password = driver.findElement(By.id("u_password"));
-		password.clear();
-		password.sendKeys(pwd);
-		WebElement productCode = driver.findElement(By.id("product_code"));
-		productCode.clear();
-		productCode.sendKeys(code);
-		String jsStart = "window.ajaxBack = jQuery.ajax;" + "\n" //
-				+ "jQuery.ajax = function(setting){" + "\n"//
-				+ "window.myCb = setting.success;" + "\n" //
-				+ "window.myContext = setting.context;" + "\n"//
-				+ "setting.success = function(){" + "\n"//
-				// +"window.myArguments = arguments;"+"\n"
-				+ "		window.myData=arguments; " + "\n"//
-				// if($.isFunction(window.myCb)){window.myCb.apply(setting.context,
-				// arguments); }
-				+ "}" + "\n" //
-				+ "window.ajaxBack(setting);" + "\n" //
-				+ "}";
-		String jsEndCustom = "jQuery.ajax=window.ajaxBack;delete window.ajaxBack;"
-				+ "if(jQuery.isFunction(window.myCb)){window.myCb.apply(window.myContext, window.myData); };"
-				+ "delete window.myCb;delete window.myData;delete window.myContext;";
-
-		try {
-			((RemoteWebDriver) driver).executeScript(jsStart);
-			driver.findElement(By.className("paySub")).click();
-			WebDriverWait wait = new WebDriverWait(driver, 10);
-			ArrayList<?> data = (ArrayList<?>) wait.until(new Function<WebDriver, Object>() {
-				public Object apply(@Nullable WebDriver driver) {
-					return ((RemoteWebDriver) driver).executeScript("return window.myData;");
-				}
-			});
-			((RemoteWebDriver) driver).executeScript(jsEndCustom);
-			String result = (String) data.get(0);
-			if (result == null || result.indexOf("success") != 0) {
-				return new Result(Constants.INPUTERROR, Constants.getMessage(Constants.INPUTERROR));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
-		}
-		return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
-
-	}
-
-	public static Result sendCode(String sessionId) {
+	public static Result sendLoginCode(String sessionId) {
 		SessionExpire sessionExpire = CookieUtils.getSessionExpire(sessionId);
 		if (StringUtils.isEmpty(sessionId) || sessionExpire == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
 		try {
-			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("codekey")))
+			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("divGetRandomPwd")))
 					.click();// 120s
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -147,155 +82,178 @@ public class ChinaTelecomRemoteExecute {
 		return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 	}
 
-	public static Result auth(String sessionId, String name, String idCard, String code) {
+	public static Result login(String sessionId, String login, String pwd, String code) {
+		SessionExpire sessionExpire = CookieUtils.getSessionExpire(sessionId);
+		if (StringUtils.isEmpty(sessionId) || sessionExpire == null) {
+			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
+		}
+		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
+		driver.manage().window().maximize();
+		try {
+			((RemoteWebDriver) driver).executeScript("$(\"#txtAccount\").val(\"" + login + "\").blur();"//
+					+ "$(\"#txtPassword\").val(\"" + pwd + "\");" //
+					+ "$(\"#txtCaptcha\").val(\"" + code + "\");");
+			String loginJs = "if(!document.getElementById(\"myIframe\")){ \n" + //
+					"	jQuery(\"body\").append(\"<iframe  name='myIframe' id='myIframe'></iframe>\");\r\n" + //
+					"}; \n" + //
+					"document.getElementById(\"myIframe\").onload=function(){ \n" + //
+					"	var msg = $(\"#myIframe\").contents().find(\"#loginForm\").attr(\"data-errmsg\"); \n" + //
+					"	if(msg) window.myData = msg; else window.myData='success'; \n" + //
+					"} \n" + //
+					"$(\"#loginForm\").attr(\"target\",\"myIframe\"); \n" + //
+					"$(\"#txtPassword\").valAesEncryptSet(); \n" + //
+					"$(\"#loginForm\").submit();";//
+			((RemoteWebDriver) driver).executeScript(loginJs);
+
+			WebDriverWait wait = new WebDriverWait(driver, 10);
+			String msg = (String) wait.until(new Function<WebDriver, Object>() {
+				public Object apply(@Nullable WebDriver driver) {
+					return ((RemoteWebDriver) driver).executeScript("return window.myData;");
+				}
+			});
+			((RemoteWebDriver) driver).executeScript("delete window.myData;");
+			if (!"success".equals(msg)) {
+				return new Result(Constants.SYSTEMERROR, msg);
+			}
+			doJob(sessionId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
+		}
+		return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
+	}
+
+	public static Result getLoginVerifyImage(String sessionId, boolean refresh) {
+		SessionExpire sessionExpire = CookieUtils.getSessionExpire(sessionId);
+		if (StringUtils.isEmpty(sessionId) || sessionExpire == null) {
+			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
+		}
+		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
+		driver.manage().window().maximize();
+		try {
+			if (refresh) {
+				((RemoteWebDriver) driver).executeScript("window.myOnload=document.getElementById('imgCaptcha').onload;"//
+						+ "document.getElementById('imgCaptcha').onload=function(){ window.myData=true; };"//
+				);
+				((RemoteWebDriver) driver).executeScript("jQuery(\"#imgCaptcha\").click();");
+				WebDriverWait wait = new WebDriverWait(driver, 5);
+				wait.until(new Function<WebDriver, Object>() {
+					public Object apply(@Nullable WebDriver driver) {
+						return ((RemoteWebDriver) driver).executeScript("return window.myData;");
+					}
+				});
+				((RemoteWebDriver) driver).executeScript(
+						"delete window.myData;document.getElementById('imgCaptcha').onload=window.myOnload");
+			}
+			String js = "window.getBase64Image=function(img) {" + "\n"//
+					+ " var canvas = document.createElement(\"canvas\"); " + "\n"//
+					+ " canvas.width = img.width; " + "\n"//
+					+ " canvas.height = img.height; " + "\n"//
+					+ " var ctx = canvas.getContext(\"2d\"); " + "\n"//
+					+ " ctx.drawImage(img, 0, 0, img.width, img.height); " + "\n"//
+					+ " var dataURL = canvas.toDataURL(\"image/png\"); " + "\n"//
+					+ " return dataURL; " + "\n"//
+					+ " }; " + "\n";//
+			String base64 = (String) ((RemoteWebDriver) driver)
+					.executeScript(js + " return window.getBase64Image(document.getElementById('imgCaptcha')); ");
+			base64 = base64.replace("data:image/png;base64,", "");
+			File file = Base64Image.generateImage(base64);
+			return new Result(Constants.SUCCESS, file);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
+		}
+	}
+
+	public static Result doJob(String sessionId) {
 		SessionExpire sessionExpire = CookieUtils.getSessionExpire(sessionId);
 		if (StringUtils.isEmpty(sessionId) || sessionExpire == null) {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
 		try {
-			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("codekey")));
-			((RemoteWebDriver) driver).executeScript(
-					"document.getElementsByName('username')[0].value=decodeURI(arguments[0]);",
-					URLEncoder.encode(name));
-			((RemoteWebDriver) driver).executeScript("document.getElementsByName('idcard')[0].value=arguments[0];",
-					idCard);
-			((RemoteWebDriver) driver)
-					.executeScript("document.getElementsByName('cdrCondition.randpsw')[0].value=arguments[0];", code);
-			Result res = submit(driver);
-			if (res.code != Constants.SUCCESS) {
-				return res;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
-		}
+			TaskKit.taskExecutor.execute(new Runnable() {
+				@Override
+				public void run() {
+					driver.get("http://www.189.cn/dqmh/my189/initMy189home.do?fastcode=01420651");
+					String domain = (String) ((RemoteWebDriver) driver).executeScript(
+							"return document.getElementById(\"bodyIframe\").src.match(/toStUrl=(http:\\/\\/.*\\.189\\.cn).*&/)[1]");
 
-		TaskKit.taskExecutor.execute(new Runnable() {
-			@Override
-			public void run() {
-				Calendar calendar = Calendar.getInstance();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
-				List<Map<String, String>> datas = new ArrayList<>();
-				for (int i = 0; i < 6; i++) {
-					if (i > 0) {
-						calendar.add(Calendar.MONTH, -1);
-						driver.switchTo().defaultContent();
-						((RemoteWebDriver) driver).executeScript(
-								"document.getElementsByName('cdrCondition.cdrmonth')[0].value=arguments[0];",
-								sdf.format(calendar.getTime()));
-						Result res = submit(driver);
-						if (res.code != Constants.SUCCESS) {
-							continue;
+					String[] colums = new String[] { "startTime", "commTime", "commMode", "commPlac", "anotherNm" };
+					Calendar calendar = Calendar.getInstance();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+					List<Map<String, String>> datas = new ArrayList<>();
+					for (int i = 0; i < 6; i++) {
+						if (i > 0) {
+							calendar.add(Calendar.MONTH, -1);
+							List<List<String>> rs = submit(driver, domain, sdf.format(calendar.getTime()));
+							for (List<String> data : rs) {
+								Map<String, String> ele = new HashMap<String, String>();
+								for (int j = 0; j < data.size(); j++) {
+									if (j != 0)
+										ele.put(colums[j - 1], data.get(i));
+								}
+								datas.add(ele);
+							}
 						}
 					}
-					datas.addAll(doJob(driver, sessionId));
-				}
-				RemotePostUtils.postData(datas);
-				CookieUtils.cleanSession(sessionId);
-			}
-		});
-
-		return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
-	}
-
-	private static Result submit(WebDriver driver) {
-		try {
-			String data = (String) ((RemoteWebDriver) driver)
-					.executeScript("return decodeURIComponent(jQuery(\"form[name='form1']\").serialize());");
-			String submit = "jQuery.ajax({" + "\n" //
-					+ " type: \"POST\"," + "\n" //
-					+ " dataType: \"html\"," + "\n"//
-					+ " url: \"/zjpr/cdr/getCdrDetail.htm\"," + "\n" //
-					+ " data: arguments[0]," + "\n" //
-					+ " success: function (result) {" + "\n" //
-					+ " 	window.myData=result;" + "\n" //
-					+ " }," + "\n"//
-					+ " error: function(data) {" + "\n" //
-					+ "     console.log(\"error:\"+data.responseText);" + "\n" //
-					+ "  }" + "\n" //
-					+ " });";
-			WebDriverWait wait = new WebDriverWait(driver, 60);
-			((RemoteWebDriver) driver).executeScript(submit, HexUtils.getHexResult(data));
-			String html = (String) wait.until(new Function<WebDriver, Object>() {
-				public Object apply(@Nullable WebDriver driver) {
-					return ((RemoteWebDriver) driver).executeScript("return window.myData;");
+					RemotePostUtils.postData(datas);
+					CookieUtils.cleanSession(sessionId);
 				}
 			});
-			Pattern pattern = Pattern.compile("location.href = .*error.html.*", Pattern.CASE_INSENSITIVE);
-			Matcher matcher = pattern.matcher(html);
-			if (matcher.find()) {
-				return new Result(Constants.INPUTERROR, Constants.getMessage(Constants.INPUTERROR));
-			}
-			String success = " jQuery(\"body\").append(\"<iframe  id='myIframe'></iframe>\");" + "\n"
-					+ " document.getElementById('myIframe').srcdoc=arguments[0];";
-			((RemoteWebDriver) driver).executeScript(success, html);
-			((RemoteWebDriver) driver).executeScript("delete window.myData;");
-			driver.switchTo().frame("myIframe");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
+
 	}
 
-	@SuppressWarnings("unchecked")
-	private static List<Map<String, String>> doJob(WebDriver driver, String sessionId) {
+	private static List<List<String>> submit(WebDriver driver, String domain, String month) {
+		Integer pageNo = 1;
+		String url = domain + "/service/bill/result/mobile/mobile_call_result.jsp?"
+				+ "SDAY=1&v_choosetype=0&EDAY=31&MONTH=" + month + "&PRODTYPE=50&PRODNO=MTgwNjUyMDkyODU=&PAGENO="
+				+ pageNo + "&INTERPAGE=100";
 
+		driver.get(url);// 201710
+
+		File f = ((RemoteWebDriver) driver).getScreenshotAs(OutputType.FILE);
 		try {
-			String js = " var data=[];" + "\n"//
-					+ " jQuery('.cdrtable:first tbody').find('tr').each(function(index,val){ " + "\n"//
-					+ " 	 if(index>2){" + "\n"//
-					+ " 	 	var myTr=[];" + "\n"//
-					+ " 		jQuery(val).find('td').each(function(i,v){ " + "\n"//
-					+ " 			 if(i>0){ " + "\n"//
-					+ " 			 	myTr.push(v.innerHTML.replace(/<.*?\\/.*?>/g,''));" + "\n"//
-					+ " 			 } http://www.189.cn/dqmh/my189/initMy189home.do" + "\n"//
-					+ " 		 }" + "\n"//
-					+ " 		);" + "\n"//
-					+ " 		if(myTr.length>0){" + "\n"//
-					+ " 		  	data.push(myTr);" + "\n"//
-					+ " 		} " + "\n"//
-					+ " 	} " + "\n"//
-					+ " });" + "\n"//
-					+ " window.myData = data;" + "\n";
+			FileUtils.copyFile(f, new File("/tmp/ttt.png"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		List<List<String>> datas = new ArrayList<>();
+		try {
+			Integer pageTotal = Integer.valueOf((String) ((RemoteWebDriver) driver)
+					.executeScript("return document.getElementById(\"wpage\").getAttribute(\"maxlength\");"));
 
-			String[] colums = new String[] { "anotherNm", "commType", "startTime", "commTime", "commPlac", "commMode" };
-			WebDriverWait wait = new WebDriverWait(driver, 10);
-			wait.until(new Function<WebDriver, Object>() {
-				public Object apply(@Nullable WebDriver driver) {
-					return "complete".equals(((RemoteWebDriver) driver).executeScript("return document.readyState;"));
-				}
-			});
-			((RemoteWebDriver) driver).executeScript(js);
-			List<List<String>> list = (List<List<String>>) wait.until(new Function<WebDriver, Object>() {
-				public Object apply(@Nullable WebDriver driver) {
-					return ((RemoteWebDriver) driver).executeScript("return window.myData;");
-				}
-			});
-			((RemoteWebDriver) driver).executeScript("delete window.myData;");
-			List<Map<String, String>> datas = new ArrayList<>();
-			for (List<String> tr : list) {
-				int j = 0;
-				Map<String, String> ele = new HashMap<>();
-				ele.put("nm", CookieUtils.getSessionExpire(sessionId).nm);
-				// Mobile model = new Mobile().set("nm", SessionUtils.getPhone(key));
-				for (String td : tr) {
-					// 序列号 对方号码 呼叫类型 通话日期起始时间 通话时长 通话地 通话类型 本地费或漫游费 长途费
-					// 减免 费用小计
-					// 备注
-					if (j < 6) {
-						ele.put(colums[j], td);
-						// model.set(colums[j], td);
-					}
-					j++;
-				}
-				datas.add(ele);
-				// model.save();
+			for (int i = 1; i <= Integer.valueOf(pageTotal);) {
+				String js = "window.data=[];" + //
+						"$(\"table tr\").each(function(index,eles){ \n" + //
+						"	if(index!=0){ \n" + //
+						"		e = []; \n" + //
+						"		$(eles).find(\"td\").each(function(index,ele){\n" + //
+						"			console.log(ele);\n" + //
+						"			e.push($(ele).text())\n" + //
+						"		});\n" + //
+						"		data.push(e); \n" + //
+						" }); \n" + //
+						" return window.data;";
+				List<List<String>> ele = (List<List<String>>) ((RemoteWebDriver) driver).executeScript(js);
+				datas.addAll(ele);
+				pageNo = ++i;
+				driver.get(url);
 			}
+			return datas;
 		} catch (Exception e) {
 			e.printStackTrace();
+			if (datas.size() > 0) {
+				return datas;
+			}
 		}
 		return null;
 	}
+
 }

@@ -144,7 +144,7 @@ public class ChinaMobileRemoteExecute {
 		driver.manage().window().maximize();
 		try {
 
-			WebDriver augmentedDriver = new Augmenter().augment(driver);
+			// WebDriver augmentedDriver = new Augmenter().augment(driver);
 			org.openqa.selenium.WebElement e0 = driver.findElement(By.id("imageVec"));
 			if (refresh) {
 				((RemoteWebDriver) driver).executeScript(

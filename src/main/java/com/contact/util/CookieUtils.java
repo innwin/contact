@@ -92,22 +92,41 @@ public class CookieUtils {
 		return mapSessionId.get(sessionId);
 	}
 
+	private static SessionExpire getSessionExpireByCookie(Controller c) {
+		Map<String, String> map = get(c);
+		String sessionId = map.get("sessionId");
+		String nm = map.get("nm");
+		String lastTime = map.get("lastTime");
+		if (StringUtils.isNotEmpty(sessionId) && mapSessionId.get(sessionId) != null) {
+			return mapSessionId.get(sessionId);
+		}
+		return new SessionExpire(sessionId, nm, Long.valueOf(lastTime));
+	}
+
 	public static void put(Controller c, String sessionId, String nm, String webSessionId) {
 		int expire = 24 * 60 * 60;
 		long now = System.currentTimeMillis();
 		c.setCookie("lastTime", String.valueOf(now), expire, "/");
 		if (StringUtils.isNotEmpty(sessionId)) {
 			c.setCookie("sessionId", sessionId, expire, "/");
-			SessionExpire sessionExpire = new SessionExpire(sessionId, nm, now);
+			SessionExpire sessionExpire = getSessionExpireByCookie(c);
+			sessionExpire.sessionId = sessionId;
+			sessionExpire.nm = nm;
+			sessionExpire.time = now;
 			sessionExpire.key = getWebSession(c);
 			mapSessionId.put(sessionId, sessionExpire);
 		}
-		SessionExpire sessionExpire = mapSessionId.get(sessionId);
-		if (sessionExpire != null) {
-			sessionExpire.time = now;
+		String session = getSessionId(c);
+		if (session != null) {
+			SessionExpire sessionExpire = mapSessionId.get(session);
+			if (sessionExpire != null) {
+				sessionExpire.time = now;
+			}
 		}
+
 		if (StringUtils.isNotEmpty(nm)) {
 			c.setCookie("nm", nm, expire, "/");
+			SessionExpire sessionExpire = getSessionExpireByCookie(c);
 			sessionExpire.nm = nm;
 		}
 		if (StringUtils.isNotEmpty(webSessionId)) {
