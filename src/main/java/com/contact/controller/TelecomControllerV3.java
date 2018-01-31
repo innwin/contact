@@ -9,7 +9,6 @@ import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.render.MyCaptchaRender;
 
-import china.telecom.v3.ChinaTelecomRemoteExecute0;
 import china.telecom.v3.ChinaTelecomRemoteExecute;
 
 public class TelecomControllerV3 extends Controller {

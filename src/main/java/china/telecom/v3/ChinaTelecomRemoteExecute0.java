@@ -28,11 +28,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.beust.jcommander.internal.Nullable;
 import com.contact.common.Constants;
 import com.contact.common.Result;
-import com.contact.util.ImageUtils;
-import com.contact.util.RemotePostUtils;
-import com.contact.util.Base64Image;
 import com.contact.util.CookieUtils;
 import com.contact.util.CookieUtils.SessionExpire;
+import com.contact.util.ImageUtils;
+import com.contact.util.RemotePostUtils;
 import com.contact.util.ToolUtils;
 import com.jfinal.plugin.task.TaskKit;
 
@@ -42,8 +41,8 @@ public class ChinaTelecomRemoteExecute0 {
 		System.setProperty("phantomjs.binary.path", "/usr/bin/phantomjs");
 	}
 
-	public static Result loginForm(String key) {
-		CookieUtils.cleanSession(key);
+	public static Result loginForm(String key, String sessionId) {
+		CookieUtils.cleanSession(sessionId);
 		try {
 			WebDriver driver = new MyPhantomJSDriver("", ToolUtils.getPort(key));
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);

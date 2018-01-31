@@ -8,7 +8,6 @@ import com.contact.util.CookieUtils;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.render.MyCaptchaRender;
-import com.jfinal.kit.PropKit;
 
 import china.telecom.v3.ChinaTelecomRemoteExecute0;
 
@@ -16,9 +15,9 @@ public class TelecomControllerV30 extends Controller {
 
 	public void loginForm() {
 		String key = CookieUtils.getWebSession(this);
-		Result rs = ChinaTelecomRemoteExecute0.loginForm(key);
-		String sessionId = (String) rs.getData();
-		CookieUtils.putSessionId(this, sessionId);
+		String sessionId = CookieUtils.getSessionId(this);
+		Result rs = ChinaTelecomRemoteExecute0.loginForm(key, sessionId);
+		CookieUtils.putSessionId(this, (String) rs.getData());
 		render("login.jsp");
 	}
 

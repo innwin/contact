@@ -5,7 +5,6 @@ import com.contact.common.Result;
 import com.contact.util.CookieUtils;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
-import com.jfinal.kit.PropKit;
 
 import china.unicom.v3.ChinaUnicomRemoteExecute;
 
@@ -13,9 +12,9 @@ public class UnicomControllerV3 extends Controller {
 
 	public void loginForm() {
 		String key = CookieUtils.getWebSession(this);
-		Result rs = ChinaUnicomRemoteExecute.loginForm(key);
-		String sessionId = (String) rs.getData();
-		CookieUtils.putSessionId(this, sessionId);
+		String sessionId = CookieUtils.getSessionId(this);
+		Result rs = ChinaUnicomRemoteExecute.loginForm(key, sessionId);
+		CookieUtils.putSessionId(this, (String) rs.getData());
 		render("login.jsp");
 	}
 
