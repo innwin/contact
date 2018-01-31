@@ -223,7 +223,6 @@ public class ChinaTelecomRemoteExecute {
 						"	if(index!=0){ \n" + //
 						"		e = []; \n" + //
 						"		$(eles).find(\"td\").each(function(index,ele){\n" + //
-						"			console.log(ele);\n" + //
 						"			e.push($(ele).text())\n" + //
 						"		});\n" + //
 						"		data.push(e); \n" + //
