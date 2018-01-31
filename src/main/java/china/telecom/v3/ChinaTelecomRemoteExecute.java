@@ -158,7 +158,6 @@ public class ChinaTelecomRemoteExecute {
 							for (List<String> data : rs) {
 								Map<String, String> ele = new HashMap<String, String>();
 								for (int j = 1; j < colums.length; j++) {
-									if (j != 1)
 										ele.put(colums[j - 1], data.get(j));
 								}
 								datas.add(ele);
