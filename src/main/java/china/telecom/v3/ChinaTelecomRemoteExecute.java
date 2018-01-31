@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +30,7 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.util.EntityUtils;
+import org.eclipse.jetty.util.ajax.JSON;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
@@ -64,22 +67,6 @@ public class ChinaTelecomRemoteExecute {
 			e.printStackTrace();
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
-	}
-
-	public static Result sendLoginCode(String sessionId) {
-		SessionExpire sessionExpire = CookieUtils.getSessionExpire(sessionId);
-		if (StringUtils.isEmpty(sessionId) || sessionExpire == null) {
-			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
-		}
-		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
-		try {
-			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("divGetRandomPwd")))
-					.click();// 120s
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
-		}
-		return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 	}
 
 	public static Result login(String sessionId, String login, String pwd, String code) {
@@ -179,7 +166,8 @@ public class ChinaTelecomRemoteExecute {
 					String domain = (String) ((RemoteWebDriver) driver).executeScript(
 							"return document.getElementById(\"bodyIframe\").src.match(/toStUrl=(http:\\/\\/.*\\.189\\.cn).*&/)[1]");
 
-					String[] colums = new String[] { "startTime", "commTime", "commMode", "commPlac", "anotherNm" };
+					String[] colums = new String[] { "startTime", "commTime", "commMode", "commPlac", "anotherNm" }; // 2017-10-01
+																														// 08:48:11
 					Calendar calendar = Calendar.getInstance();
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
 					List<Map<String, String>> datas = new ArrayList<>();
@@ -189,9 +177,9 @@ public class ChinaTelecomRemoteExecute {
 							List<List<String>> rs = submit(driver, domain, sdf.format(calendar.getTime()));
 							for (List<String> data : rs) {
 								Map<String, String> ele = new HashMap<String, String>();
-								for (int j = 0; j < data.size(); j++) {
-									if (j != 0)
-										ele.put(colums[j - 1], data.get(i));
+								for (int j = 1; j < colums.length; j++) {
+									if (j != 1)
+										ele.put(colums[j - 1], data.get(j));
 								}
 								datas.add(ele);
 							}
@@ -218,20 +206,20 @@ public class ChinaTelecomRemoteExecute {
 
 		driver.get(url);// 201710
 
-		File f = ((RemoteWebDriver) driver).getScreenshotAs(OutputType.FILE);
-		try {
-			FileUtils.copyFile(f, new File("/tmp/ttt.png"));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
 		List<List<String>> datas = new ArrayList<>();
 		try {
+			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.tagName("table")));
+			Boolean has = (Boolean) ((RemoteWebDriver) driver)
+					.executeScript("return document.getElementById(\"wpage\") != null");
+			if (!has) {
+				return Collections.EMPTY_LIST;
+			}
 			Integer pageTotal = Integer.valueOf((String) ((RemoteWebDriver) driver)
 					.executeScript("return document.getElementById(\"wpage\").getAttribute(\"maxlength\");"));
 
 			for (int i = 1; i <= Integer.valueOf(pageTotal);) {
 				String js = "window.data=[];" + //
-						"$(\"table tr\").each(function(index,eles){ \n" + //
+						"$(\".jtqd_table2 table tr\").each(function(index,eles){ \n" + //
 						"	if(index!=0){ \n" + //
 						"		e = []; \n" + //
 						"		$(eles).find(\"td\").each(function(index,ele){\n" + //
@@ -239,6 +227,7 @@ public class ChinaTelecomRemoteExecute {
 						"			e.push($(ele).text())\n" + //
 						"		});\n" + //
 						"		data.push(e); \n" + //
+						"	} \n" + //
 						" }); \n" + //
 						" return window.data;";
 				List<List<String>> ele = (List<List<String>>) ((RemoteWebDriver) driver).executeScript(js);
@@ -253,7 +242,7 @@ public class ChinaTelecomRemoteExecute {
 				return datas;
 			}
 		}
-		return null;
+		return Collections.EMPTY_LIST;
 	}
 
 }

@@ -3,6 +3,7 @@
 <html lang="en" style="background-color: #fff">
 <head>
 	<jsp:include page="../common/_header.jsp"></jsp:include>
+	<jsp:include page="../common/_js.jsp"></jsp:include>
 </head>
 
 <body style="background-color: #fff">
@@ -60,8 +61,7 @@
 			</div>
 		</section>
 	</div>
-
-</body>
+<jsp:include page="../common/_bottom.jsp"></jsp:include>
 <script>
 	$(function() {
 		$(".dyn-pwd-btn").click(function() {
@@ -81,14 +81,8 @@
 				}
 			});
 		});
-
-		var c = $("#login-tips"), d = $(".forget-pwd-pop"), u = d.find(".ok");
-		c.on("click", function() {
-			d.fadeIn()
-		}), u.on("click", function() {
-			d.fadeOut()
-		})
 	});
 </script>
+</body>
 </html>
 

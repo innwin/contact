@@ -3,6 +3,7 @@
 <html lang="en" style="background-color: #fff">
 <head>
 	<jsp:include page="../common/_header.jsp"></jsp:include>
+	<jsp:include page="../common/_js.jsp"></jsp:include>
 </head>
 
 <body style="background-color: #fff">
@@ -58,8 +59,7 @@
 			</div>
 		</section>
 	</div>
-
-</body>
+<jsp:include page="../common/_bottom.jsp"></jsp:include>
 <script>
 	$(function() {
 		var c = $("#login-tips"), d = $(".forget-pwd-pop"), u = d.find(".ok");
@@ -70,5 +70,6 @@
 		})
 	});
 </script>
+</body>
 </html>
 

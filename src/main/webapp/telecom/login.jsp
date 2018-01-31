@@ -3,7 +3,7 @@
 <html lang="en" style="background-color: #fff">
 <head>
 	<jsp:include page="../common/_header.jsp"></jsp:include>
-	<jsp:include page="../common/_common_js.jsp"></jsp:include>
+	<jsp:include page="../common/_js.jsp"></jsp:include>
 </head>
 
 <body style="background-color: #fff">
