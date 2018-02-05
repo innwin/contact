@@ -7,9 +7,8 @@ build(){
 }
 
 start(){	
-	if [ {$1}x==""x ]; then
-		echo "POST_URL is needed"
-		exit(1)
+	if [ $1x==""x ]; then
+		echo "POST_URL is option"
 	fi
 	if [ `docker ps -aqf name=contact`x!=''x  ]; then
 		docker rm -f contact
