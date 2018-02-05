@@ -1,4 +1,4 @@
-CREATE DATABASE mobile;
+CREATE DATABASE IF NOT EXISTS mobile;
 
 USE mobile;
 
