@@ -141,14 +141,15 @@ public class SaveDataUtils {
 		List<Mobile> mobiles = new ArrayList<>();
 		for (Map<String, String> m : data) {
 			Mobile mobile = new Mobile().set("nm", m.get("nm"))// .set("commMode", m.get(commMode))
-					.set("commPlac", m.get("commPlac")).set("commType", "commType").set("commTime", m.get("commTime"))
+					.set("commPlac", m.get("commPlac")).set("commType", m.get("commType"))
+					.set("commTime", m.get("commTime"))
 					// .set("remark", remark)
 					.set("startTime", m.get("startTime")).set("anotherNm", m.get("anotherNm"));
 			mobiles.add(mobile);
 		}
 
-		Db.batch("insert into mobile(nm,commType,commTime,startTime,anotherNm) values(?,?,?,?,?)",
-				"nm,commType,commTime,startTime,anotherNm", mobiles, data.size());
+		Db.batch("insert into mobile(nm,commType,commPlac,commTime,startTime,anotherNm) values(?,?,?,?,?)",
+				"nm,commType,commPlac,commTime,startTime,anotherNm", mobiles, data.size());
 
 		// save DB
 		Map<String, Object> dbData = new HashMap<>();
