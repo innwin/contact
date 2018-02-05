@@ -9,11 +9,14 @@ COPY phantomjs /usr/bin/
 
 RUN tar /tmp/jdk-8u141-linux-x64.tar.gz -zxf -C /usr/local/ && \
 rm -rf /tmp/jdk-8u141-linux-x64.tar.gz && \
-chmod +x /usr/bin/phantomjs
+chmod +x /usr/bin/phantomjs && \
+apt-get install -y mysql-server mysql-client \ 
+libmysqlclient-dev libfontconfig1-dev
 
 ENV dir /var/contact
 ENV JAVA_HOME /usr/local/jdk1.8.0_141
 ENV PATH $PATH:${JAVA_HOME}/bin
+ENV SQL_FILE ${dir}/contact/src/main/resources/schema.sql
 
 COPY src ${dir}/src
 COPY pom.xml mvnw ${dir}/
@@ -23,4 +26,4 @@ RUN sed -i "s/post.url=__blank/post.url=${POST_URL}/g" ${dir}/src/main/resources
 
 WORKDIR ${dir}
 
-CMD ./mvnw jetty:run
+CMD sh -c "service mysql start && mysql -uroot < ${SQL_FILE} && ./mvnw jetty:run"

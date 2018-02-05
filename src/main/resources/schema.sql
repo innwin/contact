@@ -2,7 +2,7 @@ CREATE DATABASE mobile;
 
 USE mobile;
 
-CREATE TABLE `mobile` (
+CREATE TABLE IF NOT EXISTS `mobile` (
   `id` int(11) NOT NULL auto_increment,
   `nm` varchar(255),
   `commMode` varchar(255),
