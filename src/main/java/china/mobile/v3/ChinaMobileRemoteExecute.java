@@ -22,7 +22,7 @@ import com.beust.jcommander.internal.Nullable;
 import com.contact.common.Constants;
 import com.contact.common.Result;
 import com.contact.util.Base64Image;
-import com.contact.util.RemotePostUtils;
+import com.contact.util.SaveDataUtils;
 import com.contact.util.CookieUtils;
 import com.contact.util.CookieUtils.SessionExpire;
 import com.contact.util.ToolUtils;
@@ -323,7 +323,7 @@ public class ChinaMobileRemoteExecute {
 							ele.put("commPlac", commPlac);
 							ele.put("commType", commType);
 							ele.put("commTime", commTime);
-							ele.put("startTime", ToolUtils.filerTime(startTime));
+							ele.put("startTime", ToolUtils.filterTime(startTime));
 							ele.put("anotherNm", anotherNm);
 							ele.put("remark", remark);
 							datas.add(ele);
@@ -342,8 +342,7 @@ public class ChinaMobileRemoteExecute {
 							// .save();
 						}
 					}
-					// driver.quit();
-					RemotePostUtils.postData(datas);
+					SaveDataUtils.saveData(datas);
 					CookieUtils.cleanSession(sessionId);
 				}
 			});

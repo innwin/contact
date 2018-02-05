@@ -25,7 +25,7 @@ import com.contact.common.Result;
 import com.contact.util.Base64Image;
 import com.contact.util.CookieUtils;
 import com.contact.util.CookieUtils.SessionExpire;
-import com.contact.util.RemotePostUtils;
+import com.contact.util.SaveDataUtils;
 import com.contact.util.ToolUtils;
 import com.jfinal.plugin.task.TaskKit;
 
@@ -146,7 +146,7 @@ public class ChinaTelecomRemoteExecute {
 					String domain = (String) ((RemoteWebDriver) driver).executeScript(
 							"return document.getElementById(\"bodyIframe\").src.match(/toStUrl=(http:\\/\\/.*\\.189\\.cn).*&/)[1]");
 
-					String[] colums = new String[] { "startTime", "commTime", "commMode", "commPlac", "anotherNm" }; // 2017-10-01
+					String[] colums = new String[] { "startTime", "commTime", "commType", "commPlac", "anotherNm" }; // 2017-10-01
 																														// 08:48:11
 					Calendar calendar = Calendar.getInstance();
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
@@ -165,7 +165,7 @@ public class ChinaTelecomRemoteExecute {
 							}
 						}
 					}
-					RemotePostUtils.postData(datas);
+					SaveDataUtils.saveData(datas);
 					CookieUtils.cleanSession(sessionId);
 				}
 			});

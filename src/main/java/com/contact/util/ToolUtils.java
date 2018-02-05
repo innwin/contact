@@ -8,7 +8,7 @@ import com.jfinal.kit.PropKit;
 
 public class ToolUtils {
 
-	public static String filerTime(String content) {
+	public static String filterTime(String content) {
 		String pattern0 = "\\d*-\\d*-\\d* \\d*:\\d*:\\d*";
 		String pattern1 = "(\\d*)-\\d* \\d*:\\d*:\\d*";
 

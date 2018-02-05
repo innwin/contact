@@ -17,3 +17,10 @@ CREATE TABLE `mobile` (
 --  `content` mediumtext NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `mobile_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `phoneNumber` varchar(15) DEFAULT NULL,
+  `detailReportSrc` longtext,
+  `reportTime` datetime DEFAULT NULL,
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

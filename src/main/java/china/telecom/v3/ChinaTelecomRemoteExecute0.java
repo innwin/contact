@@ -31,7 +31,7 @@ import com.contact.common.Result;
 import com.contact.util.CookieUtils;
 import com.contact.util.CookieUtils.SessionExpire;
 import com.contact.util.ImageUtils;
-import com.contact.util.RemotePostUtils;
+import com.contact.util.SaveDataUtils;
 import com.contact.util.ToolUtils;
 import com.jfinal.plugin.task.TaskKit;
 
@@ -190,7 +190,7 @@ public class ChinaTelecomRemoteExecute0 {
 					}
 					datas.addAll(doJob(driver, sessionId));
 				}
-				RemotePostUtils.postData(datas);
+				SaveDataUtils.saveData(datas);
 				CookieUtils.cleanSession(sessionId);
 			}
 		});
