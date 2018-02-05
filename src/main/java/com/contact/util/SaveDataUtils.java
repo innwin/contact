@@ -155,10 +155,10 @@ public class SaveDataUtils {
 		Map<String, Object> dbData = new HashMap<>();
 		for (int i : Arrays.asList(3, 6)) {
 			Filter filter = new Filter(data).least(i);
-			dbData.put("least" + i + "commplac", filter.commPlac());
-			dbData.put("least" + i + "leastten", filter.leastTen());
-			dbData.put("least" + i + "eachother", filter.eachOther());
-			dbData.put("least" + i + "sameCommPlac", filter.sameCommPlac());
+			dbData.put("least" + i + "CommPlac", filter.commPlac());
+			dbData.put("least" + i + "LeastTen", filter.leastTen());
+			dbData.put("least" + i + "EachOther", filter.eachOther());
+			dbData.put("least" + i + "SameCommPlac", filter.sameCommPlac());
 		}
 		if (dbData.size() > 0) {
 			Db.update("insert into `mobile_detail`(phoneNumber,detailReportSrc,reportTime) values(?,?,?)",
