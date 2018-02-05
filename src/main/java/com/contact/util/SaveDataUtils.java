@@ -148,7 +148,7 @@ public class SaveDataUtils {
 			mobiles.add(mobile);
 		}
 
-		Db.batch("insert into mobile(nm,commType,commPlac,commTime,startTime,anotherNm) values(?,?,?,?,?)",
+		Db.batch("insert into mobile(nm,commType,commPlac,commTime,startTime,anotherNm) values(?,?,?,?,?,?)",
 				"nm,commType,commPlac,commTime,startTime,anotherNm", mobiles, data.size());
 
 		// save DB

@@ -41,7 +41,7 @@ public class ChinaMobileRemoteExecute {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.get("https://login.10086.cn/login.html?channelID=12003&backUrl=http://shop.10086.cn/i/");// https://login.10086.cn?backUrl=about:blank
 			driver.manage().window().maximize();
-			driver.findElement(By.id("radiobuttonSMS")).click();
+			driver.findElement(By.id("sms_login_1")).click();
 			// SessionUtils.putSessionId(key, new SessionExpire(((RemoteWebDriver)
 			// driver).getSessionId().toString(),
 			// System.currentTimeMillis()));
