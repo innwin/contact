@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jetty.util.ajax.JSON;
 
 import com.contact.common.Mobile;
@@ -81,7 +81,7 @@ class Filter {
 		return outData;
 	}
 
-	public int eachOther() {
+	public Integer eachOther() {
 		Map<String, Set<String>> tmp = new HashMap<>();
 		Set<String> outData = new HashSet<>();
 		for (Map<String, String> ele : data) {
@@ -106,6 +106,18 @@ class Filter {
 		}
 		return outData.size();
 	}
+
+	public Integer sameCommPlac() {
+		Integer i = 0;
+		String city = new PhoneSearch().search(data.get(0).get("nm")).get("city");
+		for (Map<String, String> ele : data) {
+			if (StringUtils.isNotEmpty(city) && city.equals(ele.get("commPlac"))) {
+				i++;
+			}
+		}
+		return i;
+	}
+
 }
 
 public class SaveDataUtils {
@@ -134,10 +146,11 @@ public class SaveDataUtils {
 			dbData.put("least" + i + "commplac", filter.commPlac());
 			dbData.put("least" + i + "leastten", filter.leastTen());
 			dbData.put("least" + i + "eachother", filter.eachOther());
+			dbData.put("least" + i + "sameCommPlac", filter.sameCommPlac());
 		}
 		Db.update("insert into `mobile_detail`(phoneNumber,detailReportSrc,reportTime) values(?,?,?)",
 				datas.get(0).get("nm"), JSON.toString(dbData), Calendar.getInstance().getTime());
-		
+
 		System.out.printf("%s data: %s ", JSON.toString(dbData),
 				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 	}
