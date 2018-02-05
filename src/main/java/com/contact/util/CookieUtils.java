@@ -100,7 +100,7 @@ public class CookieUtils {
 		if (StringUtils.isNotEmpty(sessionId) && mapSessionId.get(sessionId) != null) {
 			return mapSessionId.get(sessionId);
 		}
-		return new SessionExpire(sessionId, nm, Long.valueOf(lastTime));
+		return new SessionExpire(sessionId, nm, Long.valueOf(lastTime == null ? "0" : lastTime));
 	}
 
 	public static void put(Controller c, String sessionId, String nm, String webSessionId) {

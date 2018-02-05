@@ -23,4 +23,5 @@ CREATE TABLE IF NOT EXISTS `mobile_detail` (
   `phoneNumber` varchar(15) DEFAULT NULL,
   `detailReportSrc` longtext,
   `reportTime` datetime DEFAULT NULL,
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

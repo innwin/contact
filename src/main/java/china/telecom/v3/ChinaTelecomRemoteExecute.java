@@ -1,6 +1,7 @@
 package china.telecom.v3;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,8 +12,10 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.MyPhantomJSDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -57,9 +60,10 @@ public class ChinaTelecomRemoteExecute {
 		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
 		driver.manage().window().maximize();
 		try {
-			((RemoteWebDriver) driver).executeScript("delete loadLoginCaptcha;$(\"#txtAccount\").val(\"" + login + "\").blur();"//
-					+ "$(\"#txtPassword\").val(\"" + pwd + "\");" //
-					+ "$(\"#txtCaptcha\").val(\"" + code + "\");");
+			((RemoteWebDriver) driver)
+					.executeScript("delete loadLoginCaptcha;$(\"#txtAccount\").val(\"" + login + "\").blur();"//
+							+ "$(\"#txtPassword\").val(\"" + pwd + "\");" //
+							+ "$(\"#txtCaptcha\").val(\"" + code + "\");");
 			String loginJs = "if(!document.getElementById(\"myIframe\")){ \n" + //
 					"	jQuery(\"body\").append(\"<iframe  name='myIframe' id='myIframe'></iframe>\");\r\n" + //
 					"}; \n" + //
@@ -159,7 +163,7 @@ public class ChinaTelecomRemoteExecute {
 								Map<String, String> ele = new HashMap<String, String>();
 								ele.put("nm", sessionExpire.nm);
 								for (int j = 1; j <= colums.length; j++) {
-										ele.put(colums[j - 1], data.get(j));
+									ele.put(colums[j - 1], data.get(j));
 								}
 								datas.add(ele);
 							}
@@ -188,7 +192,8 @@ public class ChinaTelecomRemoteExecute {
 
 		List<List<String>> datas = new ArrayList<>();
 		try {
-			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.tagName("table")));
+			// new WebDriverWait(driver,
+			// 10).until(ExpectedConditions.visibilityOfElementLocated(By.tagName("table")));
 			Boolean has = (Boolean) ((RemoteWebDriver) driver)
 					.executeScript("return document.getElementById(\"wpage\") != null");
 			if (!has) {
