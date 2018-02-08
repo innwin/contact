@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html lang="en" style="background-color: #fff">
 <head>
-	<jsp:include page="../common/_header.jsp"></jsp:include>
-	<jsp:include page="../common/_js.jsp"></jsp:include>
+<jsp:include page="../common/_header.jsp"></jsp:include>
+<jsp:include page="../common/_js.jsp"></jsp:include>
 </head>
 
 <body style="background-color: #fff">
@@ -23,26 +23,25 @@
 						<div class="login-input-group" id="login-form-mobile">
 
 							<div class="login-input-item">
-								<i class="icon-mobile"></i> 
-								<input class="login-input"
-									type="text" name="servPwd" placeholder="服务密码" required="required" />
-								<i class="clear"></i>
+								<i class="icon-mobile"></i> <input class="login-input"
+									type="text" name="servPwd" placeholder="服务密码"
+									required="required" /> <i class="clear"></i>
 							</div>
 							<div class="login-input-item">
-								<i class="icon-lock"></i> 
-								<input class="login-input login-input-dyn" type="text" name="imgCode"
-									placeholder="图形验证码" maxlength="6" /> 
-								<i class="clear clear-dyn"></i>
-								<img class="dyn-pwd-btn" id="verify_code" src="/mobile/getVerifyCode">
+								<i class="icon-lock"></i> <input
+									class="login-input login-input-dyn" type="text" name="imgCode"
+									placeholder="图形验证码" maxlength="6" /> <i
+									class="clear clear-dyn"></i> <img class="dyn-pwd-btn"
+									id="verify_code">
 							</div>
 							<div class="login-input-item">
-								<i class="icon-lock"></i> 
-								<input class="login-input login-input-dyn" type="text" name="smsPwd"
-									placeholder="短信验证码" maxlength="6" /> 
-								<i class="clear clear-dyn"></i>
+								<i class="icon-lock"></i> <input
+									class="login-input login-input-dyn" type="text" name="smsPwd"
+									placeholder="短信验证码" maxlength="6" /> <i
+									class="clear clear-dyn"></i>
 								<div class="dyn-pwd-btn" id="send_sms"
 									style="text-align: center; line-height: 30px">获取验证码</div>
-							</div> 
+							</div>
 							<div id="popup-captcha"></div>
 						</div>
 						<div class="login-btn" id="login-btn-mobile" status="0">登录</div>
@@ -68,24 +67,36 @@
 			</div>
 		</section>
 	</div>
-<jsp:include page="../common/_bottom.jsp"></jsp:include>
-<script>
-	$(function() {
-		$("#send_sms").click(function() {
+	<jsp:include page="../common/_bottom.jsp"></jsp:include>
+	<script>
+		function refreshImg() {
 			$.ajax({
 				type : "POST",
-				url : "/mobile/sendSMS",
+				url : "/mobile/getVerifyCode?refresh=true&random="
+						+ Math.random(),
 				success : function(msg) {
-					$.dialog.tips("发送成功", 1)
+					if (msg.code == 0)
+						$("#verify_code").attr("src", msg.data);
 				}
 			});
+		}
+
+		$(function() {
+			refreshImg();
+			$("#send_sms").click(function() {
+				$.ajax({
+					type : "POST",
+					url : "/mobile/sendSMS",
+					success : function(msg) {
+						$.dialog.tips("发送成功", 1)
+					}
+				});
+			});
+			$("#verify_code").click(function() {
+				refreshImg();
+			});
 		});
-		
-		$("#verify_code").click(function() {
-			this.src="/mobile/getVerifyCode?refresh=true&random="+Math.random();
-		});
-	});
-</script>
+	</script>
 </body>
 </html>
 

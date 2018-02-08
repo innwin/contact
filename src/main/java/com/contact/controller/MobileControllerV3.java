@@ -1,13 +1,10 @@
 package com.contact.controller;
 
-import java.io.File;
-
 import com.contact.common.Constants;
 import com.contact.common.Result;
 import com.contact.util.CookieUtils;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
-import com.jfinal.ext.render.MyCaptchaRender;
 
 import china.mobile.v3.ChinaMobileRemoteExecute;
 
@@ -48,8 +45,6 @@ public class MobileControllerV3 extends Controller {
 	}
 
 	public void authForm() {
-		String sessionId = CookieUtils.getSessionId(this);
-		ChinaMobileRemoteExecute.authForm(sessionId);
 		CookieUtils.updateLastTime(this);
 		render("auth.jsp");
 	}
@@ -59,14 +54,8 @@ public class MobileControllerV3 extends Controller {
 		boolean refresh = Boolean.valueOf(getPara("refresh", "false"));
 		Result rs = ChinaMobileRemoteExecute.getVerifyImage(sessionId, refresh);
 		CookieUtils.updateLastTime(this);
-		render(new MyCaptchaRender((File) rs.data));
-	}
-
-	public void sendSMS() {
-		String sessionId = CookieUtils.getSessionId(this);
-		Result rs = ChinaMobileRemoteExecute.sendSMS(sessionId);
-		CookieUtils.updateLastTime(this);
 		renderJson(rs);
+//		render(new MyCaptchaRender((File) rs.data));
 	}
 
 	@Before(MyValidator.class)
