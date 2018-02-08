@@ -113,14 +113,13 @@ public class ChinaMobileRemoteExecute {
 				" $.getJSON('/login.htm', params, function(jsonData) {\r\n" + //
 				"	if (jsonData.code == \"0000\") {\r\n" + //
 				"		// success \r\n" + //
-				"		window.location.href = jsonData.assertAcceptURL\r\n" + 
-				"								+ \"?backUrl=\" + backUrl + \"&artifact=\"\r\n" + 
-				"								+ jsonData.artifact;"+
-				"		window.myData = \"success\";\r\n" + //
+				"		window.location.href = jsonData.assertAcceptURL\r\n"
+				+ "								+ \"?backUrl=\" + backUrl + \"&artifact=\"\r\n"
+				+ "								+ jsonData.artifact;" + "		window.myData = \"success\";\r\n" + //
 				"	} else if (jsonData.result == '9') {\r\n" + //
 				"		// already login \r\n" + //
-				"		window.location.href = \"http://shop.10086.cn/i/\";"+
-				"		window.myData = \"success\";\r\n" + //
+				"		window.location.href = \"http://shop.10086.cn/i/\";"
+				+ "		window.myData = \"success\";\r\n" + //
 				"	}else{\r\n" + //
 				"		//faild \r\n" + //
 				"		window.myData = jsonData.desc;\r\n" + //
@@ -230,15 +229,17 @@ public class ChinaMobileRemoteExecute {
 		return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
 	}
 
-	private static Result doJob(String sessionId, WebDriver driver) {
-		try {
-			TaskKit.taskExecutor.execute(new Runnable() {
-				@Override
-				public void run() {
+	private static void doJob(String sessionId, WebDriver driver) {
+
+		TaskKit.taskExecutor.execute(new Runnable() {
+			@Override
+			public void run() {
+				try {
 					String js = "jQuery.ajax({\r\n" + //
 					"	 type: \"GET\",\r\n" + //
 					"	//dataType: \"json\",\r\n" + //
-					"	 url: \"/i/v1/fee/detailbillinfojsonp/" + CookieUtils.getSessionExpire(sessionId).nm + "\",\r\n" + //
+					"	 url: \"/i/v1/fee/detailbillinfojsonp/" + CookieUtils.getSessionExpire(sessionId).nm + "\",\r\n"
+							+ //
 					"	 data:{curCuror: \"1\",\r\n" + //
 					"	 	step: \"50\",\r\n" + //
 					"		qryMonth: \"%s\",\r\n" + //
@@ -297,14 +298,11 @@ public class ChinaMobileRemoteExecute {
 					}
 					SaveDataUtils.saveData(datas);
 					CookieUtils.cleanSession(sessionId);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			});
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
-		}
-		return new Result(Constants.SUCCESS, Constants.getMessage(Constants.SUCCESS));
+			}
+		});
 	}
 
 }
