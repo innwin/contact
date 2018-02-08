@@ -60,23 +60,23 @@ public class ChinaMobileRemoteExecute {
 		try {
 			WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
 
-			String js = "  $.ajax({\r\n" + //
-					"	type: \"get\",\r\n" + //
-					"	contentType: \"*\",\r\n" + //
-					"	cache: false,\r\n" + //
-					"	async: true,\r\n" + //
-					"	timeout: 2e4,\r\n" + //
-					"	data: {},\r\n" + //
+			String js = "  $.ajax({\n" + //
+					"	type: \"get\",\n" + //
+					"	contentType: \"*\",\n" + //
+					"	cache: false,\n" + //
+					"	async: true,\n" + //
+					"	timeout: 2e4,\n" + //
+					"	data: {},\n" + //
 					"	url: \"/i/v1/fee/detbillrandomcodejsonp/" + login + "?callback=callback\"," + //
-					"	success: function (result) {\r\n" + //
-					"		var callback=function(data){\r\n" + //
-					"			window.myData = data;\r\n" + //
-					"		}\r\n" + //
-					"		eval(result);\r\n" + //
-					"	},\r\n" + "	error: function(data) {\r\n" + //
-					"		alert(data);\r\n" + //
-					"	}\r\n" + //
-					"});\r\n";
+					"	success: function (result) {\n" + //
+					"		var callback=function(data){\n" + //
+					"			window.myData = data;\n" + //
+					"		}\n" + //
+					"		eval(result);\n" + //
+					"	},\n" + "	error: function(data) {\n" + //
+					"		alert(data);\n" + //
+					"	}\n" + //
+					"});\n";
 			((RemoteWebDriver) driver).executeScript(js);
 			WebDriverWait wait = new WebDriverWait(driver, 10);
 			@SuppressWarnings("unchecked")
@@ -102,29 +102,29 @@ public class ChinaMobileRemoteExecute {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
-		String js = " params={};\r\n" + //
-				" params.account = \"" + login + "\";\r\n" + //
-				" params.password = \"" + pwd + "\";\r\n" + //
-				" params.pwdType =\"01\";\r\n" + //
-				" params.accountType = \"01\";\r\n" + //
-				" params.password =  encrypt(params.password);\r\n" + //
-				" params.channelID = $(\"#channelID\").val();\r\n" + //
-				" params.timestamp = new Date().getTime();\r\n" + //
-				" $.getJSON('/login.htm', params, function(jsonData) {\r\n" + //
-				"	if (jsonData.code == \"0000\") {\r\n" + //
-				"		// success \r\n" + //
-				"		window.location.href = jsonData.assertAcceptURL\r\n"
-				+ "								+ \"?backUrl=\" + backUrl + \"&artifact=\"\r\n"
-				+ "								+ jsonData.artifact;" + "		window.myData = \"success\";\r\n" + //
-				"	} else if (jsonData.result == '9') {\r\n" + //
-				"		// already login \r\n" + //
-				"		window.location.href = \"http://shop.10086.cn/i/\";"
-				+ "		window.myData = \"success\";\r\n" + //
-				"	}else{\r\n" + //
-				"		//faild \r\n" + //
-				"		window.myData = jsonData.desc;\r\n" + //
-				"	}\r\n" + //
-				" });\r\n";
+		String js = " params={};\n" + //
+				" params.account = \"" + login + "\";\n" + //
+				" params.password = \"" + pwd + "\";\n" + //
+				" params.pwdType =\"01\";\n" + //
+				" params.accountType = \"01\";\n" + //
+				" params.password =  encrypt(params.password);\n" + //
+				" params.channelID = $(\"#channelID\").val();\n" + //
+				" params.timestamp = new Date().getTime();\n" + //
+				" $.getJSON('/login.htm', params, function(jsonData) {\n" + //
+				"	if (jsonData.code == \"0000\") {\n" + //
+				"		// success \n" + //
+				"		window.location.href = jsonData.assertAcceptURL\n"
+				+ "								+ \"?backUrl=\" + backUrl + \"&artifact=\"\n"
+				+ "								+ jsonData.artifact;" + "		window.myData = \"success\";\n" + //
+				"	} else if (jsonData.result == '9') {\n" + //
+				"		// already login \n" + //
+				"		window.location.href = \"http://shop.10086.cn/i/\";" + "		window.myData = \"success\";\n"
+				+ //
+				"	}else{\n" + //
+				"		//faild \n" + //
+				"		window.myData = jsonData.desc;\n" + //
+				"	}\n" + //
+				" });\n";
 		((RemoteWebDriver) driver).executeScript(js);
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -154,17 +154,17 @@ public class ChinaMobileRemoteExecute {
 		driver.manage().window().maximize();
 		try {
 
-			String js = "var img = document.createElement(\"img\");\r\n" + //
-					"img.src = \"/i/authImg?t=\" + Math.random();\r\n" + //
-					"img.onload=function(){\r\n" + //
-					"	var img = this;\r\n" + //
-					"	var canvas = document.createElement(\"canvas\"); \r\n" + //
-					"	canvas.width = img.width; \r\n" + //
-					"	canvas.height = img.height; \r\n" + //
-					"	var ctx = canvas.getContext(\"2d\");\r\n" + //
-					"	ctx.drawImage(img, 0, 0, img.width, img.height); \r\n" + //
-					"	var dataURL = canvas.toDataURL(\"image/png\");\r\n" + //
-					"	window.myData = dataURL\r\n" + //
+			String js = "var img = document.createElement(\"img\");\n" + //
+					"img.src = \"/i/authImg?t=\" + Math.random();\n" + //
+					"img.onload=function(){\n" + //
+					"	var img = this;\n" + //
+					"	var canvas = document.createElement(\"canvas\"); \n" + //
+					"	canvas.width = img.width; \n" + //
+					"	canvas.height = img.height; \n" + //
+					"	var ctx = canvas.getContext(\"2d\");\n" + //
+					"	ctx.drawImage(img, 0, 0, img.width, img.height); \n" + //
+					"	var dataURL = canvas.toDataURL(\"image/png\");\n" + //
+					"	window.myData = dataURL\n" + //
 					"}";
 			((RemoteWebDriver) driver).executeScript(js);
 			WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -192,23 +192,24 @@ public class ChinaMobileRemoteExecute {
 				ToolUtils.getPort(CookieUtils.getSessionExpire(sessionId).key));
 		try {
 
-			String js = "$.ajax({\r\n" + //
-					"	type: \"get\",\r\n" + //
-					"	contentType: \"*\",\r\n" + //
-					"	cache: false,\r\n" + //
-					"	async: true,\r\n" + //
-					"	timeout: 2e4,\r\n" + //
-					"	data: {pwdTempSerCode: base64encode(utf16to8(\"" + servPwd
-					+ "\"), pwdTempRandCode: base64encode(utf16to8(\"" + smsPwd + "\"), captchaVal: \"" + imgCode
-					+ "\"},\r\n" + //
-					"	url: \"/i/v1/fee/detailbilltempidentjsonp/" + CookieUtils.getSessionExpire(sessionId).nm
-					+ "\", \r\n" + //
-					"	success: function (result) {\r\n" + //
-					"		window.myData = result; \r\n" + //
-					"	},\r\n" + //
-					"	error: function(data) {\r\n" + //
-					"		window.myData= data; \r\n" + //
-					"	}\r\n" + //
+			String js = "$.ajax({\n" + //
+					"	type: \"get\",\n" + //
+					"	contentType: \"*\",\n" + //
+					"	cache: false,\n" + //
+					"	async: true,\n" + //
+					"	timeout: 2e4,\n" + //
+					"	data: {	pwdTempSerCode: \n" + //
+					" 			base64encode(utf16to8(\"" + servPwd + "\"), \n" + //
+					" 			pwdTempRandCode: base64encode(utf16to8(\"" + smsPwd + "\"),\n" + //
+					"			captchaVal: \"" + imgCode + "\"},\n" + //
+					"	url: \"/i/v1/fee/detailbilltempidentjsonp/" + //
+					CookieUtils.getSessionExpire(sessionId).nm + "\", \n" + //
+					"	success: function (result) {\n" + //
+					"		window.myData = result; \n" + //
+					"	},\n" + //
+					"	error: function(data) {\n" + //
+					"		window.myData= data; \n" + //
+					"	}\n" + //
 					"});";
 			((RemoteWebDriver) driver).executeScript(JsUtils.base64() + JsUtils.utf16to8() + js);
 			WebDriverWait wait = new WebDriverWait(driver, 5);
@@ -235,22 +236,21 @@ public class ChinaMobileRemoteExecute {
 			@Override
 			public void run() {
 				try {
-					String js = "jQuery.ajax({\r\n" + //
-					"	 type: \"GET\",\r\n" + //
-					"	//dataType: \"json\",\r\n" + //
-					"	 url: \"/i/v1/fee/detailbillinfojsonp/" + CookieUtils.getSessionExpire(sessionId).nm + "\",\r\n"
-							+ //
-					"	 data:{curCuror: \"1\",\r\n" + //
-					"	 	step: \"50\",\r\n" + //
-					"		qryMonth: \"%s\",\r\n" + //
-					"		billType: \"01\"},\r\n" + //
-					"	success: function (result) {\r\n" + //
-					"		window.myData = result; \r\n" + //
-					"	\r\n" + //
-					"	},\r\n" + //
-					"	error: function(data) {\r\n" + //
-					"		window.myData = data.responseText \r\n" + //
-					"	}\r\n" + //
+					String js = "jQuery.ajax({\n" + //
+					"	 type: \"GET\",\n" + //
+					"	//dataType: \"json\",\n" + //
+					"	 url: \"/i/v1/fee/detailbillinfojsonp/" + //
+					CookieUtils.getSessionExpire(sessionId).nm + "\",\n" + //
+					"	 data:{curCuror: \"1\",\n" + //
+					"	 	step: \"50\",\n" + //
+					"		qryMonth: \"%s\",\n" + //
+					"		billType: \"01\"},\n" + //
+					"	success: function (result) {\n" + //
+					"		window.myData = result; \n" + //
+					"	},\n" + //
+					"	error: function(data) {\n" + //
+					"		window.myData = data.responseText \n" + //
+					"	}\n" + //
 					"});";
 
 					Calendar calendar = Calendar.getInstance();
