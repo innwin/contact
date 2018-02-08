@@ -62,7 +62,7 @@ public class ChinaMobileRemoteExecute {
 			WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
 			WebElement name = driver.findElement(By.id("p_name"));
 			name.clear();
-			name.sendKeys(login);// 18868945291
+			name.sendKeys(login);
 			WebElement smsPwd = driver.findElement(By.id("getSMSpwd"));
 			String display = smsPwd.getCssValue("display");
 			if (!"none".equals(display)) {
@@ -81,28 +81,44 @@ public class ChinaMobileRemoteExecute {
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));
 		}
 		WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
-		// driver.findElement(By.id("radiobuttonSMS")).click();
-		// driver.findElement(By.id("p_name")).sendKeys(login);// 18868945291
-		WebElement pwdElement = driver.findElement(By.id("p_pwd"));
-		pwdElement.clear();
-		pwdElement.sendKeys(pwd);
-		((RemoteWebDriver) driver).executeScript(
-				"window.getJSON=$.getJSON;$.getJSON=function(){ window.funObj=arguments[2]; var myFun=function(data){  window.myData=data;} ; window.getJSON(arguments[0],arguments[1],myFun) }");
-		driver.findElement(By.id("submit_bt")).click();
+		String js = " params={};\r\n" + //
+				" params.account = \"" + login + "\";\r\n" + //
+				" params.password = \"" + pwd + "\";\r\n" + //
+				" params.pwdType =\"01\";\r\n" + //
+				" params.accountType = \"01\";\r\n" + //
+				" params.password =  encrypt(params.password);\r\n" + //
+				" params.channelID = $(\"#channelID\").val();\r\n" + //
+				" params.timestamp = new Date().getTime();\r\n" + //
+				" $.getJSON('/login.htm', params, function(jsonData) {\r\n" + //
+				"	if (jsonData.code == \"0000\") {\r\n" + //
+				"		// success \r\n" + //
+				"		window.location.href = jsonData.assertAcceptURL\r\n" + //
+				"								+ \"?backUrl=\" + backUrl + \"&artifact=\"\r\n" + //
+				"								+ jsonData.artifact;\r\n" + //
+				"		window.myData = \"success\";\r\n" + //
+				"	} else if (jsonData.result == '9') {\r\n" + //
+				"		// already login \r\n" + //
+				"		window.location.href = \"http://shop.10086.cn/i/\";\r\n" + //
+				"		window.myData = \"success\";\r\n" + //
+				"	}else{\r\n" + //
+				"		//faild \r\n" + //
+				"		window.myData = jsonData.desc;\r\n" + //
+				"	}\r\n" + //
+				" });\r\n";
+		((RemoteWebDriver) driver).executeScript(js);
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, 10);
 			@SuppressWarnings("unchecked")
-			Map<String, ?> data = (Map<String, ?>) wait.until(new Function<WebDriver, Object>() {
+			String data = (String) wait.until(new Function<WebDriver, Object>() {
 				public Object apply(@Nullable WebDriver driver) {
 					return ((RemoteWebDriver) driver).executeScript("return window.myData;");
 				}
 			});
-			((RemoteWebDriver) driver)
-					.executeScript("window.funObj(window.myData);delete window.myData;$.getJSON=window.getJSON;");
-			if (!"0000".equals(data.get("code"))) {
-				return new Result(Constants.INPUTERROR, data.get("desc"));
+			((RemoteWebDriver) driver).executeScript("delete window.myData;");
+			if (!"success".equals(data)) {
+				return new Result(Constants.INPUTERROR, data);
 			}
-			return new Result(Constants.SUCCESS, data.get("desc"));
+			return new Result(Constants.SUCCESS, data);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result(Constants.SYSTEMERROR, Constants.getMessage(Constants.SYSTEMERROR));

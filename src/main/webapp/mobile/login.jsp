@@ -30,11 +30,9 @@
 							</div>
 							<div class="login-input-item">
 								<i class="icon-lock"></i> 
-								<input class="login-input login-input-dyn" type="tel" name="pwd"
-									placeholder="短信验证码" maxlength="6" /> 
-								<i class="clear clear-dyn"></i>
-								<div class="dyn-pwd-btn"
-									style="text-align: center; line-height: 30px">获取验证码</div>
+								<input class="login-input"
+									type="text" name="pwd" placeholder="服务密码" required="required" />
+								<i class="clear"></i>
 							</div>
 							<div id="popup-captcha"></div>
 						</div>
@@ -62,27 +60,6 @@
 		</section>
 	</div>
 <jsp:include page="../common/_bottom.jsp"></jsp:include>
-<script>
-	$(function() {
-		$(".dyn-pwd-btn").click(function() {
-			var phone = $("#login").val();
-			if (!phone) {
-				$.dialog.tips("请输入手机号", 1)
-				return;
-			}
-			$.ajax({
-				type : "POST",
-				url : "/mobile/getSMSCode",
-				data : {
-					"login" : phone
-				},
-				success : function(msg) {
-					$.dialog.tips("发送成功", 1)
-				}
-			});
-		});
-	});
-</script>
 </body>
 </html>
 
