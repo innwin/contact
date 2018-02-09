@@ -7,7 +7,7 @@ window.getBase64Image = function(img) {
 	var dataURL = canvas.toDataURL("image/png");
 	return dataURL;
 };
-window.myOnload = document.getElementById('imgCaptcha').onload;
+//window.myOnload = document.getElementById('imgCaptcha').onload;
 document.getElementById('imgCaptcha').onload = function() {
 	window.myData = window.getBase64Image(document.getElementById('imgCaptcha'));;
 };
