@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html lang="en" style="background-color: #fff">
 <head>
-	<jsp:include page="../common/_header.jsp"></jsp:include>
-	<jsp:include page="../common/_js.jsp"></jsp:include>
+<jsp:include page="../common/_header.jsp"></jsp:include>
+<jsp:include page="../common/_js.jsp"></jsp:include>
 </head>
 
 <body style="background-color: #fff">
@@ -23,23 +23,21 @@
 						<div class="login-input-group" id="login-form-mobile">
 
 							<div class="login-input-item">
-								<i class="icon-mobile"></i> 
-								<input class="login-input"
+								<i class="icon-mobile"></i> <input class="login-input"
 									type="text" name="login" placeholder="手机号码" required="required" />
 								<i class="clear"></i>
 							</div>
 							<div class="login-input-item">
-								<i class="icon-lock"></i> 
-								<input class="login-input"
-									type="text" name="pwd" placeholder="服务密码" required="required" />
-								<i class="clear"></i>
+								<i class="icon-lock"></i> <input class="login-input" type="text"
+									name="pwd" placeholder="服务密码" required="required" /> <i
+									class="clear"></i>
 							</div>
 							<div class="login-input-item">
-								<i class="icon-lock"></i> 
-								<input class="login-input login-input-dyn" type="text" name="code"
-									placeholder="图形验证码" maxlength="6" /> 
-								<i class="clear clear-dyn"></i>
-								<img class="dyn-pwd-btn" src="getVerifyImage">
+								<i class="icon-lock"></i> <input
+									class="login-input login-input-dyn" type="text" name="code"
+									placeholder="图形验证码" maxlength="6" /> <i
+									class="clear clear-dyn"></i> <img class="dyn-pwd-btn"
+									id="verify_code">
 							</div>
 							<div id="popup-captcha"></div>
 						</div>
@@ -66,7 +64,35 @@
 			</div>
 		</section>
 	</div>
-<jsp:include page="../common/_bottom.jsp"></jsp:include>
+	<jsp:include page="../common/_bottom.jsp"></jsp:include>
+	<script>
+		function refreshImg() {
+			$.ajax({
+				type : "POST",
+				url : "/mobile/getVerifyImage?random=" + Math.random(),
+				success : function(msg) {
+					if (msg.code == 0)
+						$("#verify_code").attr("src", msg.data);
+				}
+			});
+		}
+
+		$(function() {
+			refreshImg();
+			$("#send_sms").click(function() {
+				$.ajax({
+					type : "POST",
+					url : "/mobile/getAuthPwd",
+					success : function(msg) {
+						$.dialog.tips("发送成功", 1)
+					}
+				});
+			});
+			$("#verify_code").click(function() {
+				refreshImg();
+			});
+		});
+	</script>
 </body>
 </html>
 

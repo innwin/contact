@@ -1,13 +1,10 @@
 package com.contact.controller;
 
-import java.io.File;
-
 import com.contact.common.Constants;
 import com.contact.common.Result;
 import com.contact.util.CookieUtils;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
-import com.jfinal.ext.render.MyCaptchaRender;
 
 import china.telecom.v3.ChinaTelecomRemoteExecute;
 
@@ -23,10 +20,10 @@ public class TelecomControllerV3 extends Controller {
 
 	public void getVerifyImage() {
 		String sessionId = CookieUtils.getSessionId(this);
-		Result rs = ChinaTelecomRemoteExecute.getLoginVerifyImage(sessionId, true);
+		Result rs = ChinaTelecomRemoteExecute.getLoginVerifyImage(sessionId);
 		CookieUtils.updateLastTime(this);
-		System.out.println(rs.data);
-		render(new MyCaptchaRender((File) rs.data));
+		renderJson(rs);
+		// render(new MyCaptchaRender((File) rs.data));
 	}
 
 	@Before(MyValidator.class)

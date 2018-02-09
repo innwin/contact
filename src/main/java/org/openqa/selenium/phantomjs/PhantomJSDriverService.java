@@ -596,7 +596,6 @@ public class PhantomJSDriverService extends DriverService {
 						argsBuilder.add(String.format("--webdriver-logfile=%s", logFile.getAbsolutePath()));
 					}
 				}
-
 				// Create a new service
 				return new PhantomJSDriverService(phantomjs, port, argsBuilder.build(), environment);
 			} catch (IOException e) {

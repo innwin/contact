@@ -36,10 +36,18 @@ public class MobileControllerV3 extends Controller {
 
 	}
 
-	public void getSMSCode() {
+	public void getAuthPwd() {
 		String sessionId = CookieUtils.getSessionId(this);
 		String phone = getPara("login");
-		Result rs = ChinaMobileRemoteExecute.getSMSPwd(sessionId, phone);
+		Result rs = ChinaMobileRemoteExecute.getAuthPwd(sessionId, phone);
+		CookieUtils.updateLastTime(this);
+		renderJson(rs);
+	}
+	
+	public void getLoginPwd() {
+		String sessionId = CookieUtils.getSessionId(this);
+		String phone = getPara("login");
+		Result rs = ChinaMobileRemoteExecute.getLoginPwd(sessionId, phone);
 		CookieUtils.updateLastTime(this);
 		renderJson(rs);
 	}

@@ -119,7 +119,14 @@ public class PhantomJSDriver extends RemoteWebDriver implements TakesScreenshot 
 	 *      for configuration details.
 	 */
 	public PhantomJSDriver(Capabilities desiredCapabilities, int port) {
-		this(PhantomJSDriverService.createDefaultServiceWithPort(desiredCapabilities, port), desiredCapabilities);
+		this(PhantomJSDriverService.createDefaultServiceWithPort(addUserAgent(desiredCapabilities), port),
+				desiredCapabilities);
+	}
+
+	private static Capabilities addUserAgent(Capabilities desiredCapabilities) {
+		((DesiredCapabilities) desiredCapabilities).setCapability("phantomjs.page.settings.userAgent",
+				"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36");
+		return desiredCapabilities;
 	}
 
 	/**
