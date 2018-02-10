@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -157,48 +158,7 @@ public class SaveDataUtils {
 	}
 
 	public static void saveData(List<Map<String, String>> data) {
-		// Pattern pattern = Pattern
-		// .compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
-		// String url = PropKit.get("post.url");
-		// if (pattern.matcher(url).matches()) {
-		// try {
-		// HttpRequestUtils.httpPost(url, datas);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// } else {
-		// System.out.printf("%s data: %s ", JSON.toString(datas),
-		// new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-		// }
-
-		List<Mobile> mobiles = new ArrayList<>();
-		for (Map<String, String> m : data) {
-			Mobile mobile = new Mobile().set("nm", m.get("nm"))// .set("commMode", m.get(commMode))
-					.set("commPlac", m.get("commPlac")).set("commType", m.get("commType"))
-					.set("commTime", m.get("commTime"))
-					// .set("remark", remark)
-					.set("startTime", m.get("startTime")).set("anotherNm", m.get("anotherNm"));
-			mobiles.add(mobile);
-		}
-
-		Db.batch("insert into mobile(nm,commType,commPlac,commTime,startTime,anotherNm) values(?,?,?,?,?,?)",
-				"nm,commType,commPlac,commTime,startTime,anotherNm", mobiles, data.size());
-
-		// save DB
-		Map<String, Object> dbData = new HashMap<>();
-		for (int i : Arrays.asList(3, 6)) {
-			Filter filter = new Filter(data).least(i);
-			dbData.put("least" + i + "CommPlac", filter.commPlac());
-			dbData.put("least" + i + "LeastTen", filter.leastTen());
-			dbData.put("least" + i + "EachOther", filter.eachOther());
-			dbData.put("least" + i + "SameCommPlac", filter.sameCommPlac());
-		}
-		if (dbData.size() > 0) {
-			Db.update("insert into `mobile_detail`(phoneNumber,detailReportSrc,reportTime) values(?,?,?)",
-					data.get(0).get("nm"), JSON.toString(dbData), Calendar.getInstance().getTime());
-		}
-		System.out.printf("%s data: %s ", JSON.toString(dbData),
-				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+		saveData(Collections.EMPTY_MAP, data);
 	}
 
 	public static void postData(String nm) {
