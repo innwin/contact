@@ -3,6 +3,16 @@
 <html lang="en" style="background-color: #fff">
 <head>
 <jsp:include page="../common/_header.jsp"></jsp:include>
+<style type="text/css">
+.login-tips {
+	padding-top: .625rem;
+	padding-left: .375rem;
+	padding-bottom: .3125rem;
+	font-size: .40625rem;
+	color: #139DE8;
+	z-index: 100;
+}
+</style>
 </head>
 
 <body style="background-color: #fff">
@@ -11,30 +21,16 @@
 			<a href="javascript:void(0)"><i class="icon-arrow-left"></i></a> <a
 				href="javascript:void(0)"><div class="logo"></div></a>
 		</header>
-		<section class="login-section">
+		<section class="login-section" style="margin-top: 50px">
 			<ul class="login-tabs js-tabs">
-				<li class="login-tab js-tab selected">手机验证</li>
-				<li class="login-tab js-tab">账号验证</li>
+				<li class="login-tab js-tab selected" style="width: 33.3%;"><a
+					href="/mobile/loginForm">中国移动</a></li>
+				<li class="login-tab js-tab selected" style="width: 33.3%;"><a
+					href="/unicom/loginForm">中国联通</a></li>
+				<li class="login-tab js-tab selected" style="width: 33.3%;"><a
+					href="/telecom/loginForm">中国电信</a></li>
 			</ul>
-			<div class="js-tabconts">
-				<div class="js-tabcont selected">
-					<form action="/home/home" method="post">
-						<div class="login-input-group" id="login-form-mobile">
-
-							<div class="login-input-item">
-								<i class="icon-mobile"></i> <input class="login-input"
-									value="${login}" type="tel" id="login" name="login"
-									placeholder="手机号码" required="required" /> <i class="clear"></i>
-							</div>
-							<div id="popup-captcha"></div>
-						</div>
-						<div class="login-btn" id="login-btn-mobile" status="0">go</div>
-					</form>
-					<p class="login-tips">${result == null ? '' : result.data }
-						${error}</p>
-					<p class="login-tips" id="login-tips">忘记密码如何登录？</p>
-				</div>
-			</div>
+			<p class="login-tips" id="login-tips">忘记密码如何登录？</p>
 		</section>
 		<!-- 点击“忘记密码如何登录”时显示的弹窗 -->
 		<section class="forget-pwd-pop">
@@ -51,7 +47,17 @@
 			</div>
 		</section>
 	</div>
-	<jsp:include page="../common/_bottom.jsp"></jsp:include>
+
 </body>
+<script>
+	$(function() {
+		var c = $("#login-tips"), d = $(".forget-pwd-pop"), u = d.find(".ok");
+		c.on("click", function() {
+			d.fadeIn()
+		}), u.on("click", function() {
+			d.fadeOut()
+		})
+	});
+</script>
 </html>
 

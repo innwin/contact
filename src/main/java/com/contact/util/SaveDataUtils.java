@@ -110,7 +110,7 @@ class Filter {
 	public Integer sameCommPlac() {
 		Integer i = 0;
 		if (data.size() > 0) {
-			String city = new PhoneSearch().search(data.get(0).get("nm")).get("city");
+			String city = PhoneSearchUtils.search(data.get(0).get("nm")).get("city");
 			for (Map<String, String> ele : data) {
 				if (StringUtils.isNotEmpty(city) && city.equals(ele.get("commPlac"))) {
 					i++;

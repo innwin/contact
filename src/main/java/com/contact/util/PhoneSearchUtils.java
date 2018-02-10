@@ -5,14 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class PhoneSearch {
-	private Scanner scan;
+import org.eclipse.jetty.util.ajax.JSON;
 
-	public PhoneSearch() {
-		scan = new Scanner(PhoneSearch.class.getResourceAsStream("/phone.dat"), "UTF-8");
-	}
+public class PhoneSearchUtils {
 
-	public Map<String, String> search(String phone) {
+	private static Scanner scan = new Scanner(PhoneSearchUtils.class.getResourceAsStream("/phone.dat"), "UTF-8");
+
+	public static Map<String, String> search(String phone) {
 		scan.reset();
 		String mob = phone.substring(0, 7);
 		while (true) {
@@ -36,5 +35,9 @@ public class PhoneSearch {
 			}
 		}
 		return Collections.EMPTY_MAP;
+	}
+	
+	public static void main(String [] args) {
+		System.out.println(JSON.toString(PhoneSearchUtils.search("18868945291")));
 	}
 }

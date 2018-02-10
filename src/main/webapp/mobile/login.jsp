@@ -37,7 +37,7 @@
 							</div>
 							<div id="popup-captcha"></div>
 						</div>
-						<button class="login-btn" id="login-btn-mobile" status="0">登录</button>
+						<div class="login-btn" id="login-btn-mobile" status="0">登录</div>
 					</form>
 					<p class="login-tips">${result == null ? '' : result.data }
 						${error}</p>
