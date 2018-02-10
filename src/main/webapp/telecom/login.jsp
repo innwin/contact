@@ -57,7 +57,7 @@
 		function refreshImg() {
 			$.ajax({
 				type : "POST",
-				url : "/mobile/getVerifyImage?random=" + Math.random(),
+				url : "/telecom/getVerifyImage?random=" + Math.random(),
 				success : function(msg) {
 					if (msg.code == 0)
 						$("#verify_code").attr("src", msg.data);

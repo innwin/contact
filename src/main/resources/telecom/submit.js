@@ -1,4 +1,4 @@
-window.data = [];
+var data = [];
 $(".jtqd_table2 table tr").each(function(index, eles) {
 	if (index != 0) {
 		e = [];
@@ -8,4 +8,4 @@ $(".jtqd_table2 table tr").each(function(index, eles) {
 		data.push(e);
 	}
 });
-return window.data;
+window.myData = data;

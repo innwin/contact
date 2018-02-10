@@ -12,4 +12,4 @@ document.getElementById("myIframe").onload=function(){
 } 
 $("#loginForm").attr("target","myIframe");
 $("#txtPassword").valAesEncryptSet();
-$("#loginForm").submit();"
+$("#loginForm").submit();

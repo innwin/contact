@@ -18,6 +18,7 @@ import com.contact.common.Constants;
 import com.contact.common.Result;
 import com.contact.util.CookieUtils;
 import com.contact.util.CookieUtils.SessionExpire;
+import com.contact.util.DebugUtils;
 import com.contact.util.JsExecUtils;
 import com.contact.util.SaveDataUtils;
 import com.contact.util.ToolUtils;
@@ -91,7 +92,7 @@ public class ChinaTelecomRemoteExecute {
 				public void run() {
 					driver.get("http://www.189.cn/dqmh/my189/initMy189home.do?fastcode=01420651");
 					String domain = (String) ((RemoteWebDriver) driver).executeScript(
-							"return document.getElementById(\"bodyIframe\").src.match(/toStUrl=(http:\\/\\/.*\\.189\\.cn).*&/)[1]");
+							"return document.getElementById('bodyIframe').src.match(/toStUrl=(http:\\/\\/.*\\.189\\.cn).*/)[1]");
 
 					String[] colums = new String[] { "startTime", "commTime", "commType", "commPlac", "anotherNm" }; // 2017-10-01
 																														// 08:48:11
@@ -131,19 +132,20 @@ public class ChinaTelecomRemoteExecute {
 				+ "SDAY=1&v_choosetype=0&EDAY=31&MONTH=" + month + "&PRODTYPE=50&PRODNO=MTgwNjUyMDkyODU=&PAGENO="
 				+ pageNo + "&INTERPAGE=100";
 
-		driver.get(url);// 201710
+		// DebugUtils.saveImg(driver, "/tmp/test0008.png");
 
 		List<List<String>> datas = new ArrayList<>();
 		try {
+			driver.get(url);// 201710
 			// new WebDriverWait(driver,
 			// 10).until(ExpectedConditions.visibilityOfElementLocated(By.tagName("table")));
 			Boolean has = (Boolean) ((RemoteWebDriver) driver)
-					.executeScript("return document.getElementById(\"wpage\") != null");
+					.executeScript("return document.getElementById('wpage') != null");
 			if (!has) {
 				return Collections.EMPTY_LIST;
 			}
 			Integer pageTotal = Integer.valueOf((String) ((RemoteWebDriver) driver)
-					.executeScript("return document.getElementById(\"wpage\").getAttribute(\"maxlength\");"));
+					.executeScript("return document.getElementById('wpage').getAttribute('maxlength');"));
 
 			for (int i = 1; i <= Integer.valueOf(pageTotal);) {
 				List<List<String>> ele = (List<List<String>>) JsExecUtils.exec(driver, "/telecom/submit.js", true);
