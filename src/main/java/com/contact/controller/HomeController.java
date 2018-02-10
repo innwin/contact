@@ -23,8 +23,9 @@ public class HomeController extends Controller {
 			redirect("/telecom/loginForm");
 		} else if ("联通".equals(isp)) {
 			redirect("/unicom/loginForm");
+		} else {
+			renderJson("{ code: 500 , data: \" phone number is error \" }");
 		}
-		renderJson();
 	}
 
 	public void logs() {
