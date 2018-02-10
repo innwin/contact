@@ -52,7 +52,6 @@ public class ChinaTelecomRemoteExecute {
 		driver.manage().window().maximize();
 		try {
 			String msg = (String) JsExecUtils.exec(driver, "/telecom/login.js", true, login, pwd, code);
-			((RemoteWebDriver) driver).executeScript("delete window.myData;");
 			if (!"success".equals(msg)) {
 				return new Result(Constants.INPUTERROR, msg);
 			}
