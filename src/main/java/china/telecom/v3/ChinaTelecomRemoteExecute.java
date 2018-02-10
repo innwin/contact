@@ -136,8 +136,8 @@ public class ChinaTelecomRemoteExecute {
 		List<List<String>> datas = new ArrayList<>();
 		try {
 			driver.get(String.format(url, 1));// 201710
-			// new WebDriverWait(driver,
-			// 10).until(ExpectedConditions.visibilityOfElementLocated(By.tagName("table")));
+
+			// FIXME: some time we can not find this element
 			Boolean has = (Boolean) ((RemoteWebDriver) driver)
 					.executeScript("return document.getElementById('wpage') != null");
 			if (!has) {
@@ -147,19 +147,20 @@ public class ChinaTelecomRemoteExecute {
 					.executeScript("return document.getElementById('wpage').getAttribute('maxlength');"));
 			Integer pageNo = 1;
 			for (int i = 1; i <= Integer.valueOf(pageTotal);) {
-				List<List<String>> ele = (List<List<String>>) JsExecUtils.exec(driver, "/telecom/submit.js", true);
-				datas.addAll(ele);
+				try {
+					List<List<String>> ele = (List<List<String>>) JsExecUtils.exec(driver, "/telecom/submit.js", true);
+					datas.addAll(ele);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				pageNo = ++i;
 				driver.get(String.format(url, pageNo));
 			}
 			return datas;
 		} catch (Exception e) {
 			e.printStackTrace();
-			if (datas.size() > 0) {
-				return datas;
-			}
 		}
-		return Collections.EMPTY_LIST;
+		return datas;
 	}
 
 }
