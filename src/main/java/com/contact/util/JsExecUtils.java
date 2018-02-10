@@ -34,23 +34,27 @@ public class JsExecUtils {
 	}
 
 	public static Object exec(WebDriver driver, String jsFile, boolean withMyData, Object... args) {
-		try {
-			String js = JsExecUtils.readStream(JsExecUtils.class.getResourceAsStream(jsFile));
-			((RemoteWebDriver) driver).executeScript(js, args);
-			if (withMyData) {
-				WebDriverWait wait = new WebDriverWait(driver, 10);
-				@SuppressWarnings("unchecked")
-				Object data = wait.until(new Function<WebDriver, Object>() {
-					public Object apply(@Nullable WebDriver driver) {
-						return ((RemoteWebDriver) driver).executeScript("return window.myData;");
-					}
-				});
-				((RemoteWebDriver) driver).executeScript("delete window.myData;");
-				return data;
+		int retry = 3;
+		for (int i = 0; i < retry; i++) {
+			try {
+				String js = JsExecUtils.readStream(JsExecUtils.class.getResourceAsStream(jsFile));
+				((RemoteWebDriver) driver).executeScript(js, args);
+				if (withMyData) {
+					WebDriverWait wait = new WebDriverWait(driver, 10);
+					@SuppressWarnings("unchecked")
+					Object data = wait.until(new Function<WebDriver, Object>() {
+						public Object apply(@Nullable WebDriver driver) {
+							return ((RemoteWebDriver) driver).executeScript("return window.myData;");
+						}
+					});
+					((RemoteWebDriver) driver).executeScript("delete window.myData;");
+					return data;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return null;
 	}
+
 }
