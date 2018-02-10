@@ -145,14 +145,14 @@ public class ChinaMobileRemoteExecute {
 		TaskKit.taskExecutor.execute(new Runnable() {
 			@Override
 			public void run() {
-				try {
-					Calendar calendar = Calendar.getInstance();
-					List<Map<String, String>> datas = new ArrayList<>();
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
-					for (int i = 0; i < 6; i++) {
-						if (i > 0) {
-							calendar.add(Calendar.MONTH, -1);
-						}
+				Calendar calendar = Calendar.getInstance();
+				List<Map<String, String>> datas = new ArrayList<>();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+				for (int i = 0; i < 6; i++) {
+					if (i > 0) {
+						calendar.add(Calendar.MONTH, -1);
+					}
+					try {
 						Map<String, ?> myData = (Map<String, ?>) JsExecUtils.exec(driver, "/mobile/doJob.js", true,
 								CookieUtils.getSessionExpire(sessionId).nm, sdf.format(calendar.getTime()));
 						if (!"000000".equals(myData.get("retCode"))) {
@@ -179,27 +179,27 @@ public class ChinaMobileRemoteExecute {
 							ele.put("remark", remark);
 							datas.add(ele);
 						}
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-					Map<String, ?> myData = (Map<String, ?>) JsExecUtils.exec(driver, "/mobile/getUserInfo.js", true,
-							CookieUtils.getSessionExpire(sessionId).nm);
-					Map<String, ?> userInfo = (Map<String, ?>) myData.get("data");
-					if ("000000".equals(myData.get("retCode"))) {
-						String name = (String) userInfo.get("name");
-						String netAge = (String) userInfo.get("netAge");
-						String address = (String) userInfo.get("address");
-						Map<String, String> data = new HashMap<>();
-						data.put("name", name);
-						data.put("netAge", netAge);
-						data.put("address", address);
-						userInfo = data;
-					} else {
-						userInfo = Collections.EMPTY_MAP;
-					}
-					SaveDataUtils.saveData(userInfo, datas);
-					CookieUtils.cleanSession(sessionId);
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
+				Map<String, ?> myData = (Map<String, ?>) JsExecUtils.exec(driver, "/mobile/getUserInfo.js", true,
+						CookieUtils.getSessionExpire(sessionId).nm);
+				Map<String, ?> userInfo = (Map<String, ?>) myData.get("data");
+				if ("000000".equals(myData.get("retCode"))) {
+					String name = (String) userInfo.get("name");
+					String netAge = (String) userInfo.get("netAge");
+					String address = (String) userInfo.get("address");
+					Map<String, String> data = new HashMap<>();
+					data.put("name", name);
+					data.put("netAge", netAge);
+					data.put("address", address);
+					userInfo = data;
+				} else {
+					userInfo = Collections.EMPTY_MAP;
+				}
+				SaveDataUtils.saveData(userInfo, datas);
+				CookieUtils.cleanSession(sessionId);
 			}
 		});
 	}
