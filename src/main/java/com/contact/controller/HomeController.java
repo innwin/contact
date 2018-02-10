@@ -16,6 +16,7 @@ public class HomeController extends Controller {
 		String phone = getPara("login");
 		CookieUtils.putNm(this, phone);
 		String isp = PhoneSearchUtils.search(phone).get("isp");
+		setAttr("login", CookieUtils.getNm(this));
 		if ("移动".equals(isp)) {
 			redirect("/mobile/loginForm");
 		} else if ("电信".equals(isp)) {

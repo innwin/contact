@@ -15,6 +15,7 @@ public class TelecomControllerV3 extends Controller {
 		String sessionId = CookieUtils.getSessionId(this);
 		Result rs = ChinaTelecomRemoteExecute.loginForm(key, sessionId);
 		CookieUtils.putSessionId(this, (String) rs.getData());
+		setAttr("login", CookieUtils.getNm(this));
 		render("login.jsp");
 	}
 

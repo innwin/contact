@@ -15,6 +15,7 @@ public class UnicomControllerV3 extends Controller {
 		String sessionId = CookieUtils.getSessionId(this);
 		Result rs = ChinaUnicomRemoteExecute.loginForm(key, sessionId);
 		CookieUtils.putSessionId(this, (String) rs.getData());
+		setAttr("login", CookieUtils.getNm(this));
 		render("login.jsp");
 	}
 

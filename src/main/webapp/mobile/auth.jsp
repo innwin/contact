@@ -24,21 +24,21 @@
 
 							<div class="login-input-item">
 								<i class="icon-mobile"></i> <input class="login-input"
-									type="text" name="servPwd" placeholder="服务密码"
-									required="required" /> <i class="clear"></i>
+									type="text" name="servPwd" value="${servPwd}"
+									placeholder="服务密码" required="required" /> <i class="clear"></i>
 							</div>
 							<div class="login-input-item">
 								<i class="icon-lock"></i> <input
-									class="login-input login-input-dyn" type="text" name="imgCode"
-									placeholder="图形验证码" maxlength="6" /> <i
-									class="clear clear-dyn"></i> <img class="dyn-pwd-btn"
-									id="verify_code">
+									class="login-input login-input-dyn" type="text"
+									value="${imgCode}" name="imgCode" placeholder="图形验证码"
+									maxlength="6" /> <i class="clear clear-dyn"></i> <img
+									class="dyn-pwd-btn" id="verify_code">
 							</div>
 							<div class="login-input-item">
 								<i class="icon-lock"></i> <input
-									class="login-input login-input-dyn" type="text" name="smsPwd"
-									placeholder="短信验证码" maxlength="6" /> <i
-									class="clear clear-dyn"></i>
+									class="login-input login-input-dyn" type="text"
+									value="${smsPwd}" name="smsPwd" placeholder="短信验证码"
+									maxlength="6" /> <i class="clear clear-dyn"></i>
 								<div class="dyn-pwd-btn" id="send_sms"
 									style="text-align: center; line-height: 30px">获取验证码</div>
 							</div>
@@ -53,19 +53,7 @@
 			</div>
 		</section>
 		<!-- 点击“忘记密码如何登录”时显示的弹窗 -->
-		<section class="forget-pwd-pop">
-			<div class="forget-pwd-mask"></div>
-			<div class="forget-pwd-content">
-				<h1 class="forget-pwd-title">忘记密码</h1>
-				<p class="txt">
-					<strong>手机号</strong>用户可使用「手机号+验证码」登录；
-				</p>
-				<p class="txt">
-					<strong>邮箱账号</strong>用户可在电脑上登录壹心理网站找回密码。
-				</p>
-				<div class="ok">我知道了</div>
-			</div>
-		</section>
+		<jsp:include page="../common/_forget_pwd_pop.jsp"></jsp:include>
 	</div>
 	<jsp:include page="../common/_bottom.jsp"></jsp:include>
 	<script>
