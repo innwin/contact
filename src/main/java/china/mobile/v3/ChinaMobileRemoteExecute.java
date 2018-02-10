@@ -3,6 +3,7 @@ package china.mobile.v3;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -179,7 +180,13 @@ public class ChinaMobileRemoteExecute {
 							datas.add(ele);
 						}
 					}
-					SaveDataUtils.saveData(datas);
+					Map<String, ?> myData = (Map<String, ?>) JsExecUtils.exec(driver, "/mobile/getUserInfo.js", true,
+							CookieUtils.getSessionExpire(sessionId).nm, sdf.format(calendar.getTime()));
+					Map<String, ?> userInfo = (Map<String, ?>) myData.get("data");
+					if (!"000000".equals(myData.get("retCode"))) {
+						userInfo = Collections.EMPTY_MAP;
+					}
+					SaveDataUtils.saveData(userInfo, datas);
 					CookieUtils.cleanSession(sessionId);
 				} catch (Exception e) {
 					e.printStackTrace();
