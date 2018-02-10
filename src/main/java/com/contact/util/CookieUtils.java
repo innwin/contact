@@ -48,29 +48,30 @@ public class CookieUtils {
 		}
 	}
 
-	static {
-
-		for (int port : ToolUtils.portAll()) {
-			MyPhantomJSDriver driver = new MyPhantomJSDriver("", port);
-			List<Map<String, ?>> sessions = driver.getAllSessions();
-			for (Map<String, ?> map : sessions) {
-				String sessionId = (String) map.get("id");
-				new MyPhantomJSDriver(sessionId, port).quit();
-			}
-		}
-
-		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-		executor.scheduleWithFixedDelay(new Runnable() {
-			public void run() {
-				for (Entry<String, SessionExpire> kv : mapSessionId.entrySet()) {
-					if (System.currentTimeMillis() - kv.getValue().time > 1000 * 60 * 3) {
-						cleanSession(kv.getKey());
-					}
-				}
-			}
-		}, 0, 1, TimeUnit.SECONDS);
-
-	}
+	// TODO: need better option
+	// static {
+	//
+	// for (int port : ToolUtils.portAll()) {
+	// MyPhantomJSDriver driver = new MyPhantomJSDriver("", port);
+	// List<Map<String, ?>> sessions = driver.getAllSessions();
+	// for (Map<String, ?> map : sessions) {
+	// String sessionId = (String) map.get("id");
+	// new MyPhantomJSDriver(sessionId, port).quit();
+	// }
+	// }
+	//
+	// ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+	// executor.scheduleWithFixedDelay(new Runnable() {
+	// public void run() {
+	// for (Entry<String, SessionExpire> kv : mapSessionId.entrySet()) {
+	// if (System.currentTimeMillis() - kv.getValue().time > 1000 * 60 * 3) {
+	// cleanSession(kv.getKey());
+	// }
+	// }
+	// }
+	// }, 0, 1, TimeUnit.SECONDS);
+	//
+	// }
 
 	public static void putSessionId(Controller c, String sessionId) {
 		put(c, sessionId, "", "");

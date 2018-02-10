@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.function.Function;
 
+import org.eclipse.jetty.util.ajax.JSON;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -32,10 +33,10 @@ public class JsExecUtils {
 
 	}
 
-	public static Object exec(WebDriver driver, String jsFile, boolean withMyData,Object ... args) {
+	public static Object exec(WebDriver driver, String jsFile, boolean withMyData, Object... args) {
 		try {
 			String js = JsExecUtils.readStream(JsExecUtils.class.getResourceAsStream(jsFile));
-			((RemoteWebDriver) driver).executeScript(js,args);
+			((RemoteWebDriver) driver).executeScript(js, args);
 			if (withMyData) {
 				WebDriverWait wait = new WebDriverWait(driver, 10);
 				@SuppressWarnings("unchecked")

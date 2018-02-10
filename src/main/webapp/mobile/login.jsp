@@ -24,13 +24,13 @@
 
 							<div class="login-input-item">
 								<i class="icon-mobile"></i> <input class="login-input"
-									type="tel" id="login" name="login" placeholder="手机号码"
-									required="required" /> <i class="clear"></i>
+									value="${login}" type="tel" id="login" name="login"
+									placeholder="手机号码" required="required" /> <i class="clear"></i>
 							</div>
 							<div class="login-input-item">
 								<i class="icon-lock"></i> <input
 									class="login-input login-input-dyn" type="text" name="pwd"
-									placeholder="短信验证码" maxlength="6" /> <i
+									value="${pwd}" placeholder="短信验证码" maxlength="6" /> <i
 									class="clear clear-dyn"></i>
 								<div class="dyn-pwd-btn" id="send_sms"
 									style="text-align: center; line-height: 30px">获取验证码</div>
@@ -64,7 +64,7 @@
 	<script>
 		$(function() {
 			$("#send_sms").click(function() {
-				if(!$("#login").val()){
+				if (!$("#login").val()) {
 					return $.dialog.tips("phone number can not be null", 1)
 				}
 				$.ajax({

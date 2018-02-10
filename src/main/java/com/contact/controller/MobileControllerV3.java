@@ -15,6 +15,7 @@ public class MobileControllerV3 extends Controller {
 		Result rs = ChinaMobileRemoteExecute.loginForm(key);
 		String sessionId = (String) rs.getData();
 		CookieUtils.putSessionId(this, sessionId);
+		setAttr("login", CookieUtils.getNm(this));
 		render("login.jsp");
 	}
 
@@ -38,7 +39,7 @@ public class MobileControllerV3 extends Controller {
 
 	public void getAuthPwd() {
 		String sessionId = CookieUtils.getSessionId(this);
-		String phone = getPara("login");
+		String phone = CookieUtils.getNm(this);
 		Result rs = ChinaMobileRemoteExecute.getAuthPwd(sessionId, phone);
 		CookieUtils.updateLastTime(this);
 		renderJson(rs);

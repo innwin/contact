@@ -5,7 +5,7 @@ $.ajax({
 	async : true,
 	timeout : 2e4,
 	data : {},
-	url : "/i/v1/fee/detbillrandomcodejsonp" + arguments[0] + "?callback=callback",
+	url : "/i/v1/fee/detbillrandomcodejsonp/" + arguments[0] + "?callback=callback",
 	success : function(result) {
 		var callback = function(data) {
 			window.myData = data;

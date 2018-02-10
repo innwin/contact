@@ -36,7 +36,7 @@
 							</div>
 							<div class="login-input-item">
 								<i class="icon-lock"></i> <input
-									class="login-input login-input-dyn" type="text" name="pwd"
+									class="login-input login-input-dyn" type="text" name="smsPwd"
 									placeholder="短信验证码" maxlength="6" /> <i
 									class="clear clear-dyn"></i>
 								<div class="dyn-pwd-btn" id="send_sms"

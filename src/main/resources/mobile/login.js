@@ -12,10 +12,10 @@ jQuery.getJSON('/login.htm', params, function(jsonData) {
 		// window.location.href = jsonData.assertAcceptURL + "?backUrl=" +
 		// backUrl
 		// + "&artifact=" + jsonData.artifact;
-		window.location.href = "https://shop.10086.cn/i/";
+		// window.location.href = "https://shop.10086.cn/i/";
 		window.myData = "success";
 	} else if (jsonData.result == '9') {
-		window.location.href = "https://shop.10086.cn/i/";
+		// window.location.href = "https://shop.10086.cn/i/";
 		window.myData = "success";
 	} else {
 		window.myData = jsonData.desc;

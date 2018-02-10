@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
+import org.eclipse.jetty.util.ajax.JSON;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.MyPhantomJSDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -35,8 +36,6 @@ public class ChinaMobileRemoteExecute {
 			WebDriver driver = new MyPhantomJSDriver("", ToolUtils.getPort(key));
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.get("https://login.10086.cn/");
-			System.out.println(driver.getCurrentUrl()+"---------");
-			DebugUtils.saveImg(driver, "/tmp/test001.png");
 			driver.manage().window().maximize();
 			return new Result(Constants.SUCCESS, ((RemoteWebDriver) driver).getSessionId().toString());
 		} catch (Exception e) {
@@ -45,7 +44,7 @@ public class ChinaMobileRemoteExecute {
 		}
 
 	}
-	
+
 	public static Result getLoginPwd(String sessionId, String login) {
 		SessionExpire sessionExpire = CookieUtils.getSessionExpire(sessionId);
 		if (StringUtils.isEmpty(sessionId) || sessionExpire == null) {
@@ -53,8 +52,7 @@ public class ChinaMobileRemoteExecute {
 		}
 		try {
 			WebDriver driver = new MyPhantomJSDriver(sessionId, ToolUtils.getPort(sessionExpire.key));
-			String data = (String) JsExecUtils.exec(driver, "/mobile/getLoginPwd.js", true,
-					login);
+			String data = (String) JsExecUtils.exec(driver, "/mobile/getLoginPwd.js", true, login);
 			if (!"success".equals(data)) {
 				return new Result(Constants.INPUTERROR, data);
 			}
@@ -95,6 +93,7 @@ public class ChinaMobileRemoteExecute {
 			if (!"success".equals(data)) {
 				return new Result(Constants.INPUTERROR, data);
 			}
+			driver.get("https://shop.10086.cn/i/");// FIXME: too slow...
 			return new Result(Constants.SUCCESS, data);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -146,7 +145,6 @@ public class ChinaMobileRemoteExecute {
 			@Override
 			public void run() {
 				try {
-
 					Calendar calendar = Calendar.getInstance();
 					List<Map<String, String>> datas = new ArrayList<>();
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
@@ -156,12 +154,11 @@ public class ChinaMobileRemoteExecute {
 						}
 						Map<String, ?> myData = (Map<String, ?>) JsExecUtils.exec(driver, "/mobile/doJob.js", true,
 								CookieUtils.getSessionExpire(sessionId).nm, sdf.format(calendar.getTime()));
-						Map<String, ?> myMap = (Map<String, ?>) myData.get(0);
-						String retCode = String.valueOf(myMap.get("retCode"));
-						if (!"000000".equals(retCode)) {
+						if (!"000000".equals(myData.get("retCode"))) {
 							continue;
 						}
-						ArrayList<Map<String, String>> msgs = (ArrayList<Map<String, String>>) myMap.get("data");
+						String year = ((String) myData.get("startDate")).substring(0, 4);
+						List<Map<String, String>> msgs = (List<Map<String, String>>) myData.get("data");
 						for (Map<String, String> obj : msgs) {
 							String commMode = obj.get("commMode");
 							String commPlac = obj.get("commPlac");
@@ -176,7 +173,7 @@ public class ChinaMobileRemoteExecute {
 							ele.put("commPlac", commPlac);
 							ele.put("commType", commType);
 							ele.put("commTime", commTime);
-							ele.put("startTime", ToolUtils.filterTime(startTime));
+							ele.put("startTime", year + "-" + startTime);
 							ele.put("anotherNm", anotherNm);
 							ele.put("remark", remark);
 							datas.add(ele);
