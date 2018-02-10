@@ -183,7 +183,16 @@ public class ChinaMobileRemoteExecute {
 					Map<String, ?> myData = (Map<String, ?>) JsExecUtils.exec(driver, "/mobile/getUserInfo.js", true,
 							CookieUtils.getSessionExpire(sessionId).nm);
 					Map<String, ?> userInfo = (Map<String, ?>) myData.get("data");
-					if (!"000000".equals(myData.get("retCode"))) {
+					if ("000000".equals(myData.get("retCode"))) {
+						String name = (String) userInfo.get("name");
+						String netAge = (String) userInfo.get("netAge");
+						String address = (String) userInfo.get("address");
+						Map<String, String> data = new HashMap<>();
+						data.put("name", name);
+						data.put("netAge", netAge);
+						data.put("address", address);
+						userInfo = data;
+					} else {
 						userInfo = Collections.EMPTY_MAP;
 					}
 					SaveDataUtils.saveData(userInfo, datas);
