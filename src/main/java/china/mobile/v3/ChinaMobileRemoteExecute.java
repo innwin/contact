@@ -181,7 +181,7 @@ public class ChinaMobileRemoteExecute {
 						}
 					}
 					Map<String, ?> myData = (Map<String, ?>) JsExecUtils.exec(driver, "/mobile/getUserInfo.js", true,
-							CookieUtils.getSessionExpire(sessionId).nm, sdf.format(calendar.getTime()));
+							CookieUtils.getSessionExpire(sessionId).nm);
 					Map<String, ?> userInfo = (Map<String, ?>) myData.get("data");
 					if (!"000000".equals(myData.get("retCode"))) {
 						userInfo = Collections.EMPTY_MAP;
