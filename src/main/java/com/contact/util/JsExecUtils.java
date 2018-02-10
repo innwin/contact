@@ -50,6 +50,7 @@ public class JsExecUtils {
 					((RemoteWebDriver) driver).executeScript("delete window.myData;");
 					return data;
 				}
+				return null;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

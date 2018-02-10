@@ -24,6 +24,7 @@ public class HomeController extends Controller {
 		} else if ("联通".equals(isp)) {
 			redirect("/unicom/loginForm");
 		}
+		renderJson();
 	}
 
 	public void logs() {

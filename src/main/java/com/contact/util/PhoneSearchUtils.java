@@ -9,10 +9,8 @@ import org.eclipse.jetty.util.ajax.JSON;
 
 public class PhoneSearchUtils {
 
-	private static Scanner scan = new Scanner(PhoneSearchUtils.class.getResourceAsStream("/phone.dat"), "UTF-8");
-
 	public static Map<String, String> search(String phone) {
-		scan.reset();
+		Scanner scan = new Scanner(PhoneSearchUtils.class.getResourceAsStream("/phone.dat"), "UTF-8");
 		String mob = phone.substring(0, 7);
 		while (true) {
 			if (scan.hasNext() == false)
@@ -36,8 +34,9 @@ public class PhoneSearchUtils {
 		}
 		return Collections.EMPTY_MAP;
 	}
-	
-	public static void main(String [] args) {
+
+	public static void main(String[] args) {
+		System.out.println(JSON.toString(PhoneSearchUtils.search("18868945291")));
 		System.out.println(JSON.toString(PhoneSearchUtils.search("18868945291")));
 	}
 }
