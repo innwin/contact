@@ -127,16 +127,15 @@ public class ChinaTelecomRemoteExecute {
 	}
 
 	private static List<List<String>> submit(WebDriver driver, String domain, String month) {
-		Integer pageNo = 1;
 		String url = domain + "/service/bill/result/mobile/mobile_call_result.jsp?"
-				+ "SDAY=1&v_choosetype=0&EDAY=31&MONTH=" + month + "&PRODTYPE=50&PRODNO=MTgwNjUyMDkyODU=&PAGENO="
-				+ pageNo + "&INTERPAGE=100";
+				+ "SDAY=1&v_choosetype=0&EDAY=31&MONTH=" + month + "&PRODTYPE=50&PRODNO=MTgwNjUyMDkyODU=&PAGENO=%s"
+				+ "&INTERPAGE=100";
 
 		// DebugUtils.saveImg(driver, "/tmp/test0008.png");
 
 		List<List<String>> datas = new ArrayList<>();
 		try {
-			driver.get(url);// 201710
+			driver.get(String.format(url, 1));// 201710
 			// new WebDriverWait(driver,
 			// 10).until(ExpectedConditions.visibilityOfElementLocated(By.tagName("table")));
 			Boolean has = (Boolean) ((RemoteWebDriver) driver)
@@ -146,12 +145,12 @@ public class ChinaTelecomRemoteExecute {
 			}
 			Integer pageTotal = Integer.valueOf((String) ((RemoteWebDriver) driver)
 					.executeScript("return document.getElementById('wpage').getAttribute('maxlength');"));
-
+			Integer pageNo = 1;
 			for (int i = 1; i <= Integer.valueOf(pageTotal);) {
 				List<List<String>> ele = (List<List<String>>) JsExecUtils.exec(driver, "/telecom/submit.js", true);
 				datas.addAll(ele);
 				pageNo = ++i;
-				driver.get(url);
+				driver.get(String.format(url, pageNo));
 			}
 			return datas;
 		} catch (Exception e) {
