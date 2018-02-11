@@ -26,10 +26,6 @@ import com.jfinal.plugin.task.TaskKit;
 
 public class ChinaTelecomRemoteExecute {
 
-	static {
-		System.setProperty("phantomjs.binary.path", "/usr/bin/phantomjs");
-	}
-
 	public static Result loginForm(String key, String sessionId) {
 		CookieUtils.cleanSession(sessionId);
 		try {

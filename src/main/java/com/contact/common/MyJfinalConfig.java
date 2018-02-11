@@ -27,6 +27,7 @@ public class MyJfinalConfig extends JFinalConfig {
 	 * 配置常量
 	 */
 	public void configConstant(Constants me) {
+		System.setProperty("phantomjs.binary.path", "/usr/bin/phantomjs");
 		// 加载少量必要配置，随后可用PropKit.get(...)获取值
 		PropKit.use("a_little_config.txt");
 		MyPropKit.use("my_config.txt");

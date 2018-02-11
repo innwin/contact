@@ -29,11 +29,7 @@ import com.jfinal.plugin.task.TaskKit;
 
 public class ChinaUnicomRemoteExecute {
 
-	static {
-		System.setProperty("phantomjs.binary.path", "/usr/bin/phantomjs");
-	}
-
-	public static Result loginForm(String key,String sessionId) {
+	public static Result loginForm(String key, String sessionId) {
 		CookieUtils.cleanSession(sessionId);
 		try {
 			WebDriver driver = new MyPhantomJSDriver("", ToolUtils.getPort(key));

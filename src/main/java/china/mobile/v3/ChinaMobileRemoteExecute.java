@@ -27,10 +27,6 @@ import com.jfinal.plugin.task.TaskKit;
 
 public class ChinaMobileRemoteExecute {
 
-	static {
-		System.setProperty("phantomjs.binary.path", "/usr/bin/phantomjs");
-	}
-
 	public static Result loginForm(String key) {
 		CookieUtils.cleanSession(key);
 		try {
