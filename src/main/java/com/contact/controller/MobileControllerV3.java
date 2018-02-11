@@ -77,6 +77,9 @@ public class MobileControllerV3 extends Controller {
 		CookieUtils.updateLastTime(this);
 		setAttr("result", rs);
 		if (rs.code != Constants.SUCCESS) {
+			setAttr("servPwd", servPwd);
+			setAttr("smsPwd", smsPwd);
+			setAttr("imgCode", imgCode);
 			render("auth.jsp");
 		} else {
 			render("result.jsp");
