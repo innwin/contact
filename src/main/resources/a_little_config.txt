@@ -9,6 +9,3 @@ task.keep_alive_seconds=30000
 max.count = 1000
 max.port.count = 1
 post.url=__blank
-mobile.type=移动
-telecom.type=电信
-unicom.type=联通

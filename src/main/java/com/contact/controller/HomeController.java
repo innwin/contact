@@ -1,9 +1,8 @@
 package com.contact.controller;
 
-import java.net.URLEncoder;
-
 import com.contact.common.Mobile;
 import com.contact.util.CookieUtils;
+import com.contact.util.MyPropKit;
 import com.contact.util.PhoneSearchUtils;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.PropKit;
@@ -21,11 +20,11 @@ public class HomeController extends Controller {
 		CookieUtils.putNm(this, phone);
 		String isp = PhoneSearchUtils.search(phone).get("isp");
 		;
-		if (PropKit.get("mobile.type").equals(isp)) {
+		if (MyPropKit.get("mobile.type").equals(isp)) {
 			redirect("/mobile/loginForm");
-		} else if (PropKit.get("telecom.type").equals(isp)) {
+		} else if (MyPropKit.get("telecom.type").equals(isp)) {
 			redirect("/telecom/loginForm");
-		} else if (PropKit.get("unicom.type").equals(isp)) {
+		} else if (MyPropKit.get("unicom.type").equals(isp)) {
 			redirect("/unicom/loginForm");
 		} else {
 			renderJson("{ code: 500 , data: \" phone number is error \" }");

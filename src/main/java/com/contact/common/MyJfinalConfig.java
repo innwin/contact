@@ -4,6 +4,7 @@ import com.contact.controller.HomeController;
 import com.contact.controller.MobileControllerV3;
 import com.contact.controller.TelecomControllerV3;
 import com.contact.controller.UnicomControllerV3;
+import com.contact.util.MyPropKit;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -28,6 +29,7 @@ public class MyJfinalConfig extends JFinalConfig {
 	public void configConstant(Constants me) {
 		// 加载少量必要配置，随后可用PropKit.get(...)获取值
 		PropKit.use("a_little_config.txt");
+		MyPropKit.use("my_config.txt");
 		me.setDevMode(PropKit.getBoolean("devMode", false));
 		me.setViewType(ViewType.JSP);
 	}

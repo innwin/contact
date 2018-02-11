@@ -1,0 +1,3 @@
+mobile.type=移动
+telecom.type=电信
+unicom.type=联通
