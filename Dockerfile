@@ -34,4 +34,6 @@ RUN sed -i "s/post.url=__blank/post.url=${POST_URL}/g" ${dir}/src/main/resources
 
 WORKDIR ${dir}
 
-CMD sh -c "service mysql start && mysql -uroot < ${SQL_FILE} && ./mvnw jetty:run"
+RUN  sh -c "service mysql restart && mysql -uroot < ${SQL_FILE} && ./mvnw clean install -DskipTests"
+
+CMD sh -c "service mysql restart && ./mvnw jetty:run"
