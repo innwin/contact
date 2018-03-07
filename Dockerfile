@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:trusty
 
 RUN apt-get update && apt-get -y install wget && wget --no-cookies --no-check-certificate --header \
 "Cookie: gpw_e24=http://www.oracle.com/; oraclelicense=accept-securebackup-cookie" \
@@ -36,4 +36,4 @@ WORKDIR ${dir}
 
 RUN sh -c "service mysql start && mysql -uroot < ${SQL_FILE} && ./mvnw clean install -DskipTests"
 
-CMD sh -c "rm -rf /var/run/mysqld/mysqld.sock.lock && service mysql start && ./mvnw jetty:run"
+CMD sh -c "rm -rf /var/run/mysqld/mysqld.sock.lock && ./mvnw jetty:run"

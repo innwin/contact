@@ -126,6 +126,8 @@ public class PhantomJSDriver extends RemoteWebDriver implements TakesScreenshot 
 	private static Capabilities addUserAgent(Capabilities desiredCapabilities) {
 		((DesiredCapabilities) desiredCapabilities).setCapability("phantomjs.page.settings.userAgent",
 				"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36");
+		((DesiredCapabilities) desiredCapabilities).setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS,
+				new String[] { "--ignore-ssl-errors=true" });
 		return desiredCapabilities;
 	}
 
