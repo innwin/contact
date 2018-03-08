@@ -29,11 +29,12 @@ ENV SQL_FILE ${dir}/src/main/resources/schema.sql
 COPY src ${dir}/src
 COPY pom.xml mvnw ${dir}/
 COPY .mvn ${dir}/.mvn
+COPY mysql.sh /opt/
 
 RUN sed -i "s/post.url=__blank/post.url=${POST_URL}/g" ${dir}/src/main/resources/a_little_config.txt
 
 WORKDIR ${dir}
 
-RUN sh -c "service mysql start && mysql -uroot < ${SQL_FILE} && ./mvnw clean install -DskipTests"
+RUN sh -c "/opt/mysql.sh start && mysql -uroot < ${SQL_FILE} && ./mvnw clean install -DskipTests"
 
-CMD sh -c "rm -rf /var/run/mysqld/mysqld.sock.lock && ./mvnw jetty:run"
+CMD sh -c "/opt/mysql.sh start && ./mvnw jetty:run"
