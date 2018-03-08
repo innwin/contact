@@ -89,7 +89,12 @@ mysqld_status () {
     fi
 }
 
-start(){
+#
+# main()
+#
+
+case "${1:-''}" in
+  'start')
 	sanity_checks;
 	# Start daemon
 	log_daemon_msg "Starting MySQL database server" "mysqld"
@@ -99,15 +104,16 @@ start(){
 	else
 	    # Could be removed during boot
 	    test -e /var/run/mysqld || install -m 755 -o mysql -g root -d /var/run/mysqld
-
+	    
   	    pidfile=`mysqld_get_param pid-file`
             if [ -f "$pidfile" ] && ps `cat $pidfile` >/dev/null 2>&1; then rm -rf $pidfile; fi
-        	
+
 	    # Start MySQL! 
   	    /usr/bin/mysqld_safe > /dev/null 2>&1 &
+
 	    # 6s was reported in #352070 to be too few when using ndbcluster
         # 14s was reported in #736452 to be too few with large installs
-        for i in $(seq 1 30); do
+            for i in $(seq 1 30); do
                 sleep 1
 	        if mysqld_status check_alive nowarn ; then break; fi
 		log_progress_msg "."
@@ -116,18 +122,12 @@ start(){
                 log_end_msg 0
 	        # Now start mysqlcheck or whatever the admin wants.
 	        output=$(/etc/mysql/debian-start)
-		[ -n "$output" ] && log_action_msg "$output"
+		if [ -n "$output" ] ; then log_action_msg "$output"; fi
 	    else
 	        log_end_msg 1
 		log_failure_msg "Please take a look at the syslog"
 	    fi
 	fi
-}
-
-
-case "${1:-''}" in
-  'start')
-	start
 	;;
 
   'stop')
