@@ -1,4 +1,4 @@
-FROM ubuntu:trusty
+FROM ubuntu
 
 RUN apt-get update && apt-get -y install wget && wget --no-cookies --no-check-certificate --header \
 "Cookie: gpw_e24=http://www.oracle.com/; oraclelicense=accept-securebackup-cookie" \
